@@ -1,0 +1,14 @@
+{
+	"name": "Windows Arm64EC",
+	"build_name": "windows_arm64ec",
+	"architectures": {
+		"neon" : {
+			"build_flags" : [ "-mtune=neoverse-n1", "-march=armv8-a", "--target=arm64ec-pc-windows-msvc" ],
+			"systems" : {
+				"n1_c6g": {}
+			},
+			"default_system": "n1_c6g"
+		}
+	},
+	"default_architecture": "neon"
+}

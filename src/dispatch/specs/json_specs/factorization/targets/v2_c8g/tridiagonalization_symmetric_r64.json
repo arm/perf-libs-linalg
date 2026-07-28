@@ -1,0 +1,32 @@
+[
+	{
+		"routine": "tridiagonalization_symmetric",
+		"datatype": "r64",
+		"target": "v2_c8g",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1744",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T07:12:09.215041Z",
+			"spec_sha256": "47691f7a0aa00c149b7c026318ee53086b815eeb50e6d82df2c65a9e47e3b46d"
+		}
+	}
+]

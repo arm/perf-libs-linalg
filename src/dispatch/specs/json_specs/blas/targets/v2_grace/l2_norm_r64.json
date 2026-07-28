@@ -1,0 +1,155 @@
+[
+	{
+		"routine": "l2_norm",
+		"datatype": "r64",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l2_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 6526",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 26582",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 170950",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 243994",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 288250",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1419922",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1757662",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 48
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 83990",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 288250",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 394534",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 565834",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 648010",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 1007566",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1270594",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1419922",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1499338",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 32
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l2_norm_strategy",
+		"problem_context_base": "l2_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T17:27:40.390797Z",
+			"spec_sha256": "7585812521681ff20a61f0c8c0deb99613f3c9f9b7cfa2034735413806071adb"
+		}
+	}
+]

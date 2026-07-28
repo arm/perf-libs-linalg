@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "tridiagonalization_sym",
+		"datatype": "r32",
+		"target": "apple_m4",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									1
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								1
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T00:40:25.021027Z",
+			"spec_sha256": "bbf260342b797d48fc4a6e727b0c1fb55055e72db2e0d2fa7e2cf842b8e20aad"
+		}
+	}
+]

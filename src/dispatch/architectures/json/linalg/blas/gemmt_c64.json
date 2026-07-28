@@ -1,0 +1,4 @@
+[
+	{"routine": "gemmt", "symbol": "zgemmt"},
+	{"routine": "gemmtr", "symbol": "zgemmtr"}
+]

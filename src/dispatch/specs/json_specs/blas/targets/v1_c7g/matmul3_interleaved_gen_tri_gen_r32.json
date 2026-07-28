@@ -1,0 +1,117 @@
+[
+	{
+		"routine": "matmul3_interleaved_gen_tri_gen",
+		"datatype": "r32",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 97336",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 1685159",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 9800344",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 43614208",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 344472101",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 700227072",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 982107784",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 1856331989",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 3368254499",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 4475809792",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1440,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 1,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 75,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"strategy_tag": "matmul3_interleaved_gen_tri_gen",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, triangular_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T18:12:52.607619Z",
+			"spec_sha256": "f5c797444113aa60203c67587980f24079f9829cf2c6b28e1b83dbc1fcbe3b6b"
+		}
+	}
+]

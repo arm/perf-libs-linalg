@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotmg",
+		"datatype": "r32",
+		"target": "v2_c8g",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotmg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_modified_rotation",
+		"problem_context_base": "rotmg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T22:37:57.547538Z",
+			"spec_sha256": "4a8ce894d7703464bbf0ae83c1f0f3d349077fd67a59a561fa5053c2abe47efd"
+		}
+	}
+]

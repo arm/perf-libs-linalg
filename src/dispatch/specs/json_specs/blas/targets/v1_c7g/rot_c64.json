@@ -1,0 +1,112 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "c64",
+		"target": "v1_c7g",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 742",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 3286",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 5258",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 46186",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 75041",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 510",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 742",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 1930",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 5258",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 40510",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T20:03:27.747619Z",
+			"spec_sha256": "335447119263fac44a41f72f1f00cbca09649908bdc24b1dad64fd06ea28951f"
+		}
+	}
+]

@@ -1,0 +1,80 @@
+[
+	{
+		"routine": "tridiagonalization_symmetric",
+		"datatype": "r32",
+		"target": "taishan",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 48",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 80",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 128",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 144",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 192",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 208",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 256",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 384",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 448",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1024",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1280",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 1536",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1792",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 2048",
+							"value": 8
+						}
+					],
+					"default": 8
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization"
+	}
+]

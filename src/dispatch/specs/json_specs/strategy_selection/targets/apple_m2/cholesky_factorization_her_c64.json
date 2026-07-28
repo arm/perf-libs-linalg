@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "cholesky_factorization_her",
+		"datatype": "c64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 15",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 16",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 16",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<hermitian_matrix<matrix_base<{0}>>, IntType>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:16:25.700332Z",
+			"spec_sha256": "d6732fd45b4c00698fd6626034c89ba3fe275d09b6c408bdc799118679165c4c"
+		}
+	}
+]

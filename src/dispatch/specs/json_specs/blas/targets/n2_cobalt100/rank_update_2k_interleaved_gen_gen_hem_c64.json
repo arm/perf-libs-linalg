@@ -1,0 +1,125 @@
+[
+	{
+		"routine": "rank_update_2k_interleaved_gen_gen_hem",
+		"datatype": "c64",
+		"target": "n2_cobalt100",
+		"strategy_tag": "rank_update_2k_interleaved",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 4000",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 48668",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 842579",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1588261",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 2819876",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 8290687",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 21807104",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 52911908",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 79610044",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 118014516",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 172236050",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 247456835",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 2,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 120,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:49:58.861516Z",
+			"spec_sha256": "0ab2c5c7a317489cb9c08434e79f5cf7be712f1dd463244963adfefbefa2e349"
+		}
+	}
+]

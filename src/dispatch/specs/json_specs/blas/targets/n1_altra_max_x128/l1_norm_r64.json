@@ -1,0 +1,287 @@
+[
+	{
+		"routine": "l1_norm",
+		"datatype": "r64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l1_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 11722",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 14002",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 40510",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 75041",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 115682",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 141298",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 223882",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 243994",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 288250",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 365590",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 425162",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 491734",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 527810",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 565834",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 605878",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 648010",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 692302",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 738826",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 892541",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1007566",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1069078",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1419922",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1499338",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1582041",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1668118",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 1757662",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 48
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1438",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1930",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 3286",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 5258",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 9734",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 35374",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 40510",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 66826",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 83990",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 265430",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 288250",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 457541",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 605878",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 648010",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 738826",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 892541",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 1007566",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 1069078",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 1133366",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 1200510",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 1270594",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 1343702",
+								"value": 136
+							},
+							{
+								"condition": "scale <= 1419922",
+								"value": 144
+							},
+							{
+								"condition": "scale <= 1499338",
+								"value": 160
+							},
+							{
+								"condition": "scale <= 1582041",
+								"value": 168
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 128
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l1_norm_strategy",
+		"problem_context_base": "l1_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:59:08.039451Z",
+			"spec_sha256": "e74855aa74223a5318e47940abaaa23f5f5187d3c0e42a64d61d622d4433d5b3"
+		}
+	}
+]

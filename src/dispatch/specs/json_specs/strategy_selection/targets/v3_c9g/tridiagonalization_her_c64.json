@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "tridiagonalization_her",
+		"datatype": "c64",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									1
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								1
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "tridiagonalization<hermitian_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T22:01:55.888656Z",
+			"spec_sha256": "c697158b350c7d4dd6bb633a4a72fd99d840a8d41e3ad66a13be083198d4b92d"
+		}
+	}
+]

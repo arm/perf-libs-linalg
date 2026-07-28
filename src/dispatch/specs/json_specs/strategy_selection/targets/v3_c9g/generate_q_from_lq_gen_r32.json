@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "generate_q_from_lq_gen",
+		"datatype": "r32",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									2
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								2
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "generate_q_from_lq<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:12:57.247369Z",
+			"spec_sha256": "046bc968ea4ecbd75ebeb73d9357d47b379b07743fee9c35a3a9b01e6e4f72b9"
+		}
+	}
+]

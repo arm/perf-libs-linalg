@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotm",
+		"datatype": "r32",
+		"target": "taishan",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotm",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "apply_modified_rotation",
+		"problem_context_base": "rotm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T08:51:21.263932Z",
+			"spec_sha256": "63a6b84e24a0cc10375d27a248542cd57a086cb8553027f383a99a8735044a50"
+		}
+	}
+]

@@ -1,0 +1,44 @@
+[
+	{
+		"routine": "bidiagonalization",
+		"datatype": "c64",
+		"target": "n1_altra_x80",
+		"strategy_tag": "bidiagonalization_generic",
+		"problem_context_base": "bidiagonalization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1010",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1341",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1738",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": 8
+						}
+					],
+					"default": 8
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T05:27:07.377828Z",
+			"spec_sha256": "96af3d712721ef48a5fefd2ca319bf2ae4b9bb42fc53956dccea33052c21f1e2"
+		}
+	}
+]

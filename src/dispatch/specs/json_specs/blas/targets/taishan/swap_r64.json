@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "swap",
+		"datatype": "r64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "swap",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"default": 1,
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "swap_strategy",
+		"problem_context_base": "swap<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T09:20:19.349262Z",
+			"spec_sha256": "efd4867eb3959e72a61b8aa41be8396914ab015f949ae94ec270e302bf4694c5"
+		}
+	}
+]

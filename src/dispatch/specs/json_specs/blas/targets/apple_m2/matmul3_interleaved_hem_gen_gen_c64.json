@@ -1,0 +1,97 @@
+[
+	{
+		"routine": "matmul3_interleaved_hem_gen_gen",
+		"datatype": "c64",
+		"target": "apple_m2",
+		"strategy_tag": "matmul3_interleaved_strategy_tag",
+		"problem_context_base": "matmul3<hermitian_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 19683",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 97336",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 5639752",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 9800344",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 105823817",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 480,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 18,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 512,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T22:54:06.115871Z",
+			"spec_sha256": "c576d14d2c9b2e5e35132dc9e598f344ef5c643478acd0fdf7353e0f9552598b"
+		}
+	}
+]

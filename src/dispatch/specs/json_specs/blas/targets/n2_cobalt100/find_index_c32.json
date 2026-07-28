@@ -1,0 +1,127 @@
+[
+	{
+		"routine": "find_index",
+		"datatype": "c32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "find_index",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 9734",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 22858",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 52438",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 605878",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1499338",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 48
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1438",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 8010",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 22858",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 457541",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 491734",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 80
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "find_index_strategy",
+		"problem_context_base": "find_index<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:31:26.411651Z",
+			"spec_sha256": "c5cae01a7fe6c6bb37c3ee95cf2d4f188978e5f4c5e2c63d6a86a64a30595847"
+		}
+	}
+]

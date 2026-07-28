@@ -1,0 +1,95 @@
+{
+    "name": "getrf",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ipiv",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "info",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sgetrf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dgetrf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cgetrf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zgetrf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/factorization/interfaces/getrf.hpp"
+}

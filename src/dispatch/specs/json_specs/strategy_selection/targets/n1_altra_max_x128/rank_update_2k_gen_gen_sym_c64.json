@@ -1,0 +1,76 @@
+[
+	{
+		"routine": "rank_update_2k_gen_gen_sym",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 4489",
+										"value": [
+											4,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											3,
+											4
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 257049",
+									"value": [
+										3,
+										4
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 3375",
+								"value": [
+									4,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									3,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 130323843",
+							"value": [
+								3,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T09:35:07.786825Z",
+			"spec_sha256": "0f89af2a29328421286314f93989795701b611fb29743c205a17e831677a0f43"
+		}
+	}
+]

@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotg",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_rotation",
+		"problem_context_base": "rotg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T02:54:14.665297Z",
+			"spec_sha256": "136202f91987e50b74a7297924129528c7bf605d6fce9990f622509dddc4a9f7"
+		}
+	}
+]

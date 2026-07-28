@@ -1,0 +1,67 @@
+{
+    "name": "rotmg",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "XMatrixType",
+            "name": "d1",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "d2",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "b1",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "b2",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "param",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "srotmg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "XMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "drotmg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "XMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/rotmg.hpp"
+}

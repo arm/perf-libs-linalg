@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotg",
+		"datatype": "c32",
+		"target": "n2_cobalt100",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_rotation",
+		"problem_context_base": "rotg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:16:58.827305Z",
+			"spec_sha256": "dd275847e487452432f375715d50fa3bf0d034029bb35ce5caa377ef416c12b6"
+		}
+	}
+]

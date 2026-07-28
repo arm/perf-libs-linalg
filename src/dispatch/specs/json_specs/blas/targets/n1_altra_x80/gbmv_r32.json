@@ -1,0 +1,51 @@
+[
+	{
+		"routine": "gbmv",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 23716",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 2592100",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 16
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_general_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:40:54.558745Z",
+			"spec_sha256": "19548e647935cc56f4bd931ec03484da3f63a607261200211bf3c6e939735a3b"
+		}
+	}
+]

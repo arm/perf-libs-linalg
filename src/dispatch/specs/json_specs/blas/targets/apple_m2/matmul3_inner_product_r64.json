@@ -1,0 +1,66 @@
+[
+	{
+		"routine": "matmul3_inner_product",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"strategy_tag": "matmul3_inner_product",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg_step() == 1 && pctx.b.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 93718",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 1200510",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 6
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 16598",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 6
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:41:25.637557Z",
+			"spec_sha256": "8eff0a3b4e8ee73692b1eb321555c3d867c8ffd8919d67231933697dc44ba8b7"
+		}
+	}
+]

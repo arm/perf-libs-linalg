@@ -1,0 +1,108 @@
+{
+    "name": "gemm_batch_dispatch_arch",
+	"namespaces": [ "perflibs", "gemm" ],
+    "return_type": "void",
+	"includes": [
+		"framework/linalg_blas_types.hpp"
+	],
+    "template_parameters": [
+		{
+			"name": "T",
+			"type": "typename"
+		}
+	],
+	"parameters": [
+        {
+            "type": "char",
+            "name": "transa",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "char",
+            "name": "transb",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "m",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "n",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "k",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "T",
+            "name": "alpha",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "T",
+            "name": "a",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "lda",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "T",
+            "name": "b",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "ldb",
+            "is_const": false,
+            "is_pointer":false
+        },
+        {
+            "type": "T",
+            "name": "beta",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "T",
+            "name": "c",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "kernel_inttype",
+            "name": "ldc",
+            "is_const": false,
+            "is_pointer": false
+        }
+    ],
+
+	"instantiations": {
+		"gemm_batch_dispatch": {
+			"template_values": [
+				{ "T": "r32" },
+				{ "T": "r64" },
+				{ "T": "c32" },
+				{ "T": "c64" }
+			],
+			"symbol_type": "c++template",
+			"namespaces": [ "perflibs", "gemm" ]
+		}
+	},
+    "interface_header_include": "packages/matmul/interfaces/gemm_batch_dispatch.hpp"
+}

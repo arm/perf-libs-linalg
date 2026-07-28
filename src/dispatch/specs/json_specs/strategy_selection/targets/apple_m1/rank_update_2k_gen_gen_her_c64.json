@@ -1,0 +1,87 @@
+[
+	{
+		"routine": "rank_update_2k_gen_gen_her",
+		"datatype": "c64",
+		"target": "apple_m1",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 84100",
+										"value": [
+											4,
+											2,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											2,
+											4,
+											3
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 257049",
+									"value": [
+										2,
+										4,
+										3
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									4,
+									2,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 125000",
+								"value": [
+									4,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									3,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 130323843",
+							"value": [
+								3,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T01:29:28.064657Z",
+			"spec_sha256": "1b616e258549898e6f08f57655136dbeeb5bfb8d3426dc928c5b0a1cbee65ed5"
+		}
+	}
+]

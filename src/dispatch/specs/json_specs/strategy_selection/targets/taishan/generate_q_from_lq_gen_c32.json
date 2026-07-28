@@ -1,0 +1,45 @@
+[
+	{
+		"routine": "generate_q_from_lq_gen",
+		"datatype": "c32",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 74",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 76",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 76",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "generate_q_from_lq<general_matrix<matrix_base<{0}>>>"
+	}
+]

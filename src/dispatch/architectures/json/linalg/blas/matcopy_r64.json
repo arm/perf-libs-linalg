@@ -1,0 +1,4 @@
+[
+	{ "routine": "omatcopy", "symbol": "domatcopy" },
+	{ "routine": "imatcopy", "symbol": "dimatcopy" }
+]

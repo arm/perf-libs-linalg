@@ -1,0 +1,47 @@
+[
+	{
+		"routine": "tridiagonalization_sym",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 83",
+								"value": [
+									0,
+									1
+								]
+							},
+							{
+								"condition": "scale <= 84",
+								"value": [
+									1,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 84",
+							"value": [
+								1,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T09:57:50.336571Z",
+			"spec_sha256": "89f16c5ce05c3eea2e566df187c78e884623398e52b1efb29d0fe12afacd25ad"
+		}
+	}
+]

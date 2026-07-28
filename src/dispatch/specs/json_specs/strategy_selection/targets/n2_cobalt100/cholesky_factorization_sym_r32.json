@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "cholesky_factorization_sym",
+		"datatype": "r32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 23",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 24",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 24",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:29:11.067079Z",
+			"spec_sha256": "369ae3e69a0a6b287739cde8876ca2081faf141f54adeb0991acc802e60827b6"
+		}
+	}
+]

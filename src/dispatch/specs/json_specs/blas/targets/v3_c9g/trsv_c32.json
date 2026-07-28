@@ -1,0 +1,44 @@
+[
+	{
+		"routine": "trsv",
+		"datatype": "c32",
+		"target": "v3_c9g",
+		"strategy_tag": "triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsv",
+				"default": "default"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 4>"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T07:10:52.717062Z",
+			"spec_sha256": "ca49e07671d0717087e8df708202395b3de8738288adf629e1175d327d0f95f1"
+		}
+	}
+]

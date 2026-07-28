@@ -1,0 +1,77 @@
+{
+    "name": "get_n_strategies_arch",
+    "return_type": "std::size_t",
+	"includes": [
+		"packages/matmul/problem_context_bases.hpp",
+		"packages/solve/problem_context_bases.hpp",
+		"spec/problem_context.hpp",
+		"matrix/matrix.hpp"
+	],
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "template_parameters": [
+		{
+			"name": "ProblemContextBase",
+			"type": "typename"
+		}
+	],
+	"parameters": [
+        {
+            "type": "ProblemContextBase",
+            "name": "pctx_base",
+            "is_const": true,
+            "is_pointer": false,
+            "is_reference": true
+        }
+	],
+	"instantiations": {
+		"get_n_strategies": {
+			"template_values": [
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul2<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul2<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul2<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul2<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r16>>, r16>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const bf16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const bf16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<bf16>>, bf16>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const bf16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const bf16>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>, c64>" },
+				{ "ProblemContextBase": "perflibs::linalg::solve::solve<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, r32>" },
+				{ "ProblemContextBase": "perflibs::linalg::solve::solve<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const r64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, r64>" },
+				{ "ProblemContextBase": "perflibs::linalg::solve::solve<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" },
+				{ "ProblemContextBase": "perflibs::linalg::solve::solve<perflibs::linalg::triangular_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" }
+			],
+			"symbol_type": "c++template",
+			"namespaces": [ "perflibs", "linalg" ]
+		}
+	},
+    "interface_header_include": "packages/matmul/interfaces/get_n_strategies.hpp"
+}

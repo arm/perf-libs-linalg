@@ -1,0 +1,47 @@
+[
+	{
+		"routine": "spmv",
+		"datatype": "c64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 23716",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 4
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_symmetric_matrix_vector",
+		"problem_context_base": "matmul3<symmetric_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:04:53.275524Z",
+			"spec_sha256": "539746f7d8384e4b57469becb62dd134873ee06d16d5bd78a5f21eda2042ff9f"
+		}
+	}
+]

@@ -1,0 +1,70 @@
+[
+	{
+		"routine": "hpr2",
+		"datatype": "c32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 5476",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 12100",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 17161",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 244036",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 3455881",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 80
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_two_update",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:32:11.225887Z",
+			"spec_sha256": "e22bb8d61816ba63ad331b1d2f214398ec57bdf8dc4bf4f1cacf8ab23e1c7de7"
+		}
+	}
+]

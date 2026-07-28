@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "apply_q_from_lq_gen",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									2
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								2
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "apply_q_from_lq<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:19:21.398089Z",
+			"spec_sha256": "35c6f43a535f26f3b4f252f8245e22d3900b761b7ec73762c3f6a6952825d88c"
+		}
+	}
+]

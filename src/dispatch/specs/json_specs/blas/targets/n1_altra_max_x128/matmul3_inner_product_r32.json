@@ -1,0 +1,230 @@
+[
+	{
+		"routine": "matmul3_inner_product",
+		"datatype": "r32",
+		"target": "n1_altra_max_x128",
+		"strategy_tag": "matmul3_inner_product",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg_step() == 1 && pctx.b.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 9734",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 14002",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 52438",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 75041",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 155594",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 223882",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 243994",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 288250",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 491734",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 787658",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1069078",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1200510",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1668118",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 1757662",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 1850762",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 2152346",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 2489366",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 2735050",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 3903754",
+										"value": 88
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 510",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1046",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 1930",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 11722",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 35374",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 93718",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 170950",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 187414",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 265430",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 288250",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 787658",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 1757662",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 2152346",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 3740270",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 3903754",
+								"value": 104
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T20:58:23.192802Z",
+			"spec_sha256": "bce55d5014932befad78d47114828939132880387607654e9c9f885b091ca26c"
+		}
+	}
+]

@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "tpsv",
+		"datatype": "c32",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			}
+		},
+		"strategy_tag": "compressed_triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:54:26.129103Z",
+			"spec_sha256": "470c21984ac98187aeec474645d96c14b75dde85ace2ee5b034fa8e1601d4cf5"
+		}
+	}
+]

@@ -1,0 +1,113 @@
+{
+    "name": "larf",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "side",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "v",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incv",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "tau",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "c",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ldc",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "work",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "slarf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dlarf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "clarf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zlarf": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/factorization/interfaces/larf.hpp"
+}

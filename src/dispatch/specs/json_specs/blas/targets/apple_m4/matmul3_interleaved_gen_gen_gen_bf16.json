@@ -1,0 +1,97 @@
+[
+	{
+		"routine": "matmul3_interleaved_gen_gen_gen",
+		"datatype": "bf16",
+		"target": "apple_m4",
+		"strategy_tag": "matmul3_interleaved_strategy_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 438976",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 884736",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 27270901",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 344472101",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 982107784",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1362,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 6,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 150,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:35:02.049190Z",
+			"spec_sha256": "867cee23e7a7394ca7b499cccb376562a0ece865ba7a1abb0f8dc3f4ecdac2f3"
+		}
+	}
+]

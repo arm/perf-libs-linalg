@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotmg",
+		"datatype": "r32",
+		"target": "apple_m4",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotmg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_modified_rotation",
+		"problem_context_base": "rotmg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T01:50:54.570750Z",
+			"spec_sha256": "72c4541e688ee49fb648b1472548f0016652acbace404aa750e987018cd691e1"
+		}
+	}
+]

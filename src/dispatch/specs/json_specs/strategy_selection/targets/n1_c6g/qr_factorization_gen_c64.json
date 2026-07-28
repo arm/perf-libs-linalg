@@ -1,0 +1,49 @@
+[
+	{
+		"routine": "qr_factorization_gen",
+		"datatype": "c64",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 111",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 112",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 112",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T11:02:42.708190Z",
+			"spec_sha256": "57fcef105549c395e05bf8a17a96365ebf18159e8c12da06a586ff719e5b6443"
+		}
+	}
+]

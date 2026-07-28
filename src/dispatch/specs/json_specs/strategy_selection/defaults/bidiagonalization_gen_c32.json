@@ -1,0 +1,18 @@
+[
+	{
+		"routine": "bidiagonalization_gen",
+		"datatype": "c32",
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": [
+					0
+				],
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "bidiagonalization<general_matrix<matrix_base<{0}>>>"
+	}
+]

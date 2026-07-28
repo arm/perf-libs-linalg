@@ -1,0 +1,97 @@
+[
+	{
+		"routine": "matmul3_interleaved_gen_sym_gen",
+		"datatype": "r64",
+		"target": "apple_m4",
+		"strategy_tag": "matmul3_interleaved_strategy_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, symmetric_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 216000",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 884736",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 16581375",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 68921000",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 700227072",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 240,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 15,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 512,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T21:34:48.697639Z",
+			"spec_sha256": "a60f698a7c17edfeb0349a9324bb371b75c26336d54ce141de27d59bd0f3c4a8"
+		}
+	}
+]

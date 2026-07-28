@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "apply_q_from_qr_gen",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									2
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								2
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "apply_q_from_qr<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:16:06.672938Z",
+			"spec_sha256": "37dcf625e35e979739edc931e91c8d71c2887d5b87b8e1389ee83d524e6bd108"
+		}
+	}
+]

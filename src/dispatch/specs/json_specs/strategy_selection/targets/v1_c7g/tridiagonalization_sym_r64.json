@@ -1,0 +1,47 @@
+[
+	{
+		"routine": "tridiagonalization_sym",
+		"datatype": "r64",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 319",
+								"value": [
+									0,
+									1
+								]
+							},
+							{
+								"condition": "scale <= 320",
+								"value": [
+									1,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 320",
+							"value": [
+								1,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T01:56:48.457838Z",
+			"spec_sha256": "79264224c7d6e889e7d1b65d520ad1dc1dc62ffb4fa731e0f9a13ea4328e71f9"
+		}
+	}
+]

@@ -1,0 +1,28 @@
+[
+	{
+		"routine": "matmul3_matrix_vector",
+		"datatype": [
+			"bf16bf16r32",
+			"bf16",
+			"r32",
+			"r64",
+			"c32",
+			"c64"
+		],
+		"target": "generic_aarch64",
+		"strategy_tag": "matmul3_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "gemv",
+				"default": "default"
+			}
+		},
+		"package": "matmul"
+	}
+]

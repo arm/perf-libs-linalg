@@ -1,0 +1,49 @@
+[
+	{
+		"routine": "qr_factorization_gen",
+		"datatype": "c64",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 430",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 431",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 431",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T09:31:14.965788Z",
+			"spec_sha256": "40aabf36bfbf0ae49744bf8287ac1072e57b5c1cfd8d5073a4ff70afdf63ebb2"
+		}
+	}
+]

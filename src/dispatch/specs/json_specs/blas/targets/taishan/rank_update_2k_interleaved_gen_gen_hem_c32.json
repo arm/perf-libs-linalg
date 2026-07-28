@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "rank_update_2k_interleaved_gen_gen_hem",
+		"datatype": "c32",
+		"target": "taishan",
+		"strategy_tag": "rank_update_2k_interleaved",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 500",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 4000",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 21437",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 48668",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 442368",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 10432505888",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": 40
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 60,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T07:58:34.038546Z",
+			"spec_sha256": "a141f825f17d4ba9cc729a8946b1221aba8d5bd8507c5d274f60a392282886ca"
+		}
+	}
+]

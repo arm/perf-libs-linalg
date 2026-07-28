@@ -1,0 +1,48 @@
+[
+	{
+		"routine": "tridiagonalization_symmetric",
+		"datatype": "r32",
+		"target": "n1_altra_max_x128",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 232",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 359",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 528",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1016",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": 48
+						}
+					],
+					"default": 48
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-21T00:54:57.374871Z",
+			"spec_sha256": "591628dd4be7096d102a321eed7bd2d02f8d0700a29ed47276b1016f2887d15c"
+		}
+	}
+]

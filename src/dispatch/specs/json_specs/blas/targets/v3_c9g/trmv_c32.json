@@ -1,0 +1,103 @@
+[
+	{
+		"routine": "trmv",
+		"datatype": "c32",
+		"target": "v3_c9g",
+		"strategy_tag": "inplace_matmul_vector",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 500,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 17161",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 23716",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 203401",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 290521",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 942841",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 96
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 104
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 112
+						},
+						{
+							"condition": "scale <= 2592100",
+							"value": 120
+						},
+						{
+							"condition": "scale <= 3147076",
+							"value": 128
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 144
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:31:30.670790Z",
+			"spec_sha256": "533a915fc0c241c98e23bf7720dd3825e3b7ecab5ed05ce73ddf70bbe8f1b9db"
+		}
+	}
+]

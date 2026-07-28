@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "l2_norm",
+		"datatype": "r64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l2_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"default": 1,
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "l2_norm_strategy",
+		"problem_context_base": "l2_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T20:02:29.459443Z",
+			"spec_sha256": "bc9a16657744278ab75aab5674e597023a70bd487dba579f5a8a7355446036f5"
+		}
+	}
+]

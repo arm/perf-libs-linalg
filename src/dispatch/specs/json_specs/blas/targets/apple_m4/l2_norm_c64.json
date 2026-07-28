@@ -1,0 +1,71 @@
+[
+	{
+		"routine": "l2_norm",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l2_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 16598",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 948746",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1438",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 83990",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 948746",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l2_norm_strategy",
+		"problem_context_base": "l2_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:54:46.557462Z",
+			"spec_sha256": "f9eef3f10dfab09c4708f6f152aca0db5859a84da059993f180b8b007bc50b1f"
+		}
+	}
+]

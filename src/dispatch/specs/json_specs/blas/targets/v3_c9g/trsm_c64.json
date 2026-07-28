@@ -1,0 +1,213 @@
+[
+	{
+		"routine": "trsm",
+		"datatype": "c64",
+		"target": "v3_c9g",
+		"strategy_tag": "triangular_solve_matrix_large",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsm",
+				"default": "default"
+			},
+			"kernel_unroll": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					4,
+					32,
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 6>"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "is_left(pctx.side)",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 4913",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 29791",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 729000",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1560896",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 3241792",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 6331625",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 12008989",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 28934443",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 38272753",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 50243409",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 84027672",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 107850176",
+										"value": 128
+									},
+									{
+										"condition": "scale <= 137388096",
+										"value": 136
+									},
+									{
+										"condition": "scale <= 173741112",
+										"value": 144
+									},
+									{
+										"condition": "scale <= 274625000",
+										"value": 168
+									},
+									{
+										"condition": "scale <= 521660125",
+										"value": 176
+									},
+									{
+										"condition": "scale <= 2384621056",
+										"value": 192
+									},
+									{
+										"condition": "scale <= 6445240381",
+										"value": 128
+									},
+									{
+										"condition": "scale <= 7541066681",
+										"value": 136
+									},
+									{
+										"condition": "scale <= 10218313000",
+										"value": 144
+									},
+									{
+										"condition": "scale <= 18212205591",
+										"value": 160
+									},
+									{
+										"condition": "scale <= 23987543104",
+										"value": 184
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 8000",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 205379",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 729000",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 3241792",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 4574296",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 6331625",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 12008989",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 50243409",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 84027672",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 107850176",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 173741112",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 219256227",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 274625000",
+								"value": 152
+							},
+							{
+								"condition": "scale <= 638277381",
+								"value": 184
+							},
+							{
+								"condition": "scale <= 2384621056",
+								"value": 192
+							},
+							{
+								"condition": "scale <= 3974344704",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 23987543104",
+								"value": 40
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T06:04:43.994375Z",
+			"spec_sha256": "17f69f293363f6ee666c4b5d10c188238ada0cee3c9fecaced35d62962348c2c"
+		}
+	}
+]

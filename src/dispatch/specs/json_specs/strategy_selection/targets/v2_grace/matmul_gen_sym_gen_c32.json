@@ -1,0 +1,244 @@
+[
+	{
+		"routine": "matmul_gen_sym_gen",
+		"datatype": "c32",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd() == 1 && pctx.c.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 484",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 784",
+										"value": [
+											24,
+											13,
+											14,
+											15,
+											16
+										]
+									},
+									{
+										"condition": "scale <= 1369",
+										"value": [
+											24,
+											15,
+											13,
+											14,
+											16
+										]
+									},
+									{
+										"condition": "scale <= 2500",
+										"value": [
+											24,
+											15,
+											16,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											24,
+											15,
+											16,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 35344",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 55225",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 1954404",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											16,
+											15,
+											14,
+											24,
+											13
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										16,
+										15,
+										14,
+										24,
+										13
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 343",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 512",
+								"value": [
+									13,
+									14,
+									16,
+									24,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 10648",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 50653",
+								"value": [
+									16,
+									13,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 1560896",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 3307949",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 24389000",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 76765625",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 214921799",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								15,
+								16,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, symmetric_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T20:41:08.035487Z",
+			"spec_sha256": "36ba3114e1128432aacc9aa83b3be82e650c198f8b20de770c588d4bda245fe0"
+		}
+	}
+]

@@ -1,0 +1,67 @@
+[
+	{
+		"routine": "find_index",
+		"datatype": "r32",
+		"target": "apple_m4",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "find_index",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 365590",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 3903754",
+										"value": 4
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 22858",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 3903754",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "find_index_strategy",
+		"problem_context_base": "find_index<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:18:48.674153Z",
+			"spec_sha256": "6a14f710f94b06cf7a8b15f7eecf6f7c5b7a5287691819be73c316f225d61fd7"
+		}
+	}
+]

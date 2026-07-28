@@ -1,0 +1,19 @@
+[
+	{ "routine": "gemm", "symbol": "cgemm" },
+	{ "routine": "gemm3m", "symbol": "cgemm3m" },
+	{ "routine": "gemv", "symbol": "cgemv" },
+	{ "routine": "gerb", "symbol": "cgerbu" },
+	{ "routine": "gerbc", "symbol": "cgerbc" },
+	{ "routine": "ger", "symbol": "cgeru" },
+	{ "routine": "gerc", "symbol": "cgerc" },
+	{ "routine": "axpby", "symbol": "caxpby" },
+	{ "routine": "axpy", "symbol": "caxpy" },
+	{ "routine": "scal", "symbol": "cscal" },
+	{ "routine": "copy", "symbol": "ccopy" },
+	{ "routine": "dotu", "symbol": "cdotu" },
+	{ "routine": "dotc", "symbol": "cdotc" },
+	{ "routine": "gemm_batch_dispatch_arch", "symbol": "gemm_batch_dispatch", "template_values": { "T": "c32" }},
+	{ "routine": "get_n_strategies_arch", "symbol": "get_n_strategies", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" } },
+	{ "routine": "get_strategy_name_arch", "symbol": "get_strategy_name", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" } },
+	{ "routine": "compute_index_arch", "symbol": "compute_index", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, c32>" } }
+]

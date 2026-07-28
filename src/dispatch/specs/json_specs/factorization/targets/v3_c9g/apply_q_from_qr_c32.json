@@ -1,0 +1,149 @@
+[
+	{
+		"routine": "apply_q_from_qr",
+		"datatype": "c32",
+		"target": "v3_c9g",
+		"strategy_tag": "apply_q_from_qr_generic",
+		"problem_context_base": "apply_q_from_qr<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 43",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 141",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 359",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 528",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1016",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 32
+									}
+								],
+								"default": 32
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 24",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 359",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 112
+							}
+						],
+						"default": 112
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 16,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 100",
+							"value": 2.0
+						},
+						{
+							"condition": "scale <= 101",
+							"value": 2.5
+						},
+						{
+							"condition": "scale <= 1828",
+							"value": 2.0
+						}
+					],
+					"default": 2.0
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 24",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 80",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 232",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 359",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 528",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 745",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 1016",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": 80
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T22:05:13.884552Z",
+			"spec_sha256": "33bf49ab95356043c719081ab8093819091a5bff8351e66f30aad843d5d17c5d"
+		}
+	}
+]

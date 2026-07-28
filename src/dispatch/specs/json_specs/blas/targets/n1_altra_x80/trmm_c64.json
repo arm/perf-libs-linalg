@@ -1,0 +1,129 @@
+[
+	{
+		"routine": "trmm",
+		"datatype": "c64",
+		"target": "n1_altra_x80",
+		"strategy_tag": "l2_trmm_matmul",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 4096",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 8000",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 19683",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 42875",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 97336",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 216000",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 438976",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 884736",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 27270901",
+							"value": 104
+						},
+						{
+							"condition": "scale <= 494913671",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 2515456000",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 7703734375",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 12845785688",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": 64
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 480,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 18,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 512,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T05:45:24.513153Z",
+			"spec_sha256": "f82c757ca3fc34965facd92dfec0398dc32f5ed952d064b20c358a630e348716"
+		}
+	}
+]

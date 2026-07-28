@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "matmul_gen_gen_sym",
+		"datatype": "r32",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1",
+										"value": [
+											19,
+											18
+										]
+									},
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											19,
+											18,
+											17
+										]
+									},
+									{
+										"condition": "scale <= 3143529",
+										"value": [
+											19,
+											17,
+											18
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											17,
+											18,
+											19
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										17,
+										18,
+										19
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									19,
+									18
+								]
+							},
+							{
+								"condition": "scale <= 21952",
+								"value": [
+									18,
+									17
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									17,
+									18
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								17,
+								18
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T08:25:13.348571Z",
+			"spec_sha256": "8dab191724a30550ce31445238a6f7f329376cf0c73972f5a1aa11d3074540bd"
+		}
+	}
+]

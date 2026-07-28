@@ -1,0 +1,99 @@
+[
+	{
+		"routine": "l1_norm",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l1_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 155594",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 1668118",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 3581974",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 3903754",
+										"value": 24
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 8010",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 14002",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 66826",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 187414",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 3903754",
+								"value": 80
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l1_norm_strategy",
+		"problem_context_base": "l1_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:55:42.721833Z",
+			"spec_sha256": "d6749f74a6fa5c43d8246f2f04e61307b6c8b209780413d36053aa7696202758"
+		}
+	}
+]

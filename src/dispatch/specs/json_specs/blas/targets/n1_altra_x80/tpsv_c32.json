@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "tpsv",
+		"datatype": "c32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			}
+		},
+		"strategy_tag": "compressed_triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T05:31:29.568095Z",
+			"spec_sha256": "fffdf40b9a53b4c1bf5653fa9367db9a30a284e441a7c910be4f458afc12d8de"
+		}
+	}
+]

@@ -1,0 +1,110 @@
+[
+	{
+		"routine": "matmul4_vector_scalar",
+		"datatype": "r32",
+		"target": "v1_c7g",
+		"strategy_tag": "matmul4_vector_scalar_strategy",
+		"problem_context_base": "matmul4<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<const {2}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "waxpby",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd_step() == 1 && pctx.c.cntg_step() == 1 && pctx.d.cntg_step()",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 16598",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 46186",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 605878",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 738826",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1419922",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 56
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 742",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 2541",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 8010",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 35374",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T22:22:25.192300Z",
+			"spec_sha256": "0dcfcb6973196eb71e24be5684d7502a3743dae6187ad79aedad29241edaec58"
+		}
+	}
+]

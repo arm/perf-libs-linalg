@@ -1,0 +1,121 @@
+{
+    "name": "tbmv",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "uplo",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "char",
+            "name": "trans",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "char",
+            "name": "diag",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "k",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "stbmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r32",
+                "XMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dtbmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r64",
+                "XMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "ctbmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c32",
+                "XMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "ztbmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c64",
+                "XMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/tbmv.hpp"
+}

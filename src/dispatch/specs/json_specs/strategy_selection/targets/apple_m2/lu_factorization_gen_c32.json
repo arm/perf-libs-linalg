@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "lu_factorization_gen",
+		"datatype": "c32",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 14",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 15",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 15",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "lu_factorization<general_matrix<matrix_base<{0}>>, IntType>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:18:05.071469Z",
+			"spec_sha256": "6a30afa8bd618452fc6ba338df2763c7eb73ecfb3fd775f78f6d1d05ae1ee2d8"
+		}
+	}
+]

@@ -1,0 +1,70 @@
+[
+	{
+		"routine": "matmul4_vector_scalar",
+		"datatype": "c32",
+		"target": "apple_m2",
+		"strategy_tag": "matmul4_vector_scalar_strategy",
+		"problem_context_base": "matmul4<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<const {2}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "waxpby",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd_step() == 1 && pctx.c.cntg_step() == 1 && pctx.d.cntg_step()",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 104266",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 4
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 11722",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 93718",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T01:54:32.459821Z",
+			"spec_sha256": "ed7421ac9028849763930dce340b1018322bf658af37964786523286d9274a29"
+		}
+	}
+]

@@ -1,0 +1,15 @@
+MIT OR (Apache-2.0 WITH LLVM-exception)
+=======================================
+
+This repository is licensed under either of the following:
+
+- MIT
+- Apache-2.0 with LLVM-exception
+
+See:
+- LICENSES/MIT.txt
+- LICENSES/Apache-2.0.txt
+- LICENSES/LLVM-exception.txt
+
+Third-party components included in this project are subject to separate license
+terms; see THIRD_PARTY_NOTICES.md.

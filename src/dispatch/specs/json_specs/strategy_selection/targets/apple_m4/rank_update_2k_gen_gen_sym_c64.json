@@ -1,0 +1,76 @@
+[
+	{
+		"routine": "rank_update_2k_gen_gen_sym",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 180625",
+										"value": [
+											4,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											3,
+											4
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 257049",
+									"value": [
+										3,
+										4
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 50653",
+								"value": [
+									4,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									3,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 130323843",
+							"value": [
+								3,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T00:27:02.102608Z",
+			"spec_sha256": "325336be99335054788d5b53ed725966f79977963af9ca98957e1696ddfd7e9c"
+		}
+	}
+]

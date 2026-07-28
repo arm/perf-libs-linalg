@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "rank_update_2k_interleaved_gen_gen_sym",
+		"datatype": "c32",
+		"target": "n1_c6g",
+		"strategy_tag": "rank_update_2k_interleaved",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 665",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 2048",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 4000",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 21437",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 108000",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 442368",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 60,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:43:22.422826Z",
+			"spec_sha256": "d30961bb16386541bbb0e2e3c92acdc56b41c137c3a36ab61fc12375fcb77cb2"
+		}
+	}
+]

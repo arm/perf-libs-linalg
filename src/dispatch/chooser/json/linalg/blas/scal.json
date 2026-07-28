@@ -1,0 +1,125 @@
+{
+    "name": "scal",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AlphaType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AlphaType",
+            "name": "alpha",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AlphaType": "r32",
+                "XMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "bscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AlphaType": "bf16",
+                "XMatrixType": "bf16",
+                "promote": "bf16"
+            },
+            "symbol_type": "fortran"
+        },
+        "dscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r64",
+                "AlphaType": "r64",
+                "XMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "AlphaType": "c32",
+                "XMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "csscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "AlphaType": "r32",
+                "XMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "AlphaType": "c64",
+                "XMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        },
+        "zdscal": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "AlphaType": "r64",
+                "XMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/scal.hpp"
+}

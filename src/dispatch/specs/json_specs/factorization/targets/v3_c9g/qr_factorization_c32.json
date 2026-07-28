@@ -1,0 +1,145 @@
+[
+	{
+		"routine": "qr_factorization",
+		"datatype": "c32",
+		"target": "v3_c9g",
+		"strategy_tag": "qr_factorization_generic",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 43",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 80",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 16
+									}
+								],
+								"default": 16
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 24",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 43",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 80",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 232",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 48
+							}
+						],
+						"default": 48
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_block_size": {
+				"default": 192,
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 16,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 101",
+							"value": 2.0
+						},
+						{
+							"condition": "scale <= 108",
+							"value": 2.5
+						},
+						{
+							"condition": "scale <= 316",
+							"value": 2.0
+						},
+						{
+							"condition": "scale <= 443",
+							"value": 2.5
+						},
+						{
+							"condition": "scale <= 1828",
+							"value": 2.0
+						}
+					],
+					"default": 2.0
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 80",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 141",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 232",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 745",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": 32
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T03:34:54.080376Z",
+			"spec_sha256": "e02040e2884f7f2f570dcb5d765628e8baf2dc58da7a8066b99c1ba2791cb5ce"
+		}
+	}
+]

@@ -1,0 +1,50 @@
+[
+	{
+		"routine": "matmul3_matrix_vector",
+		"datatype": "bf16",
+		"target": "taishan",
+		"strategy_tag": "matmul3_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 3481",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 12100",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "gemv",
+				"default": "default"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:09:54.918386Z",
+			"spec_sha256": "273f628dc2b382570670e60fce7eaa3806bf3449511a8a35cca1785c2d294049"
+		}
+	}
+]

@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotg",
+		"datatype": "c32",
+		"target": "v2_c8g",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_rotation",
+		"problem_context_base": "rotg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T22:37:57.541790Z",
+			"spec_sha256": "9a5a5a483b6b7b3f987951ad14deeeb5bf244c1b9d3595590ec62033ab659620"
+		}
+	}
+]

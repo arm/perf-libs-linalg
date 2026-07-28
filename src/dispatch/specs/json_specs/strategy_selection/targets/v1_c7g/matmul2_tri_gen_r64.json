@@ -1,0 +1,69 @@
+[
+	{
+		"routine": "matmul2_tri_gen",
+		"datatype": "r64",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.b.strd() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 16777216",
+										"value": [
+											4,
+											2
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 16777216",
+									"value": [
+										4,
+										2
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 3375",
+								"value": [
+									4,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 68719476736",
+								"value": [
+									2,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 68719476736",
+							"value": [
+								2,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, {2}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:47:21.528537Z",
+			"spec_sha256": "ffb496b773f7b8ba5a9e4d593d712e69539a619ef63ecc51cedc9eab3f65c7b2"
+		}
+	}
+]

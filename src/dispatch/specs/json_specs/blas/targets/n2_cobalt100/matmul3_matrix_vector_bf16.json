@@ -1,0 +1,70 @@
+[
+	{
+		"routine": "matmul3_matrix_vector",
+		"datatype": "bf16",
+		"target": "n2_cobalt100",
+		"strategy_tag": "matmul3_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 17161",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 403225",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 3147076",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 64
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "gemv",
+				"default": "default"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T00:31:44.455217Z",
+			"spec_sha256": "8b6cc571014904b7e8d056eb567db9b8aef1048d94de0bb543c1a085da8f6d5a"
+		}
+	}
+]

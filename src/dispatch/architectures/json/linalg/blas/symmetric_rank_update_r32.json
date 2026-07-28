@@ -1,0 +1,12 @@
+[
+	{ "routine": "syr", "symbol": "ssyr" },
+	{ "routine": "syrk", "symbol": "ssyrk" },
+	{ "routine": "syr2", "symbol": "ssyr2" },
+	{ "routine": "syr2k", "symbol": "ssyr2k" },
+	{ "routine": "get_n_strategies_arch", "symbol": "get_n_strategies", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } },
+	{ "routine": "get_strategy_name_arch", "symbol": "get_strategy_name", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } },
+	{ "routine": "compute_index_arch", "symbol": "compute_index", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } },
+	{ "routine": "get_n_strategies_arch", "symbol": "get_n_strategies", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } },
+	{ "routine": "get_strategy_name_arch", "symbol": "get_strategy_name", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } },
+	{ "routine": "compute_index_arch", "symbol": "compute_index", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::rank_update_2k<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const r32>>, perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, r32>" } }
+]

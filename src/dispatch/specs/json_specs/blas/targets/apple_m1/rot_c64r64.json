@@ -1,0 +1,72 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "c64r64",
+		"target": "apple_m1",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 59306",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 457541",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 838870",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 22858",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 6
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:28:27.001216Z",
+			"spec_sha256": "44562a0adcc976c815d96d344fdaa545cbea9f9d6a88451bc6283bce150b5518"
+		}
+	}
+]

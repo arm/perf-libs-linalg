@@ -1,0 +1,38 @@
+[
+	{
+		"routine": "matmul3_matrix_vector",
+		"datatype": "c32",
+		"target": "apple_m2",
+		"strategy_tag": "matmul3_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 137641",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 4
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "gemv",
+				"default": "default"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T00:00:40.088167Z",
+			"spec_sha256": "0c3788289e9868897a162c6373afb2ef4449839fd56f739c7963e6c6ce1b7b15"
+		}
+	}
+]

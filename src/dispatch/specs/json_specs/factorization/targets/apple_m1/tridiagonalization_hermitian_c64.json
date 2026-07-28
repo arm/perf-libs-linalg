@@ -1,0 +1,32 @@
+[
+	{
+		"routine": "tridiagonalization_hermitian",
+		"datatype": "c64",
+		"target": "apple_m1",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<hermitian_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1744",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T06:13:26.629323Z",
+			"spec_sha256": "c662101a43d4449e3364f38cf22da3c1f3408db89ae22a2294f0b82795679848"
+		}
+	}
+]

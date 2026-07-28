@@ -1,0 +1,103 @@
+[
+	{
+		"routine": "cholesky_factorization_symmetric",
+		"datatype": "r64",
+		"target": "apple_m4",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 141",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 359",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 745",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 80
+									}
+								],
+								"default": 80
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 80",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 359",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 745",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 256
+							}
+						],
+						"default": 256
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 135",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 739",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T00:04:47.182648Z",
+			"spec_sha256": "55933ae09a5379ef914f8a67b9fb8227af022a274845faa2d2f2b3fa9691fd5c"
+		}
+	}
+]

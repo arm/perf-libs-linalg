@@ -1,0 +1,37 @@
+[
+	{
+		"routine": "hemv",
+		"datatype": [
+			"c32",
+			"c64"
+		],
+		"target": "generic_aarch64",
+		"strategy_tag": "symmetric_matrix_vector",
+		"problem_context_base": "matmul3<hermitian_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 50,
+				"type": "kernel_inttype"
+			},
+			"a_cache_block_bytes": {
+				"default": 204800,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "matmul"
+	}
+]

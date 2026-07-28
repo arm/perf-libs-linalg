@@ -1,0 +1,95 @@
+[
+	{
+		"routine": "rank_update_2k_gen_gen_her",
+		"datatype": "c32",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 81",
+										"value": [
+											4,
+											2,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 4489",
+										"value": [
+											2,
+											4,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											2,
+											3,
+											4
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 257049",
+									"value": [
+										2,
+										3,
+										4
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									4,
+									2,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 5832",
+								"value": [
+									4,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									3,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 130323843",
+							"value": [
+								3,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T01:37:50.286196Z",
+			"spec_sha256": "1ec681df0d164cece6c7d8665641f439bda117addc5a4e57b510e6e74ecbdf42"
+		}
+	}
+]

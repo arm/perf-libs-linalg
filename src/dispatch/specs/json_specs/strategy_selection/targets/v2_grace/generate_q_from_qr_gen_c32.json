@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "generate_q_from_qr_gen",
+		"datatype": "c32",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									2
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								2
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "generate_q_from_qr<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:18:22.472270Z",
+			"spec_sha256": "cc791b2694339ea5fe0ab8be8e3be83f6da38bbc0b6470cb07ff71e8bb2f9222"
+		}
+	}
+]

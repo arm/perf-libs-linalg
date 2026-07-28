@@ -1,0 +1,115 @@
+[
+	{
+		"routine": "swap",
+		"datatype": "r64",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "swap",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1 && pctx.y.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 4186",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 16598",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 35374",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 93718",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 223882",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 738826",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 510",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 742",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 1438",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "swap_strategy",
+		"problem_context_base": "swap<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T19:17:39.804789Z",
+			"spec_sha256": "259fb890b54cdad63e1654627592bc615d927e4be85832012f8b995b9225d9cc"
+		}
+	}
+]

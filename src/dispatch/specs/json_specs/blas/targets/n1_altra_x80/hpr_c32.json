@@ -1,0 +1,94 @@
+[
+	{
+		"routine": "hpr",
+		"datatype": "c32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 5476",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 8281",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 17161",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 203401",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 290521",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1207801",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 2592100",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 80
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:30:51.026999Z",
+			"spec_sha256": "8bebcc9715e95d66192df8aecb5027e0ea2fd95e8be7c2b2fcd8edf0bfded76f"
+		}
+	}
+]

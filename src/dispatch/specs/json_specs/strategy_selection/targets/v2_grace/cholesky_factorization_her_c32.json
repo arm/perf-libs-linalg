@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "cholesky_factorization_her",
+		"datatype": "c32",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 20",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 21",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 21",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<hermitian_matrix<matrix_base<{0}>>, IntType>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:16:59.724531Z",
+			"spec_sha256": "42d23cbf49c0c29c0a01a4409ad7b3275a8ca237cb69e71d680261a6bb1ec330"
+		}
+	}
+]

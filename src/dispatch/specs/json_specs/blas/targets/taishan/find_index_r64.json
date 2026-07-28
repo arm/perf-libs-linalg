@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "find_index",
+		"datatype": "r64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "find_index",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"default": 1,
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "find_index_strategy",
+		"problem_context_base": "find_index<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T18:57:36.250193Z",
+			"spec_sha256": "71d6b6b8928aea18a0d0225d20c9b7bd25368c34330d0407b3634b43cafe41e2"
+		}
+	}
+]

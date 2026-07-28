@@ -1,0 +1,125 @@
+{
+    "name": "omatcopy",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "BMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "order",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "char",
+            "name": "transa",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "promote",
+            "name": "alpha",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "BMatrixType",
+            "name": "b",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ldb",
+            "is_const": false,
+            "is_pointer": false
+        }
+    ],
+    "instantiations": {
+        "somatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "r32",
+                "BMatrixType": "r32"
+            },
+            "symbol_type": "c"
+        },
+        "domatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r64",
+                "AMatrixType": "r64",
+                "BMatrixType": "r64"
+            },
+            "symbol_type": "c"
+        },
+        "comatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "AMatrixType": "c32",
+                "BMatrixType": "c32"
+            },
+            "symbol_type": "c"
+        },
+        "zomatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "AMatrixType": "c64",
+                "BMatrixType": "c64"
+            },
+            "symbol_type": "c"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/omatcopy.hpp"
+}

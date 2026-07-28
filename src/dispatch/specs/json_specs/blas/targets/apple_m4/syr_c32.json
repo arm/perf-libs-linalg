@@ -1,0 +1,46 @@
+[
+	{
+		"routine": "syr",
+		"datatype": "c32",
+		"target": "apple_m4",
+		"strategy_tag": "rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 42436",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T02:27:27.145392Z",
+			"spec_sha256": "510c9ee5fe3309e519d2d22c2aa077271aac2dd6b386db4c20902f7fb2fbf7f1"
+		}
+	}
+]

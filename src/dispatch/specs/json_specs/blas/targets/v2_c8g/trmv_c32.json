@@ -1,0 +1,99 @@
+[
+	{
+		"routine": "trmv",
+		"datatype": "c32",
+		"target": "v2_c8g",
+		"strategy_tag": "inplace_matmul_vector",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 500,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 17161",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 23716",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 244036",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 403225",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 724201",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 96
+						},
+						{
+							"condition": "scale <= 2592100",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T00:07:50.106876Z",
+			"spec_sha256": "3152450020d452409cacbc246655b47efa52880d3300f84f3084c65c43551979"
+		}
+	}
+]

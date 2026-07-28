@@ -1,0 +1,29 @@
+[
+	{
+		"routine": "spr",
+		"datatype": "c64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "compressed_rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T09:15:56.744406Z",
+			"spec_sha256": "337993e5eff3619b146459bc21d49e5ae8a6025684b2476e39a783de57a971f8"
+		}
+	}
+]

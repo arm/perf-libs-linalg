@@ -1,0 +1,79 @@
+{
+    "name": "rotm",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "y",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incy",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "param",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "srotm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "drotm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/rotm.hpp"
+}

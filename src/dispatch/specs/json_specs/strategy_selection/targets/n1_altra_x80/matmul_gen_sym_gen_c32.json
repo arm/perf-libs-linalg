@@ -1,0 +1,214 @@
+[
+	{
+		"routine": "matmul_gen_sym_gen",
+		"datatype": "c32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd() == 1 && pctx.c.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											16,
+											24,
+											15,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 22201",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 1166400",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 2490084",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											15,
+											16,
+											24,
+											14,
+											13
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										15,
+										16,
+										24,
+										14,
+										13
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 343",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 5832",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 10648",
+								"value": [
+									16,
+									13,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 50653",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 300763",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 681472",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 3307949",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 24389000",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 43986977",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								15,
+								16,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, symmetric_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T08:39:42.123390Z",
+			"spec_sha256": "7577da2f6c084c82a0f84cb53b9f64b625ff5578c2e193fc1f4e4d8977a683a3"
+		}
+	}
+]

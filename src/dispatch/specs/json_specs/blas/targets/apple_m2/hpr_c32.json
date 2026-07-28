@@ -1,0 +1,50 @@
+[
+	{
+		"routine": "hpr",
+		"datatype": "c32",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 111556",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 1901641",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 4
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:22:10.133565Z",
+			"spec_sha256": "988a8e2aad937ef62e9285b20b43a2e084946856ca4360017331fce70723bad0"
+		}
+	}
+]

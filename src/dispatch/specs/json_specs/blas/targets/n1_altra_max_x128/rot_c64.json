@@ -1,0 +1,352 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1438",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 1930",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 4186",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 26582",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 46186",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 66826",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 104266",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 115682",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 170950",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 288250",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 338270",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 365590",
+										"value": 104
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 425162",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 491734",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 648010",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 838870",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 892541",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 948746",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 1007566",
+										"value": 104
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 1343702",
+										"value": 120
+									},
+									{
+										"condition": "scale <= 1419922",
+										"value": 152
+									},
+									{
+										"condition": "scale <= 1582041",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 1668118",
+										"value": 128
+									},
+									{
+										"condition": "scale <= 1757662",
+										"value": 120
+									},
+									{
+										"condition": "scale <= 1850762",
+										"value": 128
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 112
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 510",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 742",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 1438",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 2541",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 3286",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 5258",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 6526",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 8010",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 9734",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 11722",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 14002",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 26582",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 40510",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 66826",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 83990",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 141298",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 187414",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 265430",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 457541",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 491734",
+								"value": 136
+							},
+							{
+								"condition": "scale <= 527810",
+								"value": 152
+							},
+							{
+								"condition": "scale <= 565834",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 605878",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 648010",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 692302",
+								"value": 136
+							},
+							{
+								"condition": "scale <= 738826",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 787658",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 144
+							},
+							{
+								"condition": "scale <= 892541",
+								"value": 152
+							},
+							{
+								"condition": "scale <= 1069078",
+								"value": 160
+							},
+							{
+								"condition": "scale <= 1200510",
+								"value": 176
+							},
+							{
+								"condition": "scale <= 1270594",
+								"value": 184
+							},
+							{
+								"condition": "scale <= 1343702",
+								"value": 200
+							},
+							{
+								"condition": "scale <= 1419922",
+								"value": 216
+							},
+							{
+								"condition": "scale <= 1499338",
+								"value": 224
+							},
+							{
+								"condition": "scale <= 1582041",
+								"value": 208
+							},
+							{
+								"condition": "scale <= 1668118",
+								"value": 192
+							},
+							{
+								"condition": "scale <= 1850762",
+								"value": 200
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 208
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T18:43:08.181363Z",
+			"spec_sha256": "7381b9b26899a6b95362be80148ce2e38f1f40e7686c3c9fe61ef076b65fb8b1"
+		}
+	}
+]

@@ -1,0 +1,99 @@
+[
+	{
+		"routine": "tbmv",
+		"datatype": "r32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 55225",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 89401",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 1901641",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_triangular_matrix_vector",
+		"problem_context_base": "matmul2<triangular_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T05:14:45.871550Z",
+			"spec_sha256": "f7e354bf860d9cfa2c7033679dd917d6f8df324a9648fb95c08bf217764fc9c6"
+		}
+	}
+]

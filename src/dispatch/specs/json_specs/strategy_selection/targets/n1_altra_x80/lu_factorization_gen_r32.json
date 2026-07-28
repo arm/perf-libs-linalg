@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "lu_factorization_gen",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 23",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 24",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 24",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "lu_factorization<general_matrix<matrix_base<{0}>>, IntType>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T08:29:21.448086Z",
+			"spec_sha256": "86ec06623a644a40c1d15447fb26927fe10fee86b168b4c2fe3ab7adfe078491"
+		}
+	}
+]

@@ -1,0 +1,111 @@
+[
+	{
+		"routine": "rank_update_2k_gen_gen_her",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 225",
+										"value": [
+											4,
+											2,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 784",
+										"value": [
+											2,
+											4,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 2500",
+										"value": [
+											4,
+											2,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 4489",
+										"value": [
+											2,
+											4,
+											3
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											2,
+											3,
+											4
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 257049",
+									"value": [
+										2,
+										3,
+										4
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									4,
+									2,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 4096",
+								"value": [
+									4,
+									3
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									3,
+									4
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 130323843",
+							"value": [
+								3,
+								4
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T09:33:33.516919Z",
+			"spec_sha256": "fda0105301088541bd23a136929ffb4fff5e915d705969a5f8087a7ead03b904"
+		}
+	}
+]

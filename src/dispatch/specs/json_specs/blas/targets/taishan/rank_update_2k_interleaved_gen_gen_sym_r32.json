@@ -1,0 +1,105 @@
+[
+	{
+		"routine": "rank_update_2k_interleaved_gen_gen_sym",
+		"datatype": "r32",
+		"target": "taishan",
+		"strategy_tag": "rank_update_2k_interleaved",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 2048",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 9841",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 219488",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 842579",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 21807104",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 118014516",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 350113536",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1440,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 2,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 112,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T08:43:09.985955Z",
+			"spec_sha256": "b3960bae2a2e70d11e4fae0c26efa9ac9a35fa4a435aa91bf8a2391009d99368"
+		}
+	}
+]

@@ -1,0 +1,344 @@
+[
+	{
+		"routine": "matmul_gen_her_gen",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd() == 1 && pctx.c.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 225",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 256",
+										"value": [
+											24,
+											16,
+											14,
+											13,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 324",
+										"value": [
+											24,
+											13,
+											16,
+											14,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 484",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											24,
+											13,
+											16,
+											14,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 35344",
+										"value": [
+											15,
+											16,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 55225",
+										"value": [
+											15,
+											16,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 84100",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 124609",
+										"value": [
+											15,
+											16,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 180625",
+										"value": [
+											15,
+											16,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 491401",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 665856",
+										"value": [
+											15,
+											16,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 1166400",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 2490084",
+										"value": [
+											15,
+											16,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 3143529",
+										"value": [
+											15,
+											16,
+											14,
+											24,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										16,
+										15,
+										14,
+										13,
+										24
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 125",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 216",
+								"value": [
+									13,
+									24,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 1331",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 3375",
+								"value": [
+									13,
+									16,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 4096",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 10648",
+								"value": [
+									13,
+									16,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 50653",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 300763",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 681472",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 6644672",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 43986977",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 76765625",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								16,
+								15,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, hermitian_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T23:40:06.073779Z",
+			"spec_sha256": "0b71e108d40eeefa1c896c50bd32ac8294c5f6b2e2651db2526c87b4a003d18d"
+		}
+	}
+]

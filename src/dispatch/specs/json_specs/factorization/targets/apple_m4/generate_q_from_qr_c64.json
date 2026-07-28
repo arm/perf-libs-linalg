@@ -1,0 +1,113 @@
+[
+	{
+		"routine": "generate_q_from_qr",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"strategy_tag": "generate_q_from_qr_generic",
+		"problem_context_base": "generate_q_from_qr<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 43",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 745",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1347",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 80
+									}
+								],
+								"default": 80
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 528",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 745",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 32
+							}
+						],
+						"default": 32
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 16,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 100",
+							"value": 2.5
+						},
+						{
+							"condition": "scale <= 101",
+							"value": 3.25
+						},
+						{
+							"condition": "scale <= 1828",
+							"value": 2.0
+						}
+					],
+					"default": 2.0
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 80",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 528",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T01:14:42.495337Z",
+			"spec_sha256": "da1944b8d2f7dd7a82cb1d7e71614f23b99f93ed6148b6077563df8489b200c7"
+		}
+	}
+]

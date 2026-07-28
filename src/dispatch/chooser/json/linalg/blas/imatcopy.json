@@ -1,0 +1,107 @@
+{
+    "name": "imatcopy",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "order",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "char",
+            "name": "transa",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "AMatrixType",
+            "name": "alpha",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "ldb",
+            "is_const": false,
+            "is_pointer": false
+        }
+    ],
+    "instantiations": {
+        "simatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r32"
+            },
+            "symbol_type": "c"
+        },
+        "dimatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r64"
+            },
+            "symbol_type": "c"
+        },
+        "cimatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c32"
+            },
+            "symbol_type": "c"
+        },
+        "zimatcopy": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c64"
+            },
+            "symbol_type": "c"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/imatcopy.hpp"
+}

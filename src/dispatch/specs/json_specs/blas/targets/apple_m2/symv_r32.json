@@ -1,0 +1,55 @@
+[
+	{
+		"routine": "symv",
+		"datatype": "r32",
+		"target": "apple_m2",
+		"strategy_tag": "symmetric_matrix_vector",
+		"problem_context_base": "matmul3<symmetric_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 100,
+				"type": "kernel_inttype"
+			},
+			"a_cache_block_bytes": {
+				"default": 102400,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 42436",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 4
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:26:46.983406Z",
+			"spec_sha256": "56fc3a2c4a07ec7174580ba9db449390cd1802942136e7fbaf9c17cbe6babb73"
+		}
+	}
+]

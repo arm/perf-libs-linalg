@@ -1,0 +1,51 @@
+[
+	{
+		"routine": "trmv",
+		"datatype": "c32",
+		"target": "apple_m4",
+		"strategy_tag": "inplace_matmul_vector",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 500,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 5476",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:10:22.116240Z",
+			"spec_sha256": "21e8b0e16aa2c97f17eacf77f8f95f391b16a6b509ffd4b1d22b8d7fb2f7f79e"
+		}
+	}
+]

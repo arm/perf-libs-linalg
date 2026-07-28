@@ -1,0 +1,68 @@
+[
+	{
+		"routine": "matmul3_interleaved_accelerator_sym_gen_gen",
+		"datatype": "r64",
+		"target": "v2_grace",
+		"strategy_tag": "matmul3_interleaved_strategy_tag_accelerator",
+		"problem_context_base": "matmul3<symmetric_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			},
+			"l1_cntg": {
+				"default": 1000,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 2,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 100,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T20:02:00.114143Z",
+			"spec_sha256": "b14bc5fdd66e4d13326630985a0c08526aaa605bef90af2bc65e0ff14ac9cb8e"
+		}
+	}
+]

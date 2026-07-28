@@ -1,0 +1,54 @@
+[
+	{
+		"routine": "spr",
+		"datatype": "r32",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 196",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 290521",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T23:33:22.872123Z",
+			"spec_sha256": "ea0bb220dde293563c84c67eb1db71142c5b9ea5419a39fb77baf101904e9d89"
+		}
+	}
+]

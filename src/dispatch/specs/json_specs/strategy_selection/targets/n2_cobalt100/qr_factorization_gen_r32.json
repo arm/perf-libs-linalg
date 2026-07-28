@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "qr_factorization_gen",
+		"datatype": "r32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 512",
+								"value": [
+									0,
+									2
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 512",
+							"value": [
+								0,
+								2
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T00:18:39.563038Z",
+			"spec_sha256": "fb741aeeaa566b4741fba8d893400018950f0759f107bb709b976ea3922fad4c"
+		}
+	}
+]

@@ -1,0 +1,115 @@
+{
+    "name": "dot",
+    "return_type": "ReturnType",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "YMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "ReturnType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "YMatrixType",
+            "name": "y",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incy",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sdot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "r32",
+                "YMatrixType": "r32",
+                "ReturnType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "ddot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "r64",
+                "YMatrixType": "r64",
+                "ReturnType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "dsdot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "r32",
+                "YMatrixType": "r32",
+                "ReturnType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "bdot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "bf16",
+                "YMatrixType": "bf16",
+                "ReturnType": "bf16"
+            },
+            "symbol_type": "fortran"
+        },
+        "sbdot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "XMatrixType": "bf16",
+                "YMatrixType": "bf16",
+                "ReturnType": "r32"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/dot.hpp"
+}

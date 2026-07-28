@@ -1,0 +1,196 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "r64",
+		"target": "n1_altra_max_x128",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 2541",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 4186",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 11722",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 22858",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 35374",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 187414",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 243994",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 605878",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 787658",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 838870",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1850762",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 104
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 510",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 742",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 1046",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 2541",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 14002",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 26582",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 141298",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 170950",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 692302",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 1069078",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 1200510",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 1668118",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 128
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T19:19:34.692608Z",
+			"spec_sha256": "ea7266428ae39b7855907aa7f57fe33ecdbc54609f34458c23071fe1a487c903"
+		}
+	}
+]

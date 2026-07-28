@@ -1,0 +1,133 @@
+{
+    "name": "rot",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "SMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "y",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incy",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote_real",
+            "name": "c",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "SMatrixType",
+            "name": "s",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "srot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r32",
+                "XMatrixType": "r32",
+                "SMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "drot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r64",
+                "XMatrixType": "r64",
+                "SMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "crot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r32",
+                "XMatrixType": "c32",
+                "SMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "csrot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r32",
+                "XMatrixType": "c32",
+                "SMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zrot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r64",
+                "XMatrixType": "c64",
+                "SMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        },
+        "zdrot": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote_real": "r64",
+                "XMatrixType": "c64",
+                "SMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/rot.hpp"
+}

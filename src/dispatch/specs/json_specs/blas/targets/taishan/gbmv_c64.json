@@ -1,0 +1,30 @@
+[
+	{
+		"routine": "gbmv",
+		"datatype": "c64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "compressed_general_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T18:57:36.252451Z",
+			"spec_sha256": "b9ffd5b03d8186e56132b2cea4d9e47e2e32f7fb43ef31a39ef454d1c275f743"
+		}
+	}
+]

@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "tridiagonalization_hermitian",
+		"datatype": "c32",
+		"target": "n1_altra_max_x128",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<hermitian_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1016",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1347",
+							"value": 128
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T23:28:19.339766Z",
+			"spec_sha256": "2f2a1c0103ddff512d3c2bebf7c68b70e29fa6808f6ffd6c713033fcb7d5ffa2"
+		}
+	}
+]

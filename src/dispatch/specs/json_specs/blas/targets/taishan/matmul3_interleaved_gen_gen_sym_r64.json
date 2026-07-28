@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "matmul3_interleaved_gen_gen_sym",
+		"datatype": "r64",
+		"target": "taishan",
+		"strategy_tag": "rank_update_generic",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 2048",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 4000",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 48668",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 108000",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1588261",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 2819876",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 2,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 100,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T23:59:26.281109Z",
+			"spec_sha256": "daf9f20006d896a6d53c45ab132445cb2479c1c29b3b0a0d2b2fb5658e6c930c"
+		}
+	}
+]

@@ -1,0 +1,26 @@
+[
+	{
+		"routine": "tpsv",
+		"datatype": "c64",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			}
+		},
+		"strategy_tag": "compressed_triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T00:12:29.791421Z",
+			"spec_sha256": "646fafe83ba77cc6d713c1abec07250362ccec49dcacc337efa111da3d393369"
+		}
+	}
+]

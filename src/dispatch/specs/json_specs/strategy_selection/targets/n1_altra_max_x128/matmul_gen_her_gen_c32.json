@@ -1,0 +1,214 @@
+[
+	{
+		"routine": "matmul_gen_her_gen",
+		"datatype": "c32",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd() == 1 && pctx.c.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 2500",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 124609",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 180625",
+										"value": [
+											15,
+											16,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 358801",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 491401",
+										"value": [
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 665856",
+										"value": [
+											16,
+											15,
+											24,
+											13,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 1517824",
+										"value": [
+											15,
+											16,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 3143529",
+										"value": [
+											15,
+											16,
+											24,
+											14,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											16,
+											15,
+											24,
+											14,
+											13
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										16,
+										15,
+										24,
+										14,
+										13
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 343",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 512",
+								"value": [
+									13,
+									14,
+									16,
+									24,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 4096",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 5832",
+								"value": [
+									13,
+									16,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 10648",
+								"value": [
+									16,
+									13,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 43986977",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								16,
+								15,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, hermitian_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T08:33:07.125194Z",
+			"spec_sha256": "a8e532f3c4d592ba833445b8eec301cf2e4c40c28e37474d8347ee7227160487"
+		}
+	}
+]

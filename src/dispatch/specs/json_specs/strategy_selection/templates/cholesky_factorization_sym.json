@@ -1,0 +1,25 @@
+[
+	{
+		"routine": "cholesky_factorization_sym",
+		"datatype": [
+			"r32",
+			"r64"
+		],
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": [1, 2, 0],
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>"
+	}
+]

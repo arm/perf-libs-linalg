@@ -1,0 +1,107 @@
+[
+	{
+		"routine": "cholesky_factorization_symmetric",
+		"datatype": "r32",
+		"target": "apple_m4",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 43",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 80",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 359",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 745",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1016",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 80
+									}
+								],
+								"default": 80
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 359",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 528",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 745",
+								"value": 128
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 80
+							}
+						],
+						"default": 80
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 135",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 1010",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T00:02:17.713288Z",
+			"spec_sha256": "5113803f11f8d948d1de5dc67db232f5fecb39ff28113c8d14558148a89e048c"
+		}
+	}
+]

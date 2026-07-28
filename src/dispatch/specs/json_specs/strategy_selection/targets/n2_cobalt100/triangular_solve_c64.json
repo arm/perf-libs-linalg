@@ -1,0 +1,248 @@
+[
+	{
+		"routine": "triangular_solve",
+		"datatype": "c64",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.b.strd() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1",
+										"value": [
+											2,
+											5,
+											3,
+											1,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 4",
+										"value": [
+											5,
+											2,
+											3,
+											1,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 16",
+										"value": [
+											2,
+											5,
+											3,
+											1,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 144",
+										"value": [
+											2,
+											5,
+											1,
+											3,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 324",
+										"value": [
+											2,
+											1,
+											5,
+											3,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											1,
+											2,
+											5,
+											3,
+											4
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											1,
+											3,
+											2,
+											4,
+											5
+										]
+									},
+									{
+										"condition": "scale <= 35344",
+										"value": [
+											1,
+											3,
+											4,
+											2,
+											5
+										]
+									},
+									{
+										"condition": "scale <= 881721",
+										"value": [
+											1,
+											4,
+											3,
+											2,
+											5
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 881721",
+									"value": [
+										1,
+										4,
+										3,
+										2,
+										5
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									2,
+									5,
+									3,
+									1,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 27",
+								"value": [
+									5,
+									3,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 64",
+								"value": [
+									3,
+									5,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 125",
+								"value": [
+									5,
+									3,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 216",
+								"value": [
+									3,
+									5,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 343",
+								"value": [
+									5,
+									3,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 729",
+								"value": [
+									3,
+									4,
+									5
+								]
+							},
+							{
+								"condition": "scale <= 1000",
+								"value": [
+									5,
+									3,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 1331",
+								"value": [
+									3,
+									5,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 1728",
+								"value": [
+									3,
+									4,
+									5
+								]
+							},
+							{
+								"condition": "scale <= 2197",
+								"value": [
+									3,
+									5,
+									4
+								]
+							},
+							{
+								"condition": "scale <= 3375",
+								"value": [
+									3,
+									4,
+									5
+								]
+							},
+							{
+								"condition": "scale <= 827936019",
+								"value": [
+									4,
+									3,
+									5
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 827936019",
+							"value": [
+								4,
+								3,
+								5
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "solve",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T00:27:10.345813Z",
+			"spec_sha256": "b5e4dc3fe893fcde1a9ac3abdf86f9e54727d08678fb9f15f81554c350bc5de8"
+		}
+	}
+]

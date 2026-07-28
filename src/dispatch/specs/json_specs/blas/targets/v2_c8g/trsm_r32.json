@@ -1,0 +1,193 @@
+[
+	{
+		"routine": "trsm",
+		"datatype": "r32",
+		"target": "v2_c8g",
+		"strategy_tag": "triangular_solve_matrix_large",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsm",
+				"default": "default"
+			},
+			"kernel_unroll": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					4,
+					32,
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 6>"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "is_left(pctx.side)",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 50653",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 205379",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 314432",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 729000",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 6331625",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 12008989",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 28934443",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 173741112",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 274625000",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 421875000",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 638277381",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 781229961",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 1151022592",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 1668222856",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 23987543104",
+										"value": 56
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 474552",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 729000",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 3241792",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 8741816",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 16194277",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 28934443",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 50243409",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 84027672",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 107850176",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 173741112",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 219256227",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 341532099",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 781229961",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 949862087",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 2839159296",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 3361517992",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 4682608217",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 10218313000",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 23987543104",
+								"value": 24
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T01:52:54.301449Z",
+			"spec_sha256": "0f63b0dd5f8a472d24a537d2f54eccef8c04089986ae23db2929dfd3c907dd81"
+		}
+	}
+]

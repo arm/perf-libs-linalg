@@ -1,0 +1,354 @@
+[
+	{
+		"routine": "matmul_gen_sym_gen",
+		"datatype": "r64",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd() == 1 && pctx.c.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 4",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 16",
+										"value": [
+											24,
+											14,
+											13,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 100",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 121",
+										"value": [
+											24,
+											14,
+											13,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 169",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 196",
+										"value": [
+											24,
+											13,
+											16,
+											14,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 784",
+										"value": [
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 2500",
+										"value": [
+											13,
+											24,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											13,
+											14,
+											16,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 55225",
+										"value": [
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 84100",
+										"value": [
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 257049",
+										"value": [
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 1517824",
+										"value": [
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 3143529",
+										"value": [
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										16,
+										15,
+										14,
+										13,
+										24
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 8",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 27",
+								"value": [
+									24,
+									14,
+									13,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 64",
+								"value": [
+									24,
+									14,
+									16,
+									15,
+									13
+								]
+							},
+							{
+								"condition": "scale <= 343",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 512",
+								"value": [
+									13,
+									24,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 729",
+								"value": [
+									13,
+									14,
+									16,
+									24,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 1000",
+								"value": [
+									14,
+									16,
+									13,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 2197",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 2744",
+								"value": [
+									14,
+									16,
+									15,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 10648",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 21952",
+								"value": [
+									14,
+									13,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 125000",
+								"value": [
+									16,
+									13,
+									14,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 24389000",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 835896888",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								15,
+								16,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 5>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, symmetric_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T21:21:07.867795Z",
+			"spec_sha256": "78b55f54d40ae84bb49bb5d9827434097980e3f0b998beafe96e16dfa7b2e945"
+		}
+	}
+]

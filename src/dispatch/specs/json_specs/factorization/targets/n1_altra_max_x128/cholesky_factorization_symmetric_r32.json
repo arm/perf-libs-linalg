@@ -1,0 +1,90 @@
+[
+	{
+		"routine": "cholesky_factorization_symmetric",
+		"datatype": "r32",
+		"target": "n1_altra_max_x128",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 43",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 80",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 141",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 528",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 745",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 1016",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 80
+									}
+								],
+								"default": 80
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1016",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 48
+							}
+						],
+						"default": 48
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T08:36:16.776733Z",
+			"spec_sha256": "5d09784131a8f6e3c780a77bc18e06560c2862c96d90e5d3ac1e106ecaf3c197"
+		}
+	}
+]

@@ -1,0 +1,353 @@
+[
+	{
+		"routine": "matmul_sym_gen_gen",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.b.strd() == 1 && pctx.c.strd() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 100",
+										"value": [
+											24,
+											2,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 121",
+										"value": [
+											2,
+											24,
+											14,
+											16,
+											15,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 324",
+										"value": [
+											2,
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 484",
+										"value": [
+											2,
+											13,
+											14,
+											24,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 784",
+										"value": [
+											2,
+											13,
+											14,
+											16,
+											24,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											2,
+											13,
+											14,
+											16,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											2,
+											13,
+											16,
+											14,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 22201",
+										"value": [
+											2,
+											16,
+											14,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 35344",
+										"value": [
+											2,
+											14,
+											16,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 55225",
+										"value": [
+											2,
+											16,
+											14,
+											13,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 124609",
+										"value": [
+											2,
+											16,
+											14,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 180625",
+										"value": [
+											2,
+											14,
+											16,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 358801",
+										"value": [
+											2,
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 491401",
+										"value": [
+											2,
+											15,
+											16,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 665856",
+										"value": [
+											2,
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 887364",
+										"value": [
+											2,
+											15,
+											16,
+											14,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											2,
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										2,
+										16,
+										15,
+										14,
+										13,
+										24
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									24,
+									2,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 125",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 343",
+								"value": [
+									13,
+									14,
+									16,
+									24,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 125000",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 300763",
+								"value": [
+									15,
+									13,
+									14,
+									16,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 6644672",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 12977875",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 43986977",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 214921799",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 543338496",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								16,
+								15,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 6>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<symmetric_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T02:39:32.413602Z",
+			"spec_sha256": "0dcf2b93464f987807a2a6379570eb89bba85d54655ac810a69bc2516ca2d181"
+		}
+	}
+]

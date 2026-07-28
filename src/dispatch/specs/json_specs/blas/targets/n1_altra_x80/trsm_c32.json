@@ -1,0 +1,189 @@
+[
+	{
+		"routine": "trsm",
+		"datatype": "c32",
+		"target": "n1_altra_x80",
+		"strategy_tag": "triangular_solve_matrix_large",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsm",
+				"default": "default"
+			},
+			"kernel_unroll": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					4,
+					32,
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 6>"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "is_left(pctx.side)",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1728",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 19683",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 205379",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 3241792",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 6331625",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 21952000",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 38272753",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 107850176",
+										"value": 136
+									},
+									{
+										"condition": "scale <= 137388096",
+										"value": 144
+									},
+									{
+										"condition": "scale <= 173741112",
+										"value": 120
+									},
+									{
+										"condition": "scale <= 274625000",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 521660125",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 781229961",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 949862087",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1386195875",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 2839159296",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 4682608217",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 8780064047",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 13703392457",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 23987543104",
+										"value": 56
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 29791",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1061208",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 8741816",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 16194277",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 21952000",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 28934443",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 50243409",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 107850176",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 137388096",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 219256227",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 274625000",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 638277381",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 23987543104",
+								"value": 40
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T06:42:02.916380Z",
+			"spec_sha256": "bf4c1b638ec04d0d10c47e3e7c32c44afdaa3cc764b67dc764875ad496b7e1cb"
+		}
+	}
+]

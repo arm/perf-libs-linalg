@@ -1,0 +1,97 @@
+[
+	{
+		"routine": "rank_update_2k_interleaved_gen_gen_sym",
+		"datatype": "c32",
+		"target": "taishan",
+		"strategy_tag": "rank_update_2k_interleaved",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 500",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 4000",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 219488",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 842579",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 10432505888",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": 40
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 60,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T08:22:52.073610Z",
+			"spec_sha256": "a439fe2f9ba627eced7e70d5df37c40c88f611aff9feb8f76170a2afc9486098"
+		}
+	}
+]

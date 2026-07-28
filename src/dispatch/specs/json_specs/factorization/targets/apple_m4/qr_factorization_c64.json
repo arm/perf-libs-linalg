@@ -1,0 +1,113 @@
+[
+	{
+		"routine": "qr_factorization",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"strategy_tag": "qr_factorization_generic",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 141",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 232",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 32
+									}
+								],
+								"default": 32
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1016",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 32
+							}
+						],
+						"default": 32
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_block_size": {
+				"default": 192,
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 16,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 100",
+							"value": 2.0
+						},
+						{
+							"condition": "scale <= 101",
+							"value": 2.75
+						},
+						{
+							"condition": "scale <= 108",
+							"value": 3.0
+						},
+						{
+							"condition": "scale <= 1828",
+							"value": 2.0
+						}
+					],
+					"default": 2.0
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 80",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 745",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T02:25:07.874760Z",
+			"spec_sha256": "5653d1d25e4f61085c940ce32e8376c8929f73dc70066c62c5ec172307fb6bac"
+		}
+	}
+]

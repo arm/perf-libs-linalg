@@ -1,0 +1,40 @@
+[
+	{
+		"routine": "bidiagonalization",
+		"datatype": "r64",
+		"target": "n2_cobalt100",
+		"strategy_tag": "bidiagonalization_generic",
+		"problem_context_base": "bidiagonalization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 528",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1016",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T03:43:46.951355Z",
+			"spec_sha256": "ca32b547b4ea6509d49cd16d04ec4646802f888b839a8dffbd69443e1146bc74"
+		}
+	}
+]

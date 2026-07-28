@@ -1,0 +1,111 @@
+[
+	{
+		"routine": "l1_norm",
+		"datatype": "c32",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l1_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 8010",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 22858",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 83990",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 338270",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 565834",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1200510",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 48
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1438",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 11722",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 141298",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1419922",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 56
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l1_norm_strategy",
+		"problem_context_base": "l1_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:06:38.235697Z",
+			"spec_sha256": "733afeded716dd920f995e9957b0a643c5738eff658344b08d00bad6999d3a65"
+		}
+	}
+]

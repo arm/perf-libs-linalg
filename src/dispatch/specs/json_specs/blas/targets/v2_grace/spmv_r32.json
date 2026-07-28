@@ -1,0 +1,131 @@
+[
+	{
+		"routine": "spmv",
+		"datatype": "r32",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 23716",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 89401",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 203401",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 244036",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 290521",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 942841",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 2592100",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 3147076",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 3455881",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 64
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_symmetric_matrix_vector",
+		"problem_context_base": "matmul3<symmetric_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T02:53:22.599693Z",
+			"spec_sha256": "1bc65c9fec0fc714200d48f9692d90863dca723e195b1d6cf7634b5a1e005a09"
+		}
+	}
+]

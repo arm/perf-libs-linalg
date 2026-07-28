@@ -1,0 +1,149 @@
+{
+  "name": "larfb",
+  "return_type": "void",
+  "template_parameters": [
+    {
+      "name": "ParamCheck",
+      "type": "bool"
+    },
+    {
+      "name": "IntType",
+      "type": "typename"
+    },
+    {
+      "name": "AType",
+      "type": "typename"
+    }
+  ],
+  "parameters": [
+    {
+      "type": "char",
+      "name": "side",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "char",
+      "name": "trans",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "char",
+      "name": "direct",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "char",
+      "name": "storev",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "m",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "n",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "k",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "v",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "ldv",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "t",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "ldt",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "c",
+      "is_const": false,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "ldc",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "work",
+      "is_const": false,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "ldwork",
+      "is_const": true,
+      "is_pointer": true
+    }
+  ],
+  "instantiations": {
+    "slarfb": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "r32"
+      },
+      "symbol_type": "fortran"
+    },
+    "dlarfb": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "r64"
+      },
+      "symbol_type": "fortran"
+    },
+    "clarfb": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "c32"
+      },
+      "symbol_type": "fortran"
+    },
+    "zlarfb": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "c64"
+      },
+      "symbol_type": "fortran"
+    }
+  },
+  "namespaces": [
+    "perflibs",
+    "linalg"
+  ],
+  "interface_header_include": "packages/factorization/interfaces/larfb.hpp"
+}

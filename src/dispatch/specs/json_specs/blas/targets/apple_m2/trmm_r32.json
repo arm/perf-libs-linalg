@@ -1,0 +1,85 @@
+[
+	{
+		"routine": "trmm",
+		"datatype": "r32",
+		"target": "apple_m2",
+		"strategy_tag": "l2_trmm_matmul",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 884736",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 7703734375",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": 6
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1362,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 6,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 150,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:15:55.690273Z",
+			"spec_sha256": "e32d4b11885465a9b7685be5c11fed6f76c52561de5dd550a448de881b11fe12"
+		}
+	}
+]

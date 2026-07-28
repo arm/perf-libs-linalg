@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Copyright 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
+
+# Build directories.
+/build*/
+/cmake-build-*/
+
+# Python cache files.
+__pycache__/
+*.pyc
+
+# Local Python virtual environments.
+.venv/
+venv/
+
+# Local editor and language-server state.
+/.vscode/
+/.cache/
+/compile_commands.json
+
+# OS metadata files.
+.DS_Store
+
+# Merge and patch backup files.
+*.orig
+*.rej
+
+# Backups from vim/emacs.
+*~
+*.swp
+*.swo

@@ -1,0 +1,61 @@
+{
+	"ampere_one_gcp": {
+		"architecture": "neon"
+	},
+	"apple_m1": {
+		"architecture": "neon"
+	},
+	"apple_m2": {
+		"architecture": "neon"
+	},
+	"apple_m4": {
+		"architecture": "neon"
+	},
+	"n1_altra_x80": {
+		"architecture": "neon"
+	},
+	"n1_altra_max_x128": {
+		"architecture": "neon"
+	},
+	"n1_c6g": {
+		"architecture": "neon"
+	},
+	"n1_c6g_arm64ec": {
+		"architecture": "neon"
+	},
+	"n2_cobalt100": {
+		"architecture": "sve"
+	},
+	"n2_y710": {
+		"architecture": "sve"
+	},
+	"n3_axion": {
+		"architecture": "sve",
+		"max_threads": 64
+	},
+	"taishan": {
+		"architecture": "neon"
+	},
+	"v1_c7g": {
+		"architecture": "sve"
+	},
+	"v2_axion": {
+		"architecture": "sve",
+		"max_threads": 72
+	},
+	"v2_grace": {
+		"architecture": "sve"
+	},
+	"v2_c8g": {
+		"architecture": "sve"
+	},
+	"v3_c9g": {
+		"architecture": "sve"
+	},
+	"v3_cobalt200": {
+		"architecture": "sve"
+	},
+	"fujitsu_monaka": {
+		"architecture": "sve"
+	}
+}

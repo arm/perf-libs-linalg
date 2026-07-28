@@ -1,0 +1,1476 @@
+[
+	{
+		"routine": "matmul3_vector_scalar",
+		"datatype": "bf16",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.strd_step() == 1 && pctx.c.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 41",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 130",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 214",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 510",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 1438",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1930",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 2541",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 22858",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 59306",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 83990",
+										"value": 104
+									},
+									{
+										"condition": "scale <= 141298",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 155594",
+										"value": 120
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 144
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 168
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 41",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 74",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 130",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 510",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 1046",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 2541",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 6526",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 9734",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 136
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 160
+							},
+							{
+								"condition": "scale <= 565834",
+								"value": 184
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "matmul3_vector_scalar",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"kernel_spec": {
+			"jump_table": [
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 0,
+					"comment": "baxpby_kernel"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 0,
+					"comment": "baxpby_kernel"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 0,
+					"comment": "baxpby_kernel"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 0,
+					"comment": "baxpby_kernel"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "one",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "not_zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "one",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "not_zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "zero"
+					},
+					"value": 1,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "one"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "zero",
+						"beta": "all"
+					},
+					"value": 2,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "one",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "zero"
+					},
+					"value": 3,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "one"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				},
+				{
+					"condition": {
+						"incx": "zero",
+						"incy": "zero",
+						"alpha": "all",
+						"beta": "all"
+					},
+					"value": 4,
+					"comment": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>"
+				}
+			]
+		},
+		"cases": [
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "one",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "not_zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "one",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "not_zero",
+				"alpha": "all",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "zero",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "one",
+				"beta": "all"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "zero"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "one"
+			},
+			{
+				"incx": "zero",
+				"incy": "zero",
+				"alpha": "all",
+				"beta": "all"
+			}
+		],
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T00:10:18.682804Z",
+			"spec_sha256": "701c5caa85fdac5b48f4571e51e2442129491e6b679f432ac5c002c83e39e5a7"
+		}
+	}
+]

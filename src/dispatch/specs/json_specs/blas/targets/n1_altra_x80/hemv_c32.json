@@ -1,0 +1,95 @@
+[
+	{
+		"routine": "hemv",
+		"datatype": "c32",
+		"target": "n1_altra_x80",
+		"strategy_tag": "symmetric_matrix_vector",
+		"problem_context_base": "matmul3<hermitian_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"cntg_block_size": {
+				"default": 50,
+				"type": "kernel_inttype"
+			},
+			"a_cache_block_bytes": {
+				"default": 204800,
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 3481",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 17161",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 32041",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 70756",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 244036",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 942841",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 3147076",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 72
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:10:43.869210Z",
+			"spec_sha256": "18eeed5c72be83e58f5ded3c97f94b7306b4d437e741aa9d369fe8b397e5055b"
+		}
+	}
+]

@@ -1,0 +1,103 @@
+[
+	{
+		"routine": "cholesky_factorization_hermitian",
+		"datatype": "c64",
+		"target": "v3_c9g",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<hermitian_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 43",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 359",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1016",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 96
+									}
+								],
+								"default": 96
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 528",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 32
+							}
+						],
+						"default": 32
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 37",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 74",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 353",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 739",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1010",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 2207",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T01:02:51.908751Z",
+			"spec_sha256": "a70777f7c1d17e16e7b5e0a168bc80e55f5b28705451848ee67e999b1a2fc544"
+		}
+	}
+]

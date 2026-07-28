@@ -1,0 +1,4 @@
+[
+	{ "routine": "omatadd", "symbol": "zomatadd" },
+	{ "routine": "imatadd", "symbol": "zimatadd" }
+]

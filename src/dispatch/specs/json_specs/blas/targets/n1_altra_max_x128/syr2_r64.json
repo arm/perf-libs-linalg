@@ -1,0 +1,94 @@
+[
+	{
+		"routine": "syr2",
+		"datatype": "r64",
+		"target": "n1_altra_max_x128",
+		"strategy_tag": "rank_two_update",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 5476",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 12100",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 17161",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 32041",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 70756",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 89401",
+							"value": 96
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 112
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 120
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 128
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 144
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 168
+						},
+						{
+							"condition": "scale <= 3455881",
+							"value": 176
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 184
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T07:12:54.572450Z",
+			"spec_sha256": "de8fa74f546775b0bd80709a97fc7ea9dadf49bd8f71014f42b5c6ffb6669dd3"
+		}
+	}
+]

@@ -1,0 +1,89 @@
+{
+  "name": "larfg",
+  "return_type": "void",
+  "template_parameters": [
+    {
+      "name": "ParamCheck",
+      "type": "bool"
+    },
+    {
+      "name": "IntType",
+      "type": "typename"
+    },
+    {
+      "name": "AType",
+      "type": "typename"
+    }
+  ],
+  "parameters": [
+    {
+      "type": "IntType",
+      "name": "n",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "alpha",
+      "is_const": false,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "x",
+      "is_const": false,
+      "is_pointer": true
+    },
+    {
+      "type": "IntType",
+      "name": "incx",
+      "is_const": true,
+      "is_pointer": true
+    },
+    {
+      "type": "AType",
+      "name": "tau",
+      "is_const": false,
+      "is_pointer": true
+    }
+  ],
+  "instantiations": {
+    "slarfg": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "r32"
+      },
+      "symbol_type": "fortran"
+    },
+    "dlarfg": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "r64"
+      },
+      "symbol_type": "fortran"
+    },
+    "clarfg": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "c32"
+      },
+      "symbol_type": "fortran"
+    },
+    "zlarfg": {
+      "template_values": {
+        "ParamCheck": "true",
+        "IntType": "pl_linalg_int_t",
+        "AType": "c64"
+      },
+      "symbol_type": "fortran"
+    }
+  },
+  "namespaces": [
+    "perflibs",
+    "linalg"
+  ],
+  "interface_header_include": "packages/factorization/interfaces/larfg.hpp"
+}

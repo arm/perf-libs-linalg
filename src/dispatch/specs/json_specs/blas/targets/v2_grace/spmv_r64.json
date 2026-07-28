@@ -1,0 +1,75 @@
+[
+	{
+		"routine": "spmv",
+		"datatype": "r64",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 12100",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 203401",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 724201",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 3455881",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 72
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_symmetric_matrix_vector",
+		"problem_context_base": "matmul3<symmetric_matrix<packed_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T02:55:13.908958Z",
+			"spec_sha256": "dcd91d597712da6cb27c6d17fbe8b86c88c1e51d5cde7a5cbcfcec6a3d0a5c83"
+		}
+	}
+]

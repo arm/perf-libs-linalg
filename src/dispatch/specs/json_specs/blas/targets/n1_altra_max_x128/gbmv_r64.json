@@ -1,0 +1,71 @@
+[
+	{
+		"routine": "gbmv",
+		"datatype": "r64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 12100",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 32041",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 403225",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 16
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_general_matrix_vector",
+		"problem_context_base": "matmul3<general_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:20:48.176248Z",
+			"spec_sha256": "d13e456dd4a2ecb35ebafc35cda92338fe5d50333a02c19b447211b2407c1baa"
+		}
+	}
+]

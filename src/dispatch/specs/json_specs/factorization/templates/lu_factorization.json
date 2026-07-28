@@ -1,0 +1,46 @@
+[
+	{
+		"routine": "lu_factorization",
+		"datatype": [
+			"r32",
+			"r64",
+			"c32",
+			"c64"
+		],
+		"target": "generic",
+		"strategy_tag": "lu_factorization_generic",
+		"template_parameters" : [{ "name": "IntType", "type": "typename" }],
+		"problem_context_base": "lu_factorization<general_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"live": true,
+					"cases": [],
+					"default": {
+						"value": 64
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 40,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"live": true,
+					"cases": [],
+					"default": {
+						"value" : 2.5
+					}
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization"
+	}
+]

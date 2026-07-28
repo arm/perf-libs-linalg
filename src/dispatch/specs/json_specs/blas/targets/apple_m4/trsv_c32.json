@@ -1,0 +1,44 @@
+[
+	{
+		"routine": "trsv",
+		"datatype": "c32",
+		"target": "apple_m4",
+		"strategy_tag": "triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsv",
+				"default": "default"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 4>"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:50:01.013498Z",
+			"spec_sha256": "8cc2a4402a9c6e3afdeabbe2c3f32e799e8750c8bba6c7fa1a078f3ede3bb702"
+		}
+	}
+]

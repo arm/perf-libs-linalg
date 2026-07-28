@@ -1,0 +1,67 @@
+[
+	{
+		"routine": "hbmv",
+		"datatype": "c64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 676",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 2116",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 12100",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 23716",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 203401",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_symmetric_matrix_vector",
+		"problem_context_base": "matmul3<hermitian_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:33:00.438550Z",
+			"spec_sha256": "411297257f9ed95ff56207e5eec9c1d8fbd80bc277f8f52e4c9dd149e6a21952"
+		}
+	}
+]

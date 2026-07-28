@@ -1,0 +1,16 @@
+{
+	"name": "MacOS",
+	"build_name": "mac",
+	"architectures": {
+		"neon" : {
+			"build_flags" : [ "-mtune=neoverse-n1", "-march=armv8-a" ],
+			"systems" : {
+				"apple_m1" : {},
+				"apple_m2" : {},
+				"apple_m4" : {}
+			},
+			"default_system": "apple_m1"
+		}
+	},
+	"default_architecture": "neon"
+}

@@ -1,0 +1,133 @@
+{
+    "name": "spmv",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "APMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "YMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "uplo",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "alpha",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "APMatrixType",
+            "name": "ap",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "beta",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "YMatrixType",
+            "name": "y",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incy",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sspmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "APMatrixType": "r32",
+                "XMatrixType": "r32",
+                "YMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dspmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r64",
+                "APMatrixType": "r64",
+                "XMatrixType": "r64",
+                "YMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cspmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "APMatrixType": "c32",
+                "XMatrixType": "c32",
+                "YMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zspmv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "APMatrixType": "c64",
+                "XMatrixType": "c64",
+                "YMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/spmv.hpp"
+}

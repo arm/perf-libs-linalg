@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "qr_factorization",
+		"datatype": "c32",
+		"target": "apple_m4",
+		"strategy_tag": "qr_factorization_generic",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 32
+									}
+								],
+								"default": 32
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 528",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 745",
+								"value": 256
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 224
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 160
+							}
+						],
+						"default": 160
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_block_size": {
+				"default": 192,
+				"type": "kernel_inttype"
+			},
+			"min_update_block_size": {
+				"default": 16,
+				"type": "kernel_inttype"
+			},
+			"weight_factor": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1828",
+							"value": 2.0
+						}
+					],
+					"default": 2.0
+				},
+				"type": "double"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 141",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 359",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 1744",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T02:02:45.884450Z",
+			"spec_sha256": "ccf53e2d728256eeaf41b03957d16fae269d0550de0a97b534666b43542c4b7d"
+		}
+	}
+]

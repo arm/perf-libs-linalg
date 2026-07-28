@@ -1,0 +1,71 @@
+[
+	{
+		"routine": "swap",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "swap",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1 && pctx.y.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 46186",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 11722",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "swap_strategy",
+		"problem_context_base": "swap<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T16:02:30.035896Z",
+			"spec_sha256": "793b539ee09d819d08a72d919e7afbf9b85d59a502d65f196dbe587344a412e3"
+		}
+	}
+]

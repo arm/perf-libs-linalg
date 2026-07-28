@@ -1,0 +1,131 @@
+[
+	{
+		"routine": "swap",
+		"datatype": "c64",
+		"target": "v2_c8g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "swap",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1 && pctx.y.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1930",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 5258",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 16598",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 93718",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 141298",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 527810",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 948746",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 88
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 742",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1930",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 3286",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 5258",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 35374",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 170950",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 565834",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "swap_strategy",
+		"problem_context_base": "swap<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T20:50:28.818286Z",
+			"spec_sha256": "74d4abd1ab2498e1d6b9b33076f6256c11a40aa9b0d03552b763cfb9e76e5354"
+		}
+	}
+]

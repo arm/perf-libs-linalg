@@ -1,0 +1,103 @@
+[
+	{
+		"routine": "l2_norm",
+		"datatype": "c32",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l2_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 2541",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 5258",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 9734",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 141298",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 288250",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 1069078",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 24
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 46186",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 59306",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 93718",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 187414",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 491734",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l2_norm_strategy",
+		"problem_context_base": "l2_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T16:03:15.458493Z",
+			"spec_sha256": "7dda332d66390a8a969fc8a4fb6d2085f97300ab29f67c6a4011ba957a1a96b6"
+		}
+	}
+]

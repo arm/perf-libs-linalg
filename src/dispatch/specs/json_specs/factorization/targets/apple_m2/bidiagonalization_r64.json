@@ -1,0 +1,32 @@
+[
+	{
+		"routine": "bidiagonalization",
+		"datatype": "r64",
+		"target": "apple_m2",
+		"strategy_tag": "bidiagonalization_generic",
+		"problem_context_base": "bidiagonalization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1744",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T00:48:55.458937Z",
+			"spec_sha256": "7c9ba617bcf3a91f5d6d61f5d74d16a4df85b0d2103da50844a312990f947add"
+		}
+	}
+]

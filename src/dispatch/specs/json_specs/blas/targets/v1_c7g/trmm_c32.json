@@ -1,0 +1,109 @@
+[
+	{
+		"routine": "trmm",
+		"datatype": "c32",
+		"target": "v1_c7g",
+		"strategy_tag": "l2_trmm_matmul",
+		"problem_context_base": "matmul2<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 8000",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 19683",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 216000",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 5639752",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 27270901",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 43614208",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 105823817",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 20865011777",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": 48
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1440,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 1,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 112,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T00:21:10.709144Z",
+			"spec_sha256": "6d0c9802e0cd6874cd94709e348c218db7003b7e19d3de5f3b02aa49110b7165"
+		}
+	}
+]

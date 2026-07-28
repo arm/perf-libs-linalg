@@ -1,0 +1,109 @@
+[
+	{
+		"routine": "matmul3_interleaved_sym_gen_gen",
+		"datatype": "r64",
+		"target": "n1_altra_x80",
+		"strategy_tag": "matmul3_interleaved_strategy_tag",
+		"problem_context_base": "matmul3<symmetric_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 19683",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 42875",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 216000",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 884736",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1685159",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 3176523",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 16581375",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 105823817",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": 88
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 240,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 15,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 512,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T00:24:38.819882Z",
+			"spec_sha256": "1552fe5d866e932f3a3eb9e60dbdbd7063c31c32194dc81c08fca433d0cab24d"
+		}
+	}
+]

@@ -1,0 +1,33 @@
+[
+	{
+		"routine": "bidiagonalization_block_gen",
+		"datatype": "r64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 64",
+								"value": [
+									1,
+									0
+								]
+							}
+						],
+						"default": [
+							0,
+							1
+						]
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "bidiagonalization_block<general_matrix<matrix_base<{0}>>>"
+	}
+]

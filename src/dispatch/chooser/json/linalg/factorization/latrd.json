@@ -1,0 +1,117 @@
+{
+    "name": "latrd",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "uplo",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "nb",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "a",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote_real",
+            "name": "off_diagonal",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "tau",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "w",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ldw",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "slatrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dlatrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "clatrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zlatrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/factorization/interfaces/latrd.hpp"
+}

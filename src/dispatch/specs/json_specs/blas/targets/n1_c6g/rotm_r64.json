@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotm",
+		"datatype": "r64",
+		"target": "n1_c6g",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotm",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "apply_modified_rotation",
+		"problem_context_base": "rotm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:02:57.759108Z",
+			"spec_sha256": "1b8660b6c1a9296789fa3405a0feaa132867ad3562de99a7bbf7c45f539e15e1"
+		}
+	}
+]

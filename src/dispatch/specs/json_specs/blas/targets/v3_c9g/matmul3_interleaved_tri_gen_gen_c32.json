@@ -1,0 +1,133 @@
+[
+	{
+		"routine": "matmul3_interleaved_tri_gen_gen",
+		"datatype": "c32",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 8000",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 97336",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 216000",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1685159",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 3176523",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 5639752",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 9800344",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 27270901",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 1356572043",
+							"value": 128
+						},
+						{
+							"condition": "scale <= 1856331989",
+							"value": 136
+						},
+						{
+							"condition": "scale <= 2515456000",
+							"value": 152
+						},
+						{
+							"condition": "scale <= 4475809792",
+							"value": 176
+						},
+						{
+							"condition": "scale <= 5890514616",
+							"value": 184
+						},
+						{
+							"condition": "scale <= 12845785688",
+							"value": 120
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": 128
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 960,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 8,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 512,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"strategy_tag": "matmul3_interleaved_tri_gen_gen",
+		"problem_context_base": "matmul3<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T23:10:37.014312Z",
+			"spec_sha256": "91241d11bd78f34d0b56156774c726c69fc841de93350d36e660726255b01af7"
+		}
+	}
+]

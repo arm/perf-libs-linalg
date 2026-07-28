@@ -1,0 +1,167 @@
+{
+    "name": "gemv",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "XMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "YMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "trans",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "alpha",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "XMatrixType",
+            "name": "x",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incx",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "beta",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "YMatrixType",
+            "name": "y",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "incy",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "r32",
+                "XMatrixType": "r32",
+                "YMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r64",
+                "AMatrixType": "r64",
+                "XMatrixType": "r64",
+                "YMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "AMatrixType": "c32",
+                "XMatrixType": "c32",
+                "YMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "AMatrixType": "c64",
+                "XMatrixType": "c64",
+                "YMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        },
+        "sbgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "bf16",
+                "XMatrixType": "bf16",
+                "YMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "bgemv": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "bf16",
+                "AMatrixType": "bf16",
+                "XMatrixType": "bf16",
+                "YMatrixType": "bf16"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/gemv.hpp"
+}

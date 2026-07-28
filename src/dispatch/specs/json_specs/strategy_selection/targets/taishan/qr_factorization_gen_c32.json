@@ -1,0 +1,45 @@
+[
+	{
+		"routine": "qr_factorization_gen",
+		"datatype": "c32",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 77",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 78",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 78",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "qr_factorization<general_matrix<matrix_base<{0}>>>"
+	}
+]

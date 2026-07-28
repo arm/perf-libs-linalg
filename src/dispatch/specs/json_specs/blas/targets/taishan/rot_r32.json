@@ -1,0 +1,27 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "r32",
+		"target": "taishan",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"default": 1,
+				"type": "kernel_inttype"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T08:51:21.257614Z",
+			"spec_sha256": "b6ad1327e5794c917c7bf8ca8874e91e2dd8fc57c55b73f81dab83fbeaf7d553"
+		}
+	}
+]

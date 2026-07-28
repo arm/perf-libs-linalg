@@ -1,0 +1,101 @@
+[
+	{
+		"routine": "matmul_gen_gen_sym",
+		"datatype": "r64",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1",
+										"value": [
+											19,
+											18
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											19,
+											18,
+											17
+										]
+									},
+									{
+										"condition": "scale <= 3143529",
+										"value": [
+											19,
+											17,
+											18
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											17,
+											19,
+											18
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										17,
+										19,
+										18
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									19,
+									18
+								]
+							},
+							{
+								"condition": "scale <= 50653",
+								"value": [
+									18,
+									17
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									17,
+									18
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								17,
+								18
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-18T20:28:39.966064Z",
+			"spec_sha256": "2d1e46d2e9d41951e3bb18897a1975e55c3dec4ba3d6fa01a63533f4ec7003f6"
+		}
+	}
+]

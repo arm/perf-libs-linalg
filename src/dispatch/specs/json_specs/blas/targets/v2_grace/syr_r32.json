@@ -1,0 +1,54 @@
+[
+	{
+		"routine": "syr",
+		"datatype": "r32",
+		"target": "v2_grace",
+		"strategy_tag": "rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 32041",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 89401",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1207801",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 40
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T03:25:50.793516Z",
+			"spec_sha256": "300a18f04c090c8edb5e7e2301b9879f2121d74c699eb5e7c3bd04c5a67bf49f"
+		}
+	}
+]

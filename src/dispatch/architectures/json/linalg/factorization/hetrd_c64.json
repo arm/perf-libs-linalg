@@ -1,0 +1,6 @@
+[
+    {"routine": "hetrd", "symbol": "zhetrd"},
+    { "routine": "get_n_strategies_arch", "symbol": "get_n_strategies", "template_values": { "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>>" } },
+    { "routine": "get_strategy_name_arch", "symbol": "get_strategy_name", "template_values": { "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>>" } },
+    { "routine": "compute_index_arch", "symbol": "compute_index", "template_values": { "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>>" } }
+]

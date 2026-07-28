@@ -1,0 +1,42 @@
+[
+	{
+		"routine": "matmul3_outer_product",
+		"datatype": "r64",
+		"target": "apple_m4",
+		"strategy_tag": "matmul3_outer_product",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"a_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 89401",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 6
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T23:29:14.683103Z",
+			"spec_sha256": "fe7e98c22ebf6544d8705403cee13f934fbed38ce22d61d6c75075fed7d88a9b"
+		}
+	}
+]

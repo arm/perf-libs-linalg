@@ -1,0 +1,47 @@
+[
+	{
+		"routine": "tridiagonalization_her",
+		"datatype": "c64",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 360",
+								"value": [
+									0,
+									1
+								]
+							},
+							{
+								"condition": "scale <= 361",
+								"value": [
+									1,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 361",
+							"value": [
+								1,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "tridiagonalization<hermitian_matrix<matrix_base<{0}>>>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T02:52:12.517114Z",
+			"spec_sha256": "4ea7220c31b58b1d1e8d6c1a16d91395eaf2f85294158b364e1992970f824bdb"
+		}
+	}
+]

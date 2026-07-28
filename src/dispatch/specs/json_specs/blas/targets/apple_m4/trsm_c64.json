@@ -1,0 +1,81 @@
+[
+	{
+		"routine": "trsm",
+		"datatype": "c64",
+		"target": "apple_m4",
+		"strategy_tag": "triangular_solve_matrix_large",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsm",
+				"default": "default"
+			},
+			"kernel_unroll": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					4,
+					32,
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 6>"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "is_left(pctx.side)",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 50653",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 28934443",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 23987543104",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 79507",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 28934443",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 23987543104",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:05:56.795564Z",
+			"spec_sha256": "9956dbc64c8a9484e702501b329bf9df48196d719c6e85c5a77553471d044875"
+		}
+	}
+]

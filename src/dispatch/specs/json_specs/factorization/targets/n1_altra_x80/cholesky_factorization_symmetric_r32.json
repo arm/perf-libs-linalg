@@ -1,0 +1,103 @@
+[
+	{
+		"routine": "cholesky_factorization_symmetric",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 43",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 528",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1016",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1347",
+										"value": 112
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 80
+									}
+								],
+								"default": 80
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1016",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 16
+							}
+						],
+						"default": 16
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 353",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 522",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 1341",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 2207",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T07:13:00.240205Z",
+			"spec_sha256": "2d053c1bef2eb1d62115c5629578fdb9cb643866a84b953289a23e70b981f06a"
+		}
+	}
+]

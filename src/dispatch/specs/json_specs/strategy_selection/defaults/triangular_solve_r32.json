@@ -1,0 +1,28 @@
+[
+	{
+		"routine": "triangular_solve",
+		"datatype": "r32",
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"default": {
+					"cases": [
+						{
+							"condition": "pctx.b.strd() == 1",
+							"value": [
+								1
+							]
+						}
+					],
+					"default": [
+						4
+					]
+				},
+				"type": "inplace_vector<kernel_inttype, 20>"
+			}
+		},
+		"package": "solve",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>"
+	}
+]

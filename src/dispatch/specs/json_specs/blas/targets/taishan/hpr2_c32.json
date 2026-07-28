@@ -1,0 +1,54 @@
+[
+	{
+		"routine": "hpr2",
+		"datatype": "c32",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 1225",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 8281",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 724201",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_two_update",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:55:49.097770Z",
+			"spec_sha256": "e74f1e8f2edce8641d6698a928b5aba3109264b720c219dd5e4999d658516d67"
+		}
+	}
+]

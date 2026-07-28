@@ -1,0 +1,54 @@
+[
+	{
+		"routine": "matmul3_outer_product",
+		"datatype": "r32",
+		"target": "n1_c6g",
+		"strategy_tag": "matmul3_outer_product",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"a_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 8281",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 70756",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 470596",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 1207801",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 56
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T00:42:27.884667Z",
+			"spec_sha256": "2a66fa4d6f46173ca5ba2c6a86aaaa0aa61cf5019afe226b4464d7250465f5a4"
+		}
+	}
+]

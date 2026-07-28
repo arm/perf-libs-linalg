@@ -1,0 +1,93 @@
+[
+	{
+		"routine": "matmul_gen_gen_sym",
+		"datatype": "r32",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.a.cntg() == 1 && pctx.b.cntg() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1",
+										"value": [
+											19,
+											18
+										]
+									},
+									{
+										"condition": "scale <= 7744",
+										"value": [
+											19,
+											18,
+											17
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											19,
+											17,
+											18
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										19,
+										17,
+										18
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									19,
+									18
+								]
+							},
+							{
+								"condition": "scale <= 21952",
+								"value": [
+									18,
+									17
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									17,
+									18
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								17,
+								18
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, symmetric_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T09:59:04.451913Z",
+			"spec_sha256": "2be8c89e28ad37f666d74628b7e4139a5016795173e232c434cf43b6d50d6440"
+		}
+	}
+]

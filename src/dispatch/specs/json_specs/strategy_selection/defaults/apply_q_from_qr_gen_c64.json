@@ -1,0 +1,18 @@
+[
+	{
+		"routine": "apply_q_from_qr_gen",
+		"datatype": "c64",
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": [
+					0
+				],
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "apply_q_from_qr<general_matrix<matrix_base<{0}>>>"
+	}
+]

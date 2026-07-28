@@ -1,0 +1,123 @@
+[
+	{
+		"routine": "cholesky_factorization_symmetric",
+		"datatype": "r64",
+		"target": "n1_altra_x80",
+		"strategy_tag": "cholesky_factorization_generic",
+		"template_parameters": [
+			{
+				"name": "IntType",
+				"type": "typename"
+			}
+		],
+		"problem_context_base": "cholesky_factorization<symmetric_matrix<matrix_base<{0}>>, IntType>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "omp::get_max_threads() > 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 24",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 43",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 80",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 359",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 528",
+										"value": 160
+									},
+									{
+										"condition": "scale <= 1744",
+										"value": 128
+									}
+								],
+								"default": 128
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 232",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 359",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 528",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 745",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 1016",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1347",
+								"value": 192
+							},
+							{
+								"condition": "scale <= 1744",
+								"value": 64
+							}
+						],
+						"default": 64
+					}
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 74",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 353",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 739",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1738",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": 48
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T07:20:17.401826Z",
+			"spec_sha256": "92b7abc4481b8d14fdcf07b8b3f3edd21f294a82357344c52de531a6496a843f"
+		}
+	}
+]

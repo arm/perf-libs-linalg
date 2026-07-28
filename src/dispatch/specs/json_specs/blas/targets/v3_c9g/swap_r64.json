@@ -1,0 +1,151 @@
+[
+	{
+		"routine": "swap",
+		"datatype": "r64",
+		"target": "v3_c9g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "swap",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1 && pctx.y.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 5258",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 6526",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 22858",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 46186",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 338270",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 565834",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1133366",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1582041",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 80
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 742",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 2541",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 6526",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 19541",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 66826",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 83990",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 93718",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 141298",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 491734",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 948746",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 1133366",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 1270594",
+								"value": 120
+							},
+							{
+								"condition": "scale <= 1499338",
+								"value": 152
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 168
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "swap_strategy",
+		"problem_context_base": "swap<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T20:31:05.104638Z",
+			"spec_sha256": "f92d4b6fe468d33a31f4c108d766631a70cbfe427351f1db3f512c4487cf7125"
+		}
+	}
+]

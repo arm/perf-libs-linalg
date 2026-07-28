@@ -1,0 +1,23 @@
+[
+	{
+		"routine" : "tbsv",
+		"datatype" : ["r32", "r64", "c32", "c64"],
+		"target": "generic_aarch64",
+
+		"tuned_routine_spec" : {
+			"kernel_axpby" : {
+				"type" : "kernel",
+				"kernel_name" : "axpby",
+				"default" : "default"
+			},
+			"kernel_dot" : {
+				"type" : "kernel",
+				"kernel_name" : "dot",
+				"default" : "default"
+			}
+		},
+		"strategy_tag": "compressed_triangular_solve_vector",
+		"problem_context_base": "solve<triangular_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "solve"
+	}
+]

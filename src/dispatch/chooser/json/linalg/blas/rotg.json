@@ -1,0 +1,79 @@
+{
+    "name": "rotg",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "b",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "promote_real",
+            "name": "c",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "s",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "srotg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "AMatrixType": "r32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "drotg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "AMatrixType": "r64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "crotg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "AMatrixType": "c32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zrotg": {
+            "template_values": {
+                "ParamCheck": "true",
+                "AMatrixType": "c64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/rotg.hpp"
+}

@@ -1,0 +1,85 @@
+{
+    "name": "nrm2",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "FloatType",
+            "type": "typename"
+        },
+        {
+            "name": "RealType",
+            "type": "typename"
+        }
+    ],
+    "return_type": "RealType",
+    "parameters": [
+        {
+            "name": "n",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "x",
+            "type": "FloatType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "incx",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "snrm2": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r32",
+                "RealType": "r32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "dnrm2": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r64",
+                "RealType": "r64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "scnrm2": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c32",
+                "RealType": "r32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "dznrm2": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c64",
+                "RealType": "r64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/nrm2.hpp"
+}

@@ -1,0 +1,67 @@
+[
+	{
+		"routine": "tbmv",
+		"datatype": "r64",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 17161",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 70756",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 244036",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_triangular_matrix_vector",
+		"problem_context_base": "matmul2<triangular_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T00:02:59.987013Z",
+			"spec_sha256": "4ade69d68c9cb724321bf82226ee76286ef4ac25a925d38e880efbf7fcb17788"
+		}
+	}
+]

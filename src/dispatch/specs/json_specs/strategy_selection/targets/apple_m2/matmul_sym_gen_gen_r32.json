@@ -1,0 +1,383 @@
+[
+	{
+		"routine": "matmul_sym_gen_gen",
+		"datatype": "r32",
+		"target": "apple_m2",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.b.strd() == 1 && pctx.c.strd() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 9",
+										"value": [
+											24,
+											2,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 16",
+										"value": [
+											24,
+											2,
+											14,
+											13,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 121",
+										"value": [
+											24,
+											2,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 225",
+										"value": [
+											2,
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 256",
+										"value": [
+											2,
+											24,
+											14,
+											16,
+											15,
+											13
+										]
+									},
+									{
+										"condition": "scale <= 324",
+										"value": [
+											2,
+											24,
+											13,
+											14,
+											16,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 484",
+										"value": [
+											2,
+											13,
+											24,
+											16,
+											14,
+											15
+										]
+									},
+									{
+										"condition": "scale <= 784",
+										"value": [
+											2,
+											13,
+											15,
+											24,
+											16,
+											14
+										]
+									},
+									{
+										"condition": "scale <= 13456",
+										"value": [
+											2,
+											13,
+											14,
+											16,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 55225",
+										"value": [
+											2,
+											14,
+											16,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 84100",
+										"value": [
+											2,
+											16,
+											14,
+											15,
+											13,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 180625",
+										"value": [
+											2,
+											13,
+											16,
+											14,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 358801",
+										"value": [
+											2,
+											13,
+											14,
+											16,
+											15,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 665856",
+										"value": [
+											2,
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 887364",
+										"value": [
+											2,
+											15,
+											16,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 1166400",
+										"value": [
+											2,
+											16,
+											15,
+											13,
+											14,
+											24
+										]
+									},
+									{
+										"condition": "scale <= 3936256",
+										"value": [
+											2,
+											16,
+											15,
+											14,
+											13,
+											24
+										]
+									}
+								],
+								"default": {
+									"condition": "scale <= 3936256",
+									"value": [
+										2,
+										16,
+										15,
+										14,
+										13,
+										24
+									]
+								}
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1",
+								"value": [
+									24,
+									2,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 125",
+								"value": [
+									24,
+									13,
+									14,
+									16,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 343",
+								"value": [
+									13,
+									14,
+									16,
+									24,
+									15
+								]
+							},
+							{
+								"condition": "scale <= 1728",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 3375",
+								"value": [
+									13,
+									15,
+									14,
+									16,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 300763",
+								"value": [
+									13,
+									14,
+									16,
+									15,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 681472",
+								"value": [
+									15,
+									14,
+									13,
+									16,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 24389000",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 43986977",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 76765625",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 130323843",
+								"value": [
+									16,
+									15,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 344472101",
+								"value": [
+									15,
+									16,
+									13,
+									14,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 543338496",
+								"value": [
+									15,
+									16,
+									14,
+									13,
+									24
+								]
+							},
+							{
+								"condition": "scale <= 7809531904",
+								"value": [
+									16,
+									15,
+									14,
+									13,
+									24
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 7809531904",
+							"value": [
+								16,
+								15,
+								14,
+								13,
+								24
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 6>"
+			}
+		},
+		"package": "matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3<symmetric_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"manifest": {
+			"last_tuned_at": "2026-07-19T02:35:57.673012Z",
+			"spec_sha256": "7fd4de14db47b13913df2a7c325608b23762e132e0360a9aed051e0a9702aa81"
+		}
+	}
+]

@@ -1,0 +1,50 @@
+[
+	{
+		"routine": "her2",
+		"datatype": "c32",
+		"target": "apple_m1",
+		"strategy_tag": "rank_two_update",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 137641",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 403225",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:08:25.791793Z",
+			"spec_sha256": "d6fc5af760262e86fb340f3059dd855da7f263bd5c012a94cf03d0b16ce97b81"
+		}
+	}
+]

@@ -1,0 +1,207 @@
+[
+	{
+		"routine": "l2_norm",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l2_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 1438",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 2541",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 6526",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 40510",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 59306",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 66826",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 155594",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 170950",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 187414",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 223882",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 2
+									},
+									{
+										"condition": "scale <= 394534",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 605878",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 738826",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 787658",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 838870",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 948746",
+										"value": 6
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 19541",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 22858",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 26582",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 35374",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 46186",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 66826",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 141298",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 170950",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 265430",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 288250",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 457541",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 738826",
+								"value": 112
+							},
+							{
+								"condition": "scale <= 787658",
+								"value": 96
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 104
+							},
+							{
+								"condition": "scale <= 948746",
+								"value": 112
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l2_norm_strategy",
+		"problem_context_base": "l2_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T16:55:17.384875Z",
+			"spec_sha256": "7920e2a0f89f7d654a21c2c1bdfaf26c45ff23c066806debc202e7053b3a835d"
+		}
+	}
+]

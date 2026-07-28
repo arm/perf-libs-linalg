@@ -1,0 +1,97 @@
+[
+	{
+		"routine": "matmul3_interleaved_gen_tri_gen",
+		"datatype": "c64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 19683",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 97336",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 438976",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 3176523",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 5639752",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 26330609375",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 672,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 150,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"strategy_tag": "matmul3_interleaved_gen_tri_gen",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, triangular_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T01:20:48.325780Z",
+			"spec_sha256": "9d8b62aa85e376a555a3849e3613111c87e11ebf65d94cb19605cd52f3474eca"
+		}
+	}
+]

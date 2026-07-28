@@ -1,0 +1,34 @@
+{
+	"name": "Linux",
+	"build_name": "linux",
+	"architectures": {
+		"neon" : {
+			"build_flags" : [ "-mtune=neoverse-n1", "-march=armv8-a" ],
+			"systems" : {
+				"taishan": {},
+				"n1_c6g": {},
+				"ampere_one_gcp": {"inherit": "n1_c6g"},
+				"n1_altra_x80": {},
+				"n1_altra_max_x128": {}
+			},
+			"default_system": "taishan"
+		},
+		"sve" : {
+			"build_flags": [ "-mtune=neoverse-v1", "-march=armv8-a+sve" ],
+			"systems": {
+				"v1_c7g": {},
+				"v2_axion": {"inherit": "v2_c8g"},
+				"v2_c8g": {},
+				"v3_c9g": {},
+				"v2_grace": {},
+				"n2_cobalt100": {},
+				"n2_y710": {"inherit": "n2_cobalt100"},
+				"v3_cobalt200": {"inherit": "v2_c8g"},
+				"n3_axion": {"inherit": "n2_cobalt100"},
+				"fujitsu_monaka": {"inherit": "v1_c7g"}
+			},
+			"default_system": "v1_c7g"
+		}
+	},
+	"default_architecture": "neon"
+}

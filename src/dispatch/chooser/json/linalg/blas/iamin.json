@@ -1,0 +1,77 @@
+{
+    "name": "iamin",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "FloatType",
+            "type": "typename"
+        }
+    ],
+    "return_type": "IntType",
+    "parameters": [
+        {
+            "name": "n",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "x",
+            "type": "FloatType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "incx",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "isamin": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "idamin": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "icamin": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "izamin": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/iamin.hpp"
+}

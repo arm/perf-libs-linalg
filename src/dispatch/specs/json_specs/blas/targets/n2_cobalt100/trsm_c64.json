@@ -1,0 +1,185 @@
+[
+	{
+		"routine": "trsm",
+		"datatype": "c64",
+		"target": "n2_cobalt100",
+		"strategy_tag": "triangular_solve_matrix_large",
+		"problem_context_base": "solve<triangular_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "trsm",
+				"default": "default"
+			},
+			"kernel_unroll": {
+				"default": 4,
+				"type": "kernel_inttype"
+			},
+			"cntg_recursive_block_sizes": {
+				"default": [
+					4,
+					32,
+					64,
+					128,
+					256,
+					512
+				],
+				"type": "std::array<kernel_inttype, 6>"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "is_left(pctx.side)",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 3375",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 12167",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 729000",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 6331625",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 8741816",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 21952000",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 219256227",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 638277381",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 949862087",
+										"value": 64
+									},
+									{
+										"condition": "scale <= 1386195875",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 2000376000",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 2384621056",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 2839159296",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 4682608217",
+										"value": 72
+									},
+									{
+										"condition": "scale <= 5507723096",
+										"value": 80
+									},
+									{
+										"condition": "scale <= 7541066681",
+										"value": 88
+									},
+									{
+										"condition": "scale <= 10218313000",
+										"value": 96
+									},
+									{
+										"condition": "scale <= 23987543104",
+										"value": 80
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 8000",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 205379",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 729000",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 4574296",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 6331625",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 8741816",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 219256227",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 521660125",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 1386195875",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 1668222856",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 2839159296",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 5507723096",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 7541066681",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 23987543104",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"package": "solve",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T07:03:47.038476Z",
+			"spec_sha256": "fc1e23fc68eef250949d7965de0f707081b2ba46ad48f36cbce830dcaec921b0"
+		}
+	}
+]

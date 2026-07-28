@@ -1,0 +1,89 @@
+{
+    "name": "swap",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "FloatType",
+            "type": "typename"
+        }
+    ],
+    "return_type": "void",
+    "parameters": [
+        {
+            "name": "n",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "x",
+            "type": "FloatType",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "name": "incx",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "name": "y",
+            "type": "FloatType",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "name": "incy",
+            "type": "IntType",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sswap": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "dswap": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "r64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "cswap": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c32",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        },
+        "zswap": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c64",
+                "IntType": "int_type"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/swap.hpp"
+}

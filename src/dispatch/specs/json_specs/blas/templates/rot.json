@@ -1,0 +1,24 @@
+[
+	{
+		"routine" : "rot",
+		"datatype" : ["r32", "r64", "c32", "c64", "c32r32", "c64r64" ],
+		"target": "generic_aarch64",
+
+		"pctx_type": 2,
+		"tuned_routine_spec" : {
+			"kernel" : {
+				"type" : "kernel",
+				"kernel_name" : "rot",
+				"num_types": 2,
+				"default" : "default"
+			},
+			"max_threads" : {
+				"default" : 1,
+				"type" : "kernel_inttype"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc"
+	}
+]

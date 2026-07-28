@@ -1,0 +1,167 @@
+/*
+ * SPDX-FileCopyrightText: Copyright 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
+ */
+
+#ifndef PERFLIBS_LINALG_MATMUL_STRATEGIES_RANK_UPDATE_2K_INTERLEAVED_HPP
+#define PERFLIBS_LINALG_MATMUL_STRATEGIES_RANK_UPDATE_2K_INTERLEAVED_HPP
+
+
+#include "packages/matmul/strategies.hpp"
+
+#include "framework/linalg_util.hpp"
+
+#include "operators/pack.hpp"
+#include "operators/tri_resident.hpp"
+#include "operators/residents.hpp"
+#include "operators/partial_separate.hpp"
+#include "operators/kernel_exec.hpp"
+#include "operators/copy_matrix.hpp"
+#include "operators/conj_alpha.hpp"
+#include "operators/sequence.hpp"
+#include "operators/crop.hpp"
+#include "operators/parallelize.hpp"
+#include "operators/transpose_ab_2k.hpp"
+
+#include "framework/buffer_pool.hpp"
+#include "framework/alloc.hpp"
+
+#include "spec/get_block_sizes.hpp"
+
+#include "perflibs_assert.hpp"
+
+#include <string_view>
+
+namespace perflibs::linalg::matmul {
+
+class rank_update_2k_interleaved {
+
+public:
+	static constexpr std::string_view name() { return "rank_update_2k_interleaved"; }
+
+	template<typename ProblemContext>
+	requires spec::has_get_spec<spec::strategy_tag<rank_update_2k_interleaved>, ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	bool operator() (const ProblemContext& pctx) const {
+		if ( !this->can_compute(pctx) ) return false;
+
+		const auto spec = get_spec(spec::strategy_tag<rank_update_2k_interleaved>{}, pctx);
+
+		const auto kspec = spec.kernel_spec;
+		using kernel_value_type = typename decltype(kspec)::value_type;
+
+		const auto l1_cntg = spec::get_l1_cntg(spec);
+		const auto l1_strd = spec::get_l1_strd(spec);
+		const auto l2_strd = spec::get_l2_strd(spec);
+
+		//sanity check
+		PERFLIBS_ASSERT(l1_cntg % kspec.cntg_unroll == 0,                         "l1_ctng must be multiple of kspec.cntg_unroll");
+		PERFLIBS_ASSERT(l1_strd % kspec.a_interleave_spec.strd_interleave() == 0, "l1_strd must be multiple of kspec.a_interleave_spec.strd_interleave");
+		PERFLIBS_ASSERT(l2_strd % kspec.b_interleave_spec.strd_interleave() == 0, "l2_strd must be multiple of kspec.b_interleave_spec.strd_interleave");
+
+		const kernel_inttype nthreads = spec.max_threads;
+
+		const kernel_inttype a_buf_sz    = spec.a_convert.elements_required(l1_cntg, l1_strd);
+		const kernel_inttype b_buf_sz    = spec.b_convert.elements_required(l1_cntg, l2_strd);
+		const kernel_inttype c_buf_sz    = l1_strd * l2_strd;
+
+		//the amount of memory required by each thread
+		const kernel_inttype buffer_size = a_buf_sz + b_buf_sz + c_buf_sz;
+
+		//allocate all of the memory for all of the treads
+		auto buffer = get_memory<kernel_value_type>(buffer_size * nthreads);
+
+		buffer_pool a_buf { buffer,                       nthreads, buffer_size };
+		buffer_pool b_buf { buffer + a_buf_sz,            nthreads, buffer_size };
+		buffer_pool c_buf { buffer + a_buf_sz + b_buf_sz, nthreads, buffer_size };
+
+		//basic gemm kernel driver which copies the values of C into a buffer, performs the gemm and copies back
+		auto gemm_copy_driver =
+			copy_matrix { c_matrix, c_buf, general_cntg_contig_generator{},
+			kernel_exec { kspec.kernel, kspec.apply_beta }};
+
+		//basic gemm kernel driver with no copy
+		auto gemm_driver = kernel_exec { kspec.kernel, kspec.apply_beta };
+
+		auto base_syrk_driver =
+			/*
+			 * Block B into L3 cache
+			 */
+			resident(b_matrix, l1_cntg, l2_strd, spec.l2_cntg_first,
+			/*
+			 * Pack B in to the transposed interleave format
+			 */
+			pack(b_matrix, b_buf, spec.b_convert,
+			/*
+			 * Crop the compute space to move any unnecessary white space introduced by the
+			 * triangular nature of C (SYMM)
+			 *
+			 * in this particular crop we expect to see a.strd be reduced, b should not be affected
+			 */
+			crop(1, kspec.b_interleave_spec.strd_unroll,
+			/*
+			 * Block A into L2 cache
+			 */
+			resident(a_matrix, l1_cntg, l1_strd, spec.l1_cntg_first,
+			/*
+			 * Again, we do not what to be doing compute on white space
+			 *
+			 * B at this point is oversized, although it is packed at this point
+			 * we can still reduce its size so long as it is a multiple of its interleave factor
+			 */
+			crop(1, kspec.b_interleave_spec.strd_unroll,
+			/*
+			 * Pack A into the transposed-interleaved format
+			 */
+			pack(a_matrix, a_buf, spec.a_convert,
+			/*
+			 * Here we split the blocks of C into 'Full dense blocks' and portions which contain
+			 * triangles and parts of triangles
+			 *
+			 * the full-dense-blocks (c.is_physical() == true) can be computed directly into
+			 * the portions containing triangles (partial-blocks) (c.is_physical() == false)
+			 * are computed into a buffer and then copied back in
+			 */
+			partial_separate(kspec.a_interleave_spec.strd_unroll, kspec.b_interleave_spec.strd_unroll,
+			/*
+			 * do gemm - see above
+			 */
+			gemm_driver, gemm_copy_driver)))))));
+
+		auto driver =
+			parallelize(triangular_parallel_strat, b_strd, nthreads,
+			sequence(
+				base_syrk_driver,
+				transpose_ab_2k(base_syrk_driver)));
+
+		driver(pctx.a, pctx.b, pctx.c, {0, 0, 0}, pctx.alpha, pctx.beta);
+
+		if constexpr (is_hermitian_matrix_v<decltype(pctx.c)>) {
+			zero_diag_imag(pctx.c);
+		}
+
+		return true;
+	}
+
+	template<typename ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool operator() (const ProblemContext&) const { return false; }
+
+	template<typename ProblemContext>
+	requires spec::has_get_spec<spec::strategy_tag<rank_update_2k_interleaved>, ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool can_compute(const ProblemContext& pctx) const {
+		return pctx.alpha != zero<typename ProblemContext::scalar_type>
+		    && pctx.beta_zero_mode != zero_mode::scale
+		    && pctx.a.cntg_step() >= 1 && pctx.a.strd_step() >= 1
+		    && pctx.b.cntg_step() >= 1 && pctx.b.strd_step() >= 1
+		    && pctx.c.cntg_step() == 1 && pctx.c.strd_step() >= 1;
+	}
+
+	template<typename ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool can_compute(const ProblemContext&) const { return false; }
+}; //class rank_update_2k_interleaved
+} // namespace perflibs::linalg::matmul
+
+#endif // PERFLIBS_LINALG_MATMUL_STRATEGIES_RANK_UPDATE_2K_INTERLEAVED_HPP

@@ -1,0 +1,102 @@
+[
+	{
+		"routine": "hpr",
+		"datatype": "c64",
+		"target": "n1_altra_max_x128",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 2116",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 3481",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 8281",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 12100",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 42436",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 70756",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 343396",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 40
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 1207801",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 1705636",
+							"value": 104
+						},
+						{
+							"condition": "scale <= 2114116",
+							"value": 112
+						},
+						{
+							"condition": "scale <= 3147076",
+							"value": 128
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 144
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_one_update",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:38:50.604195Z",
+			"spec_sha256": "8e097cc2127831f9bbcebcea06edb23052eb221c5b0bdc6e817474860b2b47ea"
+		}
+	}
+]

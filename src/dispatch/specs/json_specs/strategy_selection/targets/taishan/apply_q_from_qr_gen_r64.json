@@ -1,0 +1,45 @@
+[
+	{
+		"routine": "apply_q_from_qr_gen",
+		"datatype": "r64",
+		"target": "taishan",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"value": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 94",
+								"value": [
+									0,
+									2
+								]
+							},
+							{
+								"condition": "scale <= 96",
+								"value": [
+									1,
+									2,
+									0
+								]
+							}
+						],
+						"default": {
+							"condition": "scale <= 96",
+							"value": [
+								1,
+								2,
+								0
+							]
+						}
+					}
+				},
+				"type": "inplace_vector<kernel_inttype, 3>"
+			}
+		},
+		"package": "factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "apply_q_from_qr<general_matrix<matrix_base<{0}>>>"
+	}
+]

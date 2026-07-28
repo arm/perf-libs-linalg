@@ -1,0 +1,129 @@
+{
+    "name": "gebrd",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "a",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote_real",
+            "name": "d",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "promote_real",
+            "name": "e",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "tauq",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "taup",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AType",
+            "name": "work",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lwork",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "info",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sgebrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dgebrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "r64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cgebrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c32",
+                "promote_real": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zgebrd": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "AType": "c64",
+                "promote_real": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/factorization/interfaces/gebrd.hpp"
+}

@@ -1,0 +1,86 @@
+{
+	"name": "compute_index_arch",
+	"return_type": "bool",
+	"includes": [
+		"packages/factorization/problem_context_bases.hpp",
+		"spec/problem_context.hpp",
+		"matrix/matrix.hpp"
+	],
+
+	"namespaces": [
+		"perflibs",
+		"linalg"
+	],
+	"template_parameters": [
+		{
+			"name": "ProblemContextBase",
+			"type": "typename"
+		}
+	],
+	"parameters": [
+		{
+			"type": "ProblemContextBase",
+			"name": "pctx_base",
+			"is_const": true,
+			"is_pointer": false,
+			"is_reference": true
+		},
+		{
+			"type": "std::size_t",
+			"name": "index",
+			"is_const": false,
+			"is_pointer": false
+		}
+	],
+
+	"instantiations": {
+		"compute_index": {
+			"template_values": [
+				{ "ProblemContextBase": "perflibs::linalg::factorization::lu_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::lu_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::lu_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::lu_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::cholesky_factorization<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::cholesky_factorization<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r64>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::cholesky_factorization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c32>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::cholesky_factorization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>, pl_linalg_int_t>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::qr_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::qr_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::qr_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::qr_factorization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization_block<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization_block<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization_block<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::bidiagonalization_block<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::symmetric_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::tridiagonalization<perflibs::linalg::hermitian_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_qr<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::apply_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<r64>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c32>>>" },
+				{ "ProblemContextBase": "perflibs::linalg::factorization::generate_q_from_lq<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>>" }
+			],
+			"symbol_type": "c++template",
+			"namespaces": [ "perflibs", "linalg" ]
+		}
+	},
+
+	"interface_header_include": "packages/matmul/interfaces/compute_index.hpp"
+}

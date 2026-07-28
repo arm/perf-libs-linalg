@@ -1,0 +1,148 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "r64",
+		"target": "n2_cobalt100",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 3286",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 4186",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 16598",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 35374",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 265430",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 365590",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 692302",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 892541",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1499338",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 72
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 742",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1046",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 3286",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 8010",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 22858",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 243994",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 365590",
+								"value": 72
+							},
+							{
+								"condition": "scale <= 605878",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 838870",
+								"value": 88
+							},
+							{
+								"condition": "scale <= 1200510",
+								"value": 80
+							},
+							{
+								"condition": "scale <= 1757662",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 72
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T18:44:22.465771Z",
+			"spec_sha256": "597c406e973d78b6e313564f8e2bb700fbf91fef0ebca9f72e5ba61aa7568da6"
+		}
+	}
+]

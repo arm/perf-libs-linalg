@@ -1,0 +1,82 @@
+[
+	{
+		"routine": "hpr2",
+		"datatype": "c64",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"b_strd_block_size": {
+				"default": "l1_block",
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 2116",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 17161",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 23716",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 55225",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 168100",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 546121",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 724201",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 104
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 112
+						},
+						{
+							"condition": "scale <= 2859481",
+							"value": 136
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 144
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_rank_two_update",
+		"problem_context_base": "rank_update_2k<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, hermitian_matrix<packed_matrix_base<{2}>>, {3}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:28:53.664525Z",
+			"spec_sha256": "cd5e02463573a5bf6585155a93e0ead17fe9621da7e4a1a5abbe25ddce688543"
+		}
+	}
+]

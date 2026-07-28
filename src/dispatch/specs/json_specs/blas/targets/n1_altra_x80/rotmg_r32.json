@@ -1,0 +1,23 @@
+[
+	{
+		"routine": "rotmg",
+		"datatype": "r32",
+		"target": "n1_altra_x80",
+		"pctx_type": 1,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rotmg",
+				"num_types": 1,
+				"default": "default"
+			}
+		},
+		"strategy_tag": "generate_modified_rotation",
+		"problem_context_base": "rotmg<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T04:28:15.669289Z",
+			"spec_sha256": "ccd72d3ddc82a6362c508fe5261fffc8c35ba8f81666bc437afe1d87c150a030"
+		}
+	}
+]

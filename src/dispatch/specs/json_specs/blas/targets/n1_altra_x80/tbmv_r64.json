@@ -1,0 +1,83 @@
+[
+	{
+		"routine": "tbmv",
+		"datatype": "r64",
+		"target": "n1_altra_x80",
+		"tuned_routine_spec": {
+			"kernel_axpby": {
+				"type": "kernel",
+				"kernel_name": "axpby",
+				"default": "default"
+			},
+			"kernel_dot": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 55225",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 111556",
+							"value": 2
+						},
+						{
+							"condition": "scale <= 137641",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 290521",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 403225",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 630436",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 828100",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 942841",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 1069156",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 1359556",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 2343961",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 3786916",
+							"value": 88
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "compressed_triangular_matrix_vector",
+		"problem_context_base": "matmul2<triangular_matrix<banded_matrix_base<const {0}>>, general_matrix<matrix_base<{1}>>, {2}>",
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-16T05:22:37.469346Z",
+			"spec_sha256": "8a7d8292b383560573c0f52b9ecfe83ac5d831c7130afd952545c75fca0f2e05"
+		}
+	}
+]

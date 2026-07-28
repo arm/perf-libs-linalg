@@ -1,0 +1,109 @@
+[
+	{
+		"routine": "gemmt",
+		"datatype": "r32",
+		"target": "n2_cobalt100",
+		"tuned_routine_spec": {
+			"kernel_spec": {
+				"kernel_name": "gemm",
+				"type": "kernel_spec"
+			},
+			"a_convert": {
+				"type": "convert",
+				"matrix": "a"
+			},
+			"b_convert": {
+				"type": "convert",
+				"matrix": "b"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 21437",
+							"value": 1
+						},
+						{
+							"condition": "scale <= 48668",
+							"value": 6
+						},
+						{
+							"condition": "scale <= 442368",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 842579",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 2819876",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 34460500",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 678286021",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 928165994",
+							"value": 88
+						},
+						{
+							"condition": "scale <= 13165304687",
+							"value": "MAX"
+						}
+					],
+					"default": "MAX"
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			},
+			"l1_cntg": {
+				"default": 1440,
+				"type": "kernel_inttype"
+			},
+			"l1_strd": {
+				"default": 1,
+				"type": "kernel_inttype"
+			},
+			"l2_cntg": {
+				"default": 10,
+				"type": "kernel_inttype"
+			},
+			"l2_strd": {
+				"default": 74,
+				"type": "kernel_inttype"
+			},
+			"a_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"b_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"c_align": {
+				"default": 0,
+				"type": "kernel_inttype"
+			},
+			"l1_cntg_first": {
+				"default": true,
+				"type": "bool"
+			},
+			"l2_cntg_first": {
+				"default": false,
+				"type": "bool"
+			}
+		},
+		"package": "matmul",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, triangular_matrix<matrix_base<{2}>>, {3}>",
+		"strategy_tag": "rank_update_generic",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T19:00:30.654903Z",
+			"spec_sha256": "55b502beea6be405ccf7543b8584b499da2c1f781a62543f79a3921015a123f8"
+		}
+	}
+]

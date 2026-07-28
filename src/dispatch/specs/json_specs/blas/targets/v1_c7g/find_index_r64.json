@@ -1,0 +1,111 @@
+[
+	{
+		"routine": "find_index",
+		"datatype": "r64",
+		"target": "v1_c7g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "find_index",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 8010",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 93718",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 527810",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 692302",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1499338",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1668118",
+										"value": 48
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 2541",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 26582",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 75041",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 128010",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 312510",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 425162",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "find_index_strategy",
+		"problem_context_base": "find_index<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T14:57:59.083057Z",
+			"spec_sha256": "78d09d790ac0b7c1e787db91fcd11e1fd1b3fa3799a4835345d73cd7d6b86db9"
+		}
+	}
+]

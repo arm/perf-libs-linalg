@@ -1,0 +1,4 @@
+[
+	{ "routine": "omatcopy", "symbol": "comatcopy" },
+	{ "routine": "imatcopy", "symbol": "cimatcopy" }
+]

@@ -1,0 +1,44 @@
+[
+	{
+		"routine": "tridiagonalization_symmetric",
+		"datatype": "r64",
+		"target": "taishan",
+		"strategy_tag": "tridiagonalization_generic",
+		"problem_context_base": "tridiagonalization<symmetric_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 240",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 256",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 448",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 512",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 2048",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization"
+	}
+]

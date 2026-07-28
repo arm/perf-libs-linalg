@@ -1,0 +1,201 @@
+{
+    "name": "gemm",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "BMatrixType",
+            "type": "typename"
+        },
+        {
+            "name": "CMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "char",
+            "name": "transa",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "char",
+            "name": "transb",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "k",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "alpha",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "a",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "lda",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "BMatrixType",
+            "name": "b",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ldb",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "promote",
+            "name": "beta",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "CMatrixType",
+            "name": "c",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ldc",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "gemm_bf16bf16r32": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "bf16",
+                "BMatrixType": "bf16",
+                "CMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "sbgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "bf16",
+                "BMatrixType": "bf16",
+                "CMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+		},
+        "bgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "bf16",
+                "AMatrixType": "bf16",
+                "BMatrixType": "bf16",
+                "CMatrixType": "bf16"
+            },
+            "symbol_type": "fortran"
+        },
+        "hgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r16",
+                "AMatrixType": "r16",
+                "BMatrixType": "r16",
+                "CMatrixType": "r16"
+            },
+            "symbol_type": "fortran"
+        },
+        "sgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r32",
+                "AMatrixType": "r32",
+                "BMatrixType": "r32",
+                "CMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "r64",
+                "AMatrixType": "r64",
+                "BMatrixType": "r64",
+                "CMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c32",
+                "AMatrixType": "c32",
+                "BMatrixType": "c32",
+                "CMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zgemm": {
+            "template_values": {
+                "ParamCheck": "true",
+                "IntType": "pl_linalg_int_t",
+                "promote": "c64",
+                "AMatrixType": "c64",
+                "BMatrixType": "c64",
+                "CMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/matmul/interfaces/gemm.hpp"
+}

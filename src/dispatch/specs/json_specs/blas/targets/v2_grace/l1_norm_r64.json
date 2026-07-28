@@ -1,0 +1,123 @@
+[
+	{
+		"routine": "l1_norm",
+		"datatype": "r64",
+		"target": "v2_grace",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l1_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 19541",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 66826",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 75041",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 155594",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 565834",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 1007566",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 1270594",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 1582041",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": 48
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 3286",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 4186",
+								"value": 2
+							},
+							{
+								"condition": "scale <= 11722",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 83990",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 155594",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 205041",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 457541",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 948746",
+								"value": 64
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": 72
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l1_norm_strategy",
+		"problem_context_base": "l1_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:04:14.437824Z",
+			"spec_sha256": "52d8cb2e69778155502eebaf1d2525a1abd0ab3c746e6c2243a4a59fddd3797a"
+		}
+	}
+]

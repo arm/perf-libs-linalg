@@ -1,0 +1,107 @@
+[
+	{
+		"routine": "l1_norm",
+		"datatype": "c64",
+		"target": "n1_c6g",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "l1_norm",
+				"num_types": 1,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.x.cntg_step() == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 4186",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 8010",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 19541",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 59306",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 205041",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 738826",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 948746",
+										"value": 40
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 1046",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 3286",
+								"value": 4
+							},
+							{
+								"condition": "scale <= 11722",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 59306",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 187414",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 223882",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 338270",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 948746",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "l1_norm_strategy",
+		"problem_context_base": "l1_norm<{0}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T15:11:37.402991Z",
+			"spec_sha256": "0f88503e5a4de5dfca5918adc94c6439ed04127075c49d3cd13791c3e6a32426"
+		}
+	}
+]

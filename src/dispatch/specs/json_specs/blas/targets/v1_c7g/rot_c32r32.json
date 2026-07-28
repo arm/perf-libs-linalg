@@ -1,0 +1,124 @@
+[
+	{
+		"routine": "rot",
+		"datatype": "c32r32",
+		"target": "v1_c7g",
+		"pctx_type": 2,
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "rot",
+				"num_types": 2,
+				"default": "default"
+			},
+			"max_threads": {
+				"value": {
+					"cases": [
+						{
+							"condition": "pctx.incx == 1 && pctx.incy == 1",
+							"value": {
+								"cases": [
+									{
+										"condition": "scale <= 5258",
+										"value": 1
+									},
+									{
+										"condition": "scale <= 6526",
+										"value": 4
+									},
+									{
+										"condition": "scale <= 11722",
+										"value": 6
+									},
+									{
+										"condition": "scale <= 35374",
+										"value": 8
+									},
+									{
+										"condition": "scale <= 75041",
+										"value": 16
+									},
+									{
+										"condition": "scale <= 128010",
+										"value": 24
+									},
+									{
+										"condition": "scale <= 312510",
+										"value": 32
+									},
+									{
+										"condition": "scale <= 565834",
+										"value": 40
+									},
+									{
+										"condition": "scale <= 787658",
+										"value": 56
+									},
+									{
+										"condition": "scale <= 1947514",
+										"value": "MAX"
+									}
+								],
+								"default": "MAX"
+							}
+						}
+					],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 742",
+								"value": 1
+							},
+							{
+								"condition": "scale <= 1930",
+								"value": 6
+							},
+							{
+								"condition": "scale <= 5258",
+								"value": 8
+							},
+							{
+								"condition": "scale <= 16598",
+								"value": 16
+							},
+							{
+								"condition": "scale <= 30742",
+								"value": 24
+							},
+							{
+								"condition": "scale <= 52438",
+								"value": 32
+							},
+							{
+								"condition": "scale <= 104266",
+								"value": 40
+							},
+							{
+								"condition": "scale <= 115682",
+								"value": 48
+							},
+							{
+								"condition": "scale <= 265430",
+								"value": 56
+							},
+							{
+								"condition": "scale <= 1947514",
+								"value": "MAX"
+							}
+						],
+						"default": "MAX"
+					}
+				},
+				"type": "kernel_inttype",
+				"default": "MAX"
+			}
+		},
+		"strategy_tag": "apply_rotation",
+		"problem_context_base": "rot<{0}, {1}>",
+		"package": "misc",
+		"manifest": {
+			"last_tuned_at": "2026-07-17T19:53:50.838262Z",
+			"spec_sha256": "393934dd643c3819d51b58b85d80be3e87f9646b83c9eb384fab257aeede1462"
+		}
+	}
+]

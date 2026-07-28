@@ -1,0 +1,48 @@
+[
+	{
+		"routine": "bidiagonalization",
+		"datatype": "c32",
+		"target": "v1_c7g",
+		"strategy_tag": "bidiagonalization_generic",
+		"problem_context_base": "bidiagonalization<general_matrix<matrix_base<{0}>>>",
+		"tuned_routine_spec": {
+			"block_size": {
+				"value": {
+					"cases": [
+						{
+							"condition": "scale <= 353",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 522",
+							"value": 16
+						},
+						{
+							"condition": "scale <= 1738",
+							"value": 8
+						},
+						{
+							"condition": "scale <= 2207",
+							"value": 24
+						},
+						{
+							"condition": "scale <= 2754",
+							"value": 16
+						}
+					],
+					"default": 16
+				},
+				"type": "kernel_inttype"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "factorization",
+		"manifest": {
+			"last_tuned_at": "2026-07-20T00:39:13.666362Z",
+			"spec_sha256": "9aeef5fea77c85e44d1d08701bbe1b7090f816ad41ef9da3427f9eb0ade7a825"
+		}
+	}
+]

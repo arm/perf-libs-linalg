@@ -1,0 +1,25 @@
+[
+	{
+		"routine": "matmul3_inner_product",
+		"datatype": "r32r32r64",
+		"target": "taishan",
+		"strategy_tag": "matmul3_inner_product",
+		"problem_context_base": "matmul3<general_matrix<matrix_base<const {0}>>, general_matrix<matrix_base<const {1}>>, general_matrix<matrix_base<{2}>>, {3}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "dot",
+				"default": "default"
+			},
+			"max_threads": {
+				"default": 1,
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "matmul",
+		"manifest": {
+			"last_tuned_at": "2026-07-15T22:00:56.796998Z",
+			"spec_sha256": "fa3553d75c030defc7025d7b1474b4f808af4aa547095531f241eb474c514677"
+		}
+	}
+]
