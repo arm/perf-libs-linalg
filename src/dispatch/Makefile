@@ -185,7 +185,7 @@ $(CHOOSER_GENERATE_DIR)/%.cpp: $(CHOOSER_JSON_DIR)/%.json $(SCRIPTS_DIR)/generat
 
 
 .PRECIOUS: $(BUILD_DIR)/%.o
-$(BUILD_DIR)/%.o: $(GENERATE_DIR)/%.cpp $(ALL_HPP_PATHS) | build-specs
+$(BUILD_DIR)/%.o: $(GENERATE_DIR)/%.cpp | $(ALL_HPP_PATHS) build-specs
 	@mkdir -p $$(dirname $@)
 	@echo "$(CXX) -c $< -o $@ $(CONFIG_CXXOPTS) -MMD -MP" >  $@.sh && chmod +x $@.sh
 ifeq ($(dev),1)
