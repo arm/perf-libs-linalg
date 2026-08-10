@@ -26,10 +26,6 @@ def main():
 	for a in j["architectures"]:
 		includes.append(f'#include "{a}/linalg/get_kernel_spec.hpp"')
 
-	for a in j["architectures"]:
-		includes.append(f'#include "{a}/linalg/get_spec.hpp"')
-
-
 	includes = "\n".join(includes)
 
 	out = f"""#ifndef {header_guard}

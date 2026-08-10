@@ -8,7 +8,8 @@
 
 #include "framework/compute.hpp"
 #include "spec/problem_context.hpp"
-#include "packages/matmul/strategies.hpp"
+#include "packages/matmul/problem_context_bases.hpp"
+#include "packages/matmul/strategies/matmul3_vector_scalar.hpp"
 #include "packages/factorization/fwd.hpp"
 #include "matrix/adaptors.hpp"
 

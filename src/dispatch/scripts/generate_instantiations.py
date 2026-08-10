@@ -57,6 +57,7 @@ def generate_instantiation(routines_json_directory, instantiations_json_file_pat
 {actively_request_macro}
 
 #include "linalg/specs.hpp"
+#include "{architecture_name}/linalg/get_spec.hpp"
 
 {includes}
 
