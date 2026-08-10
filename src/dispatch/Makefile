@@ -224,7 +224,7 @@ $(ARCHITECTURES_BUILD_DIR)/%.o: CONFIG_CXXOPTS+=-I$(ARCHITECTURES_GENERATE_DIR)
 #because make won't let us write rule that have multiple pattern matches we have to stamp out a version of this for each arch
 define make_cpp_from_json_paths
 .PRECIOUS: $(ARCHITECTURES_GENERATE_DIR)/$1/%.cpp
-$(ARCHITECTURES_GENERATE_DIR)/$1/%.cpp: $(ARCHITECTURES_JSON_DIR)/%.json
+$(ARCHITECTURES_GENERATE_DIR)/$1/%.cpp: $(ARCHITECTURES_JSON_DIR)/%.json $(SCRIPTS_DIR)/generate_instantiations.py
 	mkdir -p $$(@D)
 	$(PYTHON) $(SCRIPTS_DIR)/generate_instantiations.py \
 		--instantiation-json-file-path $$< \
