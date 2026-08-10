@@ -6,7 +6,8 @@
 #ifndef PERFLIBS_LINALG_BLAS_INTERFACES_SCAL_HPP
 #define PERFLIBS_LINALG_BLAS_INTERFACES_SCAL_HPP
 
-#include "packages/matmul/strategies.hpp"
+#include "packages/matmul/problem_context_bases.hpp"
+#include "packages/matmul/strategies/matmul3_vector_scalar.hpp"
 #include "matrix/matrix.hpp"
 #include "framework/linalg_util.hpp"
 
