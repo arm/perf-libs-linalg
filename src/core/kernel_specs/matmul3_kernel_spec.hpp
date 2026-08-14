@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
  */
 
-#ifndef PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_PRE_HPP
-#define PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_PRE_HPP
+#ifndef PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNEL_SPEC_HPP
+#define PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNEL_SPEC_HPP
 
 #include "framework/vector_length.hpp"
 #include "framework/linalg_util.hpp"
@@ -98,4 +98,4 @@ const auto interleave_matmul_kernel_specs = std::array<GemmKernelSpecType, 0> { 
 
 } //namespace perflibs::linalg
 
-#endif //PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_PRE_HPP
+#endif //PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNEL_SPEC_HPP

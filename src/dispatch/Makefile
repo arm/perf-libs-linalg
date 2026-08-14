@@ -33,6 +33,8 @@ SCRIPTS_DIR          = $(SOURCE_DIR)/scripts
 SPECS_DIR            = $(SOURCE_DIR)/specs
 SPECS_BUILD_DIR      = $(GENERATE_DIR)/hpp_specs
 
+include $(SOURCE_DIR)/kernel_specs/kernel_specs.mk
+
 CPP_FILES_TO_COPY    = $(patsubst $(SOURCE_DIR)%,$(GENERATE_DIR)%,$(shell $(FIND) $(SOURCE_DIR) -regex ".*\.cpp"))
 HPP_FILES_TO_COPY    = $(patsubst $(SOURCE_DIR)%,$(GENERATE_DIR)%,$(shell $(FIND) $(SOURCE_DIR) -regex ".*\.hpp"))
 OBJ_FROM_COPIED_CPP  = $(patsubst $(SOURCE_DIR)%.cpp,$(BUILD_DIR)%.o,$(shell $(FIND) $(SOURCE_DIR) -regex ".*\.cpp"))
@@ -78,7 +80,7 @@ ARCHITECTURES_PRIORITY_OBJ_PATHS = $(foreach arch,$(ARCHITECTURES),$(filter $(AR
 ARCHITECTURES_REMAINING_OBJ_PATHS = $(filter-out $(ARCHITECTURES_PRIORITY_OBJ_PATHS),$(ARCHITECTURES_OBJ_PATHS))
 ARCHITECTURES_GET_TRS_PATHS = $(foreach arch,$(ARCHITECTURES),$(ARCHITECTURES_GENERATE_DIR)/$(arch)/linalg/get_spec.hpp)
 
-ALL_HPP_PATHS = ${CHOOSER_GENERATED_HPP_PATHS} ${HPP_FILES_TO_COPY} ${ARCHITECTURES_GET_TRS_PATHS} ${ARCHITECTURES_GENERATE_DIR}/linalg/specs.hpp
+ALL_HPP_PATHS = ${CHOOSER_GENERATED_HPP_PATHS} ${HPP_FILES_TO_COPY} ${ARCHITECTURES_GET_TRS_PATHS} ${ARCHITECTURES_GENERATE_DIR}/linalg/specs.hpp ${KERNEL_SPECS_HPP_PATHS}
 ALL_CPP_PATHS = ${CPP_FILES_TO_COPY} ${CHOOSER_CPP_PATHS}
 ALL_OBJ_PATHS = $(ARCHITECTURES_PRIORITY_OBJ_PATHS) $(OBJ_FROM_COPIED_CPP) $(CHOOSER_OBJ_PATHS) $(ARCHITECTURES_REMAINING_OBJ_PATHS)
 
@@ -159,6 +161,7 @@ endif
 CONFIG_CXXOPTS+=$(CONFIG_CXXFLAGS) \
                 $(if $(INCLUDE_DIR),-I$(INCLUDE_DIR)) \
                 $(if $(CENTRAL_DIR),-I$(CENTRAL_DIR)/common) \
+                -I$(GENERATE_DIR) \
                 $(if $(CENTRAL_DIR),-I$(CENTRAL_DIR)/blas/linalg) \
                 $(if $(CENTRAL_DIR),-I$(CENTRAL_DIR)/blas/SRC) \
                 $(if $(EXTRA_DIR),-I$(EXTRA_DIR)) \

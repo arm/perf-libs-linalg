@@ -7,12 +7,9 @@ Regenerate C++ interleave_kernel_specs from a JSON file.
 
 Usage:
     python interleave_kernels.py interleave_kernels.json interleave_kernels.hpp
-
-If output_file is omitted, generated C++ is written to stdout.
 """
 import argparse
 import json
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -118,7 +115,7 @@ def generate_cpp_from_data(data: dict[str, list[dict[str, object]]]) -> str:
     return f"""#ifndef PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 #define PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 
-#include "interleave_kernels_pre.hpp"
+#include "kernel_specs/interleave_kernel_spec.hpp"
 
 namespace perflibs::linalg {{
 
@@ -137,27 +134,15 @@ auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContex
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Generate C++ interleave_kernel_specs from JSON."
-    )
-    parser.add_argument("input_json", help="Path to input JSON file")
-    parser.add_argument(
-        "output",
-        nargs="?",
-        help="Output C++ file path (optional). Defaults to stdout.",
-    )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_json", type=Path)
+    parser.add_argument("output", type=Path)
     args = parser.parse_args()
 
-    with Path(args.input_json).open(encoding="utf-8") as input_file:
+    with args.input_json.open(encoding="utf-8") as input_file:
         data = json.load(input_file)
 
-    cpp = generate_cpp_from_data(data)
-
-    if args.output is None:
-        sys.stdout.write(cpp)
-    else:
-        Path(args.output).write_text(cpp, encoding="utf-8")
-        print(f"Wrote {args.output}", file=sys.stderr)
+    args.output.write_text(generate_cpp_from_data(data), encoding="utf-8")
 
 
 if __name__ == "__main__":

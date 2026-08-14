@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 # SPDX-FileCopyrightText: Copyright 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
 
-import sys
+import argparse
 import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Tuple
 
 
@@ -77,7 +79,12 @@ class GemmKernelSpec:
 		b_type = MatrixInterleaveSpec( **self.b_interleave_spec ).datatype
 		return f"perflibs::linalg::interleave_matmul_kernel<{a_type}, {b_type}, {self.c_type}> {self.symbol};"
 
-with open(sys.argv[1]) as f:
+parser = argparse.ArgumentParser()
+parser.add_argument("input_json", type=Path)
+parser.add_argument("output", type=Path)
+args = parser.parse_args()
+
+with args.input_json.open(encoding="utf-8") as f:
 	j = json.load(f)
 
 kernels = {}
@@ -114,11 +121,11 @@ constexpr std::size_t {cpp_kernel_indices};""")
 kernel_spec_list_cpp= "\n".join(kernel_spec_list_cpp)
 
 
-print(f"""
-#ifndef PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_HPP
-#define PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_HPP
+generated_header = f"""
+#ifndef PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNELS_HPP
+#define PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNELS_HPP
 
-#include "matmul3_kernels_pre.hpp"
+#include "kernel_specs/matmul3_kernel_spec.hpp"
 
 #include <array>
 
@@ -138,5 +145,7 @@ namespace perflibs::linalg {{
 
 }} //namespace perflibs::linalg
 
-#endif //PERFLIBS_LINALG_FRAMEWORK_MATMUL3_KERNELS_HPP
-""")
+#endif //PERFLIBS_LINALG_KERNEL_SPECS_MATMUL3_KERNELS_HPP
+"""
+
+args.output.write_text(generated_header, encoding="utf-8")

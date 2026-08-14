@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
  */
 
-#ifndef PERFLIBS_LINALG_FRAMEWORK_INTERLEAVE_KERNELS_PRE_HPP
-#define PERFLIBS_LINALG_FRAMEWORK_INTERLEAVE_KERNELS_PRE_HPP
+#ifndef PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNEL_SPEC_HPP
+#define PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNEL_SPEC_HPP
 
 #include "framework/interleave_fallback_kernel_fwd.hpp"
 #include "framework/interleave_split_complex_kernels.hpp"
@@ -344,4 +344,4 @@ auto get_virtual_interleave_spec(const SrcMatrixType& src, const matrix_interlea
 
 } // namespace perflibs::linalg
 
-#endif //PERFLIBS_LINALG_FRAMEWORK_INTERLEAVE_KERNELS_PRE_HPP
+#endif //PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNEL_SPEC_HPP
