@@ -9,6 +9,9 @@ from pathlib import Path
 from typing import Any, Tuple
 
 
+InterleaveValue = int | dict[str, int]
+
+
 @dataclass(frozen=True)
 class GemmKernelType:
 	kernel_type: str
@@ -20,29 +23,33 @@ class GemmKernelType:
 @dataclass
 class MatrixInterleaveSpec:
 	datatype: str
-	cntg_interleave: int | str
-	strd_interleave: int | str
+	cntg_interleave: InterleaveValue
+	strd_interleave: InterleaveValue
 	split_factor: int
 	strd_unroll: int
 	strd_interleave_step: int
 	cntg_interleave_step: int
 
-	def get_cntg_interleave(self):
-		if isinstance(self.cntg_interleave, int):
-			return f"intval<{self.cntg_interleave}>"
-		return f"{self.cntg_interleave}"
-
-	def get_strd_interleave(self):
-		if isinstance(self.strd_interleave, int):
-			return f"intval<{self.strd_interleave}>"
-		return f"{self.strd_interleave}"
+	def get_interleave(self, value: InterleaveValue, extension: str):
+		if isinstance(value, int):
+			return f"intval<{value}>"
+		multiplier = value["vector_length_multiplier"]
+		return f"vl<extensions::{extension}, {self.datatype}, {multiplier}>"
 
 	@property
 	def matrix_req(self):
 		return "matrix_requirement::{}_one".format("strd" if self.strd_interleave_step == 1 else "cntg")
 
-	def to_cpp_spec(self):
-		return f"matrix_interleave_spec<{self.datatype}> {{ {self.get_cntg_interleave()}, {self.get_strd_interleave()}, {self.cntg_interleave_step}_ki, {self.strd_interleave_step}_ki, {self.matrix_req}, {self.split_factor}_ki, {self.strd_unroll}_ki }}"
+	def to_cpp_spec(self, extension: str):
+		cntg_interleave = self.get_interleave(self.cntg_interleave, extension)
+		strd_interleave = self.get_interleave(self.strd_interleave, extension)
+		return (
+			f"matrix_interleave_spec<{self.datatype}> {{ "
+			f"{cntg_interleave}, {strd_interleave}, "
+			f"{self.cntg_interleave_step}_ki, {self.strd_interleave_step}_ki, "
+			f"{self.matrix_req}, {self.split_factor}_ki, "
+			f"{self.strd_unroll}_ki }}"
+		)
 
 @dataclass
 class GemmKernelSpec:
@@ -68,8 +75,8 @@ class GemmKernelSpec:
 		a_interleave_spec =	MatrixInterleaveSpec( **self.a_interleave_spec )
 		b_interleave_spec =	MatrixInterleaveSpec( **self.b_interleave_spec )
 
-		a_interleave_spec_cpp = a_interleave_spec.to_cpp_spec()
-		b_interleave_spec_cpp = b_interleave_spec.to_cpp_spec()
+		a_interleave_spec_cpp = a_interleave_spec.to_cpp_spec(self.extensions)
+		b_interleave_spec_cpp = b_interleave_spec.to_cpp_spec(self.extensions)
 
 		return f"interleave_matmul_kernel_spec<{a_interleave_spec.datatype}, {b_interleave_spec.datatype}, {self.c_type}> {{ &{self.symbol}, {self.cntg_unroll}_ki, {a_interleave_spec_cpp}, {b_interleave_spec_cpp}, false, value_support::{self.apply_beta}, extensions::{self.extensions} }}"
 
