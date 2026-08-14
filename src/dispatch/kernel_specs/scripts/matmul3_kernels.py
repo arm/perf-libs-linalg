@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: Copyright 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
 
+
 import argparse
 import json
 from dataclasses import dataclass
@@ -36,10 +37,6 @@ class MatrixInterleaveSpec:
 		multiplier = value["vector_length_multiplier"]
 		return f"vl<extensions::{extension}, {self.datatype}, {multiplier}>"
 
-	@property
-	def matrix_req(self):
-		return "matrix_requirement::{}_one".format("strd" if self.strd_interleave_step == 1 else "cntg")
-
 	def to_cpp_spec(self, extension: str):
 		cntg_interleave = self.get_interleave(self.cntg_interleave, extension)
 		strd_interleave = self.get_interleave(self.strd_interleave, extension)
@@ -47,8 +44,7 @@ class MatrixInterleaveSpec:
 			f"matrix_interleave_spec<{self.datatype}> {{ "
 			f"{cntg_interleave}, {strd_interleave}, "
 			f"{self.cntg_interleave_step}_ki, {self.strd_interleave_step}_ki, "
-			f"{self.matrix_req}, {self.split_factor}_ki, "
-			f"{self.strd_unroll}_ki }}"
+			f"{self.split_factor}_ki, {self.strd_unroll}_ki }}"
 		)
 
 @dataclass

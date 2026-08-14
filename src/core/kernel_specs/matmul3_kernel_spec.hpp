@@ -60,7 +60,6 @@ struct matrix_interleave_spec {
 	decltype(&intval<0>) strd_interleave;
 	kernel_inttype       cntg_interleave_step;
 	kernel_inttype       strd_interleave_step;
-	matrix_requirement   matrix_req;
 	kernel_inttype       split_factor;
 	kernel_inttype       strd_unroll;
 };
