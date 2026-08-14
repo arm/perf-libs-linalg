@@ -5,112 +5,112 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<2, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<4, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 5,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<5, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<6, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<8, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 9,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<9, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<12, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<16, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 2,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<2, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<4, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 5,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<5, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<6, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<8, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 9,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<9, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<12, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<16, Flags, SrcDataType, DstDataType, ArchitectureSpec>"
+      "implementation": "fallback"
     }
   ],
   "specialization<Flags,r16,r16,ArchitectureSpec>": [],
@@ -160,168 +160,168 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<2, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<4, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 5,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<5, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<6, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<8, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 9,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<9, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 10,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<10, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<12, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<16, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 20,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<20, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 24,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<24, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 32,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<32, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 2,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<2, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<4, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 5,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<5, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<6, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<8, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 9,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<9, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 10,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<10, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<12, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<16, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 20,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<20, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 24,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<24, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 32,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<32, kernel_inttype(interleave_flags::None), bf16, bf16, ArchitectureSpec>"
+      "implementation": "fallback"
     }
   ],
   "specialization<kernel_inttype(interleave_flags::None),r32,r32,ArchitectureSpec>": [
@@ -358,21 +358,21 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<9, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<12, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<16, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 2,
@@ -407,21 +407,21 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<9, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<12, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<16, kernel_inttype(interleave_flags::None), r32, r32, ArchitectureSpec>"
+      "implementation": "fallback"
     }
   ],
   "specialization<kernel_inttype(interleave_flags::None),r64,r64,ArchitectureSpec>": [
@@ -458,35 +458,35 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<9, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<16, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 20,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<20, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 32,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<32, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 64,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<64, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 2,
@@ -521,14 +521,14 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<9, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 16,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<16, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 20,
@@ -542,14 +542,14 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<32, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 64,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<64, kernel_inttype(interleave_flags::None), r64, r64, ArchitectureSpec>"
+      "implementation": "fallback"
     }
   ],
   "specialization<kernel_inttype(interleave_flags::None),c32,c32,ArchitectureSpec>": [
@@ -586,56 +586,56 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<10, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<12, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 2,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<2, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<4, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<6, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<8, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 10,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<10, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 12,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<12, kernel_inttype(interleave_flags::None), c32, c32, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
@@ -672,7 +672,7 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "kernel": "n_cpp_interleave<5, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
@@ -693,35 +693,35 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<2, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<4, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 5,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<5, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 6,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<6, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 8,
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
-      "kernel": "t_cpp_interleave<8, kernel_inttype(interleave_flags::None), c64, c64, ArchitectureSpec>"
+      "implementation": "fallback"
     },
     {
       "strd_interleave": 4,

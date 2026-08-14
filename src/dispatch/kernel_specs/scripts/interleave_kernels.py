@@ -31,9 +31,22 @@ class InterleaveKernelSpec:
     vector_size_bits: int = 0
     matrix_req: str = "matrix_requirement::cntg_one"
     kernel: str = "nullptr"
+    implementation: str | None = None
 
-    def to_cpp(self) -> str:
-        kernel = self.kernel if self.kernel == "nullptr" else f"&{self.kernel}"
+    def implementation_function(self) -> str:
+        return {
+            ("fallback", "matrix_requirement::cntg_one"): "n_cpp_interleave",
+            ("fallback", "matrix_requirement::strd_one"): "t_cpp_interleave",
+        }[(self.implementation, self.matrix_req)]
+
+    def to_cpp(self, arguments: tuple[str, ...]) -> str:
+        kernel = self.kernel
+        if self.implementation is not None:
+            kernel = (
+                f"{self.implementation_function()}<"
+                f"{self.strd_interleave}, {', '.join(arguments)}>"
+            )
+        kernel = kernel if kernel == "nullptr" else f"&{kernel}"
 
         values = (
             f"{self.cntg_interleave}_ki",
@@ -99,7 +112,7 @@ class InterleaveKernelTable:
                 f"{self.src_data_type}, {self.dst_data_type}>, 0> {{ }};"
             )
 
-        entries = "\n".join(entry.to_cpp() for entry in self.entries)
+        entries = "\n".join(entry.to_cpp(self.arguments) for entry in self.entries)
         return f"{declaration}std::array {{\n{entries}\n}};"
 
 
