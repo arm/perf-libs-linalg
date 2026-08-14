@@ -737,5 +737,55 @@
       "matrix_req": "matrix_requirement::strd_one",
       "kernel": "t_interleave_shim<&t_interleave_split_complex_ir4<r64>>"
     }
+  ],
+  "fallback_instantiations": [
+    {
+      "flags": [],
+      "data_types": ["bf16", "r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["IsConj"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagUnit", "LowerVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagUnit", "UpperVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "LowerVirt"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "UpperVirt"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagReal", "LowerVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagReal", "UpperVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["IsConj", "DiagVirt", "LowerVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["IsConj", "DiagVirt", "UpperVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["LowerVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["UpperVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    }
   ]
 }

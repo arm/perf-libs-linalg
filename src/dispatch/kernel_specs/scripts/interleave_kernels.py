@@ -3,10 +3,12 @@
 # SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
 
 """
-Regenerate C++ interleave_kernel_specs from a JSON file.
+Generate C++ interleave kernel specs or fallback instantiations from JSON.
 
 Usage:
     python interleave_kernels.py interleave_kernels.json interleave_kernels.hpp
+    python interleave_kernels.py --print-fallback-data-types interleave_kernels.json
+    python interleave_kernels.py --fallback-instantiations ARCHITECTURE DATA_TYPE interleave_kernels.json fallback_instantiations.cpp
 """
 import argparse
 import json
@@ -19,6 +21,8 @@ TEMPLATE_PARAMETERS = {
     "DstDataType": "typename DstDataType",
     "ArchitectureSpec": "typename ArchitectureSpec",
 }
+
+FALLBACK_INSTANTIATIONS_KEY = "fallback_instantiations"
 
 
 @dataclass
@@ -38,6 +42,9 @@ class InterleaveKernelSpec:
             ("fallback", "matrix_requirement::cntg_one"): "n_cpp_interleave",
             ("fallback", "matrix_requirement::strd_one"): "t_cpp_interleave",
         }[(self.implementation, self.matrix_req)]
+
+    def is_fallback(self) -> bool:
+        return self.implementation == "fallback"
 
     def to_cpp(self, arguments: tuple[str, ...]) -> str:
         kernel = self.kernel
@@ -59,6 +66,14 @@ class InterleaveKernelSpec:
             kernel,
         )
         return f"    interleave_kernel_spec {{ {', '.join(values)} }},"
+
+    def fallback_instantiation(self, arguments: tuple[str, ...]) -> str:
+        src_data_type = arguments[1]
+        dst_data_type = arguments[2]
+        return f"""template void {self.implementation_function()}<{self.strd_interleave}, {', '.join(arguments)}>(
+    std::size_t, std::size_t, const {src_data_type}*, std::size_t, std::size_t,
+    std::size_t, std::size_t, {dst_data_type}*, std::size_t,
+    kernel_inttype, kernel_inttype);"""
 
 
 @dataclass
@@ -116,12 +131,18 @@ class InterleaveKernelTable:
         return f"{declaration}std::array {{\n{entries}\n}};"
 
 
-def generate_cpp_from_data(data: dict[str, list[dict[str, object]]]) -> str:
+def parse_tables(data: dict[str, object]) -> list[InterleaveKernelTable]:
     tables = [
         InterleaveKernelTable.from_json(key, entries)
         for key, entries in data.items()
+        if key != FALLBACK_INSTANTIATIONS_KEY
     ]
     tables.sort(key=lambda table: table.kind != "primary")
+    return tables
+
+
+def generate_cpp_from_data(data: dict[str, object]) -> str:
+    tables = parse_tables(data)
 
     generated_tables = "\n\n".join(table.to_cpp() for table in tables)
 
@@ -146,16 +167,92 @@ auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContex
 """
 
 
+def flags_expression(flags: list[str]) -> str:
+    flags_cpp = " | ".join(f"interleave_flags::{flag}" for flag in flags)
+    return f"kernel_inttype({flags_cpp or 'interleave_flags::None'})"
+
+
+def generate_fallback_instantiations(
+    data: dict[str, object], architecture: str, data_type: str
+) -> str:
+    tables = parse_tables(data)
+    primary_table = next(table for table in tables if table.kind == "primary")
+    architecture_spec = f"spec::{architecture}_architecture_spec"
+    instantiations = []
+
+    for request in data[FALLBACK_INSTANTIATIONS_KEY]:
+        if data_type not in request["data_types"]:
+            continue
+
+        flags = flags_expression(request["flags"])
+        specialization_arguments = (flags, data_type, data_type, "ArchitectureSpec")
+        table = next(
+            (
+                table
+                for table in tables
+                if table.kind == "specialization"
+                and table.arguments == specialization_arguments
+            ),
+            primary_table,
+        )
+        arguments = (flags, data_type, data_type, architecture_spec)
+        instantiations.extend(
+            entry.fallback_instantiation(arguments)
+            for entry in table.entries
+            if entry.is_fallback()
+        )
+
+    generated_instantiations = "\n\n".join(instantiations)
+    return f"""#include "{architecture}/linalg/machine_spec.hpp"
+
+#include "perflibs_complex.hpp"
+#include "perflibs_float.hpp"
+
+#define PERFLIBS_LINALG_INTERLEAVE_FALLBACK_KERNEL_ACTIVELY_REQUESTED 1
+#include "framework/interleave_fallback_kernel.hpp"
+
+namespace perflibs::linalg {{
+
+{generated_instantiations}
+
+}} // namespace perflibs::linalg
+"""
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--print-fallback-data-types", action="store_true")
+    parser.add_argument(
+        "--fallback-instantiations",
+        nargs=2,
+        metavar=("ARCHITECTURE", "DATA_TYPE"),
+    )
     parser.add_argument("input_json", type=Path)
-    parser.add_argument("output", type=Path)
+    parser.add_argument("output", type=Path, nargs="?")
     args = parser.parse_args()
+    if not args.print_fallback_data_types and args.output is None:
+        parser.error("output is required unless --print-fallback-data-types is used")
 
     with args.input_json.open(encoding="utf-8") as input_file:
         data = json.load(input_file)
 
-    args.output.write_text(generate_cpp_from_data(data), encoding="utf-8")
+    if args.print_fallback_data_types:
+        data_types = dict.fromkeys(
+            data_type
+            for request in data[FALLBACK_INSTANTIATIONS_KEY]
+            for data_type in request["data_types"]
+        )
+        print(*data_types)
+        return
+
+    if args.fallback_instantiations is None:
+        generated_cpp = generate_cpp_from_data(data)
+    else:
+        generated_cpp = generate_fallback_instantiations(
+            data, *args.fallback_instantiations
+        )
+
+    args.output.write_text(generated_cpp, encoding="utf-8")
 
 
 if __name__ == "__main__":
