@@ -10,93 +10,155 @@ Usage:
 
 If output_file is omitted, generated C++ is written to stdout.
 """
-import json
-import re
-import sys
 import argparse
+import json
+import sys
+from dataclasses import dataclass
+from pathlib import Path
 
-def sanitize_key_for_template(key):
-    if key.startswith("primary<"):
-        return ("primary", None)
-    m = re.match(r"specialization<(.+)>", key)
-    if m:
-        return ("specialization", m.group(1).strip())
-    return ("specialization", key)
+TEMPLATE_PARAMETERS = {
+    "Flags": "kernel_inttype Flags",
+    "SrcDataType": "typename SrcDataType",
+    "DstDataType": "typename DstDataType",
+    "ArchitectureSpec": "typename ArchitectureSpec",
+}
 
-def generate_cpp_from_data(data):
-    keys = list(data.keys())
-    keys_sorted = []
-    for k in keys:
-        if k.startswith("primary<"):
-            keys_sorted.append(k)
-            break
-    for k in keys:
-        if not k.startswith("primary<"):
-            keys_sorted.append(k)
 
-    lines = []
+@dataclass
+class InterleaveKernelSpec:
+    strd_interleave: int
+    cntg_interleave: int = 1
+    cntg_interleave_step: int = 1
+    strd_interleave_step: int = 1
+    split_factor: int = 0
+    vector_size_bits: int = 0
+    matrix_req: str = "matrix_requirement::cntg_one"
+    kernel: str = "nullptr"
 
-    for key in keys_sorted:
-        kind, inner = sanitize_key_for_template(key)
-        entries = data[key]
-        if kind == "primary":
-            header = ("template<kernel_inttype Flags, typename SrcDataType, typename DstDataType, typename ArchitectureSpec>\n"
-                      "inline\n"
-                      "constexpr auto interleave_kernel_specs = std::array {\n")
-        else:
-            header = f"template<typename ArchitectureSpec>\ninline\nconstexpr auto interleave_kernel_specs<{inner}> = std::array {{\n"
-        lines.append(header)
-        for e in entries:
-            cntg_interleave = e.get("cntg_interleave", 1)
+    def to_cpp(self) -> str:
+        kernel = self.kernel if self.kernel == "nullptr" else f"&{self.kernel}"
 
-            cntg_interleave_step = e.get("cntg_interleave_step", 1)
-            strd_interleave = e.get("strd_interleave", 0)
-            strd_interleave_step = e.get("strd_interleave_step", 1)
-            split_factor = e.get("split_factor", 0)
-            vector_size_bits = e.get("vector_size_bits", 0)
-            matrix_req = e.get("matrix_req", "matrix_requirement::cntg_one")
-            kernel = e.get("kernel", "nullptr")
-            kstr = kernel.strip() if isinstance(kernel, str) else "nullptr"
-            if isinstance(kernel, str) and kstr.startswith("&"):
-                kernel_repr = kstr
-            else:
-                kernel_repr = f"&{kstr}" if kstr != "nullptr" else "nullptr"
-            init = f"    interleave_kernel_spec {{ {cntg_interleave}_ki, {strd_interleave}_ki, {cntg_interleave_step}_ki, {strd_interleave_step}_ki, {split_factor}_ki, {vector_size_bits}_ki, {matrix_req}, {kernel_repr} }},\n"
-            lines.append(init)
-        lines.append("};\n\n")
-    return f"""
-#ifndef PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
+        values = (
+            f"{self.cntg_interleave}_ki",
+            f"{self.strd_interleave}_ki",
+            f"{self.cntg_interleave_step}_ki",
+            f"{self.strd_interleave_step}_ki",
+            f"{self.split_factor}_ki",
+            f"{self.vector_size_bits}_ki",
+            self.matrix_req,
+            kernel,
+        )
+        return f"    interleave_kernel_spec {{ {', '.join(values)} }},"
+
+
+@dataclass
+class InterleaveKernelTable:
+    kind: str
+    arguments: tuple[str, ...]
+    src_data_type: str
+    dst_data_type: str
+    template_parameters: tuple[str, ...]
+    entries: tuple[InterleaveKernelSpec, ...]
+
+    @classmethod
+    def from_json(
+        cls, key: str, entries: list[dict[str, object]]
+    ) -> "InterleaveKernelTable":
+        kind, arguments_string = key.split("<", maxsplit=1)
+        arguments_string = arguments_string.removesuffix(">")
+        arguments = tuple(argument.strip() for argument in arguments_string.split(","))
+        template_parameters = tuple(
+            TEMPLATE_PARAMETERS[argument]
+            for argument in arguments
+            if argument in TEMPLATE_PARAMETERS
+        )
+
+        return cls(
+            kind=kind,
+            arguments=arguments,
+            src_data_type=arguments[1],
+            dst_data_type=arguments[2],
+            template_parameters=template_parameters,
+            entries=tuple(InterleaveKernelSpec(**entry) for entry in entries),
+        )
+
+    def to_cpp(self) -> str:
+        template_declaration = ", ".join(self.template_parameters)
+        arguments = ", ".join(self.arguments)
+        target = (
+            "interleave_kernel_specs"
+            if self.kind == "primary"
+            else f"interleave_kernel_specs<{arguments}>"
+        )
+        declaration = (
+            f"template<{template_declaration}>\n"
+            "inline\n"
+            f"constexpr auto {target} = "
+        )
+
+        if not self.entries:
+            return (
+                f"{declaration}std::array<interleave_kernel_spec<"
+                f"{self.src_data_type}, {self.dst_data_type}>, 0> {{ }};"
+            )
+
+        entries = "\n".join(entry.to_cpp() for entry in self.entries)
+        return f"{declaration}std::array {{\n{entries}\n}};"
+
+
+def generate_cpp_from_data(data: dict[str, list[dict[str, object]]]) -> str:
+    tables = [
+        InterleaveKernelTable.from_json(key, entries)
+        for key, entries in data.items()
+    ]
+    tables.sort(key=lambda table: table.kind != "primary")
+
+    generated_tables = "\n\n".join(table.to_cpp() for table in tables)
+
+    return f"""#ifndef PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 #define PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 
 #include "interleave_kernels_pre.hpp"
 
 namespace perflibs::linalg {{
 
-{"".join(lines)}
+{generated_tables}
+
+template<kernel_inttype Flags, typename ProblemContext, typename System, typename... Types>
+PERFLIBS_LINALG_INLINE
+auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System) {{
+    return interleave_kernel_specs<Flags, Types..., typename ProblemContext::architecture_spec_type>;
+}}
+
 }} // namespace perflibs::linalg
 
 #endif //PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 """
 
-def main():
-    parser = argparse.ArgumentParser(description='Generate C++ interleave_kernel_specs from a JSON description.')
-    parser.add_argument('input_json', help='Path to input JSON file')
-    parser.add_argument('output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                        help='Output C++ file path (optional). Defaults to stdout.')
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Generate C++ interleave_kernel_specs from JSON."
+    )
+    parser.add_argument("input_json", help="Path to input JSON file")
+    parser.add_argument(
+        "output",
+        nargs="?",
+        help="Output C++ file path (optional). Defaults to stdout.",
+    )
     args = parser.parse_args()
 
-    with open(args.input_json, 'r') as fh:
-        data = json.load(fh)
+    with Path(args.input_json).open(encoding="utf-8") as input_file:
+        data = json.load(input_file)
 
     cpp = generate_cpp_from_data(data)
 
-    # args.output is a file-like object (sys.stdout or an open file); write to it.
-    args.output.write(cpp)
+    if args.output is None:
+        sys.stdout.write(cpp)
+    else:
+        Path(args.output).write_text(cpp, encoding="utf-8")
+        print(f"Wrote {args.output}", file=sys.stderr)
 
-    # If argparse opened a file for us (not stdout), close it to flush to disk.
-    if args.output is not sys.stdout:
-        args.output.close()
-        print(f"Wrote {args.output.name}", file=sys.stderr)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

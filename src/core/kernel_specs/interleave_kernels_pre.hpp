@@ -212,7 +212,7 @@ struct interleave_kernel_spec {
 
 	vector_length_value                            cntg_interleave = 1_ki;
 	vector_length_value                            strd_interleave;             // renamed from 'interleave'
-	kernel_inttype                                 cntg_interleave_step = 0;
+	kernel_inttype                                 cntg_interleave_step = 1;
 	kernel_inttype                                 strd_interleave_step = 1;
 	kernel_inttype                                 split_factor;
 
@@ -228,32 +228,9 @@ struct interleave_kernel_spec {
 template<kernel_inttype Flags, typename SrcDataType, typename DstDataType>
 struct interleave_kernel_specs_tag { };
 
-template<kernel_inttype Flags, typename SrcDataType, typename DstDataType, typename ArchitectureSpec>
-inline
-constexpr auto interleave_kernel_specs = std::array {
-    interleave_kernel_spec { 1_ki, 2_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<2, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 4_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<4, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 5_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<5, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 6_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<6, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 8_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<8, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 9_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<9, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 12_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<12, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 16_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::cntg_one, &n_cpp_interleave<16, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 2_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<2, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 4_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<4, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 5_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<5, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 6_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<6, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 8_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<8, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 9_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<9, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 12_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<12, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-    interleave_kernel_spec { 1_ki, 16_ki, 0_ki, 1_ki, 0_ki, 0_ki, matrix_requirement::strd_one, &t_cpp_interleave<16, Flags, SrcDataType, DstDataType, ArchitectureSpec> },
-};
-
 template<kernel_inttype Flags, typename ProblemContext, typename System, typename... Types>
 PERFLIBS_LINALG_INLINE
-auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System) {
-	return interleave_kernel_specs<Flags, Types..., typename ProblemContext::architecture_spec_type>;
-}
+auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System);
 
 template<typename ProblemContext>
 PERFLIBS_LINALG_INLINE

@@ -62,7 +62,7 @@ public:
 
 	PERFLIBS_LINALG_INLINE kernel_inttype    strd_interleave()      const { return interleave_;   }
 	PERFLIBS_LINALG_INLINE kernel_inttype    cntg_interleave()      const { return 1_ki;   }
-	PERFLIBS_LINALG_INLINE kernel_inttype    cntg_interleave_step() const { return 0_ki;   }
+	PERFLIBS_LINALG_INLINE kernel_inttype    cntg_interleave_step() const { return 1_ki;   }
 	PERFLIBS_LINALG_INLINE kernel_inttype    strd_interleave_step() const { return 1_ki;   }
 	PERFLIBS_LINALG_INLINE kernel_inttype    cntg_tile_step()       const { return strd_interleave(); }
 	PERFLIBS_LINALG_INLINE kernel_inttype    strd_tile_step()       const { return strd_step();   }
