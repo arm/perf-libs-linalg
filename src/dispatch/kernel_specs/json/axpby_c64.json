@@ -1,6 +1,7 @@
 [
 	{
 		"kernel_name": "axpby_fallback<false, complex_double, complex_double, complex_double, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -16,6 +17,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_double, complex_double, complex_double, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -31,6 +33,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_double, complex_double, complex_double, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -46,6 +49,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_double, complex_double, complex_double, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -61,6 +65,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_double, complex_double, complex_double, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -76,6 +81,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_double, complex_double, complex_double, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -91,6 +97,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_double, complex_double, complex_double, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
@@ -106,6 +113,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_double, complex_double, complex_double, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",

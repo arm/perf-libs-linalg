@@ -1,6 +1,7 @@
 [
 	{
 		"kernel_name": "axpby_fallback<false, double, double, double, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "r64",
 		"b_type": "r64",
 		"c_type": "r64",
@@ -15,6 +16,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, double, double, double, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "r64",
 		"b_type": "r64",
 		"c_type": "r64",
@@ -29,6 +31,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, double, double, double, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "r64",
 		"b_type": "r64",
 		"c_type": "r64",
@@ -43,6 +46,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, double, double, double, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "r64",
 		"b_type": "r64",
 		"c_type": "r64",

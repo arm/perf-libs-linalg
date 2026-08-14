@@ -14,6 +14,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "bf16",
 		"b_type": "bf16",
 		"c_type": "bf16",
@@ -28,6 +29,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "bf16",
 		"b_type": "bf16",
 		"c_type": "bf16",
@@ -42,6 +44,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "bf16",
 		"b_type": "bf16",
 		"c_type": "bf16",
@@ -56,6 +59,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, bf16, bf16, bf16, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "bf16",
 		"b_type": "bf16",
 		"c_type": "bf16",

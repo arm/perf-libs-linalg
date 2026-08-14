@@ -13,7 +13,6 @@
 #include "framework/copy_kernels.hpp"
 #include "framework/scal_kernels.hpp"
 #include "framework/vecadd_kernels.hpp"
-#include "framework/axpby_fallback_kernel.hpp"
 
 namespace perflibs::linalg {
 

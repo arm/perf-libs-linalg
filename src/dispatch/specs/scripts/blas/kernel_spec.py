@@ -130,9 +130,10 @@ class KernelSpecGenerator:
         input_json = {
             "kernel_spec": kernel_spec,
         }
-        passes = (
-            [KernelIndexer(self.kernel_name, self.cpp_type)] if array_index else []
+        kernel_table = (
+            f"{self.kernel_name}_kernels<{self.arch_spec}, {self.cpp_type}>"
         )
+        passes = [KernelIndexer(kernel_table)] if array_index else []
         get_kernel_cases_cpp = generate_cpp(input_json, reader=Reader(), passes=passes)
 
         matrix_datatypes = utils.get_matrix_types(self.routine["datatype"])
@@ -229,7 +230,7 @@ std::optional<{self.kernel_type}> get_{self.kernel_name}_kernel_live(
             if (entry["routine"] == "{self.routine_name}" && entry["datatype"] == "{self.datatype}") {{
                 const auto& kernel_spec = entry["kernel_spec"];
                 if (kernel_spec.type() == nlohmann::json::value_t::object) {{
-                    kernel = try_get_kernel<{self.cpp_type}>(kernel_spec[case_str].get<std::string>()).value().kernel;
+                    kernel = try_get_kernel<{self.arch_spec}, {self.cpp_type}>(kernel_spec[case_str].get<std::string>()).value().kernel;
                 }}
             }}
         }}

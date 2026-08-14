@@ -15,11 +15,20 @@ AXPBY_KERNEL_GENERATOR := $(KERNEL_SPECS_SCRIPTS_DIR)/axpby_kernels.py
 AXPBY_KERNEL_HPP_PATH := $(KERNEL_SPECS_BUILD_DIR)/axpby_kernels.hpp
 
 KERNEL_SPECS_HPP_PATHS := $(addprefix $(KERNEL_SPECS_BUILD_DIR)/,$(addsuffix .hpp,$(KERNEL_SPECS_NAMES))) $(AXPBY_KERNEL_HPP_PATH)
+KERNEL_SPECS_CPP_PATHS = $(foreach architecture,$(ARCHITECTURES),$(GENERATE_DIR)/architectures/$(architecture)/linalg/kernel_specs/axpby_fallback_instantiations.cpp)
+KERNEL_SPECS_OBJ_PATHS = $(patsubst $(GENERATE_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(KERNEL_SPECS_CPP_PATHS))
 
 .PRECIOUS: $(KERNEL_SPECS_HPP_PATHS)
 $(KERNEL_SPECS_BUILD_DIR)/%.hpp: $(KERNEL_SPECS_JSON_DIR)/%.json $(KERNEL_SPECS_SCRIPTS_DIR)/%.py
 	mkdir -p $(@D)
 	$(PYTHON) $(KERNEL_SPECS_SCRIPTS_DIR)/$*.py $< $@.tmp
+	$(FORMAT) $@.tmp || true
+	test -s $@.tmp && mv $@.tmp $@
+
+.PRECIOUS: $(GENERATE_DIR)/architectures/%/linalg/kernel_specs/axpby_fallback_instantiations.cpp
+$(GENERATE_DIR)/architectures/%/linalg/kernel_specs/axpby_fallback_instantiations.cpp: $(AXPBY_KERNEL_JSON_PATHS) $(AXPBY_KERNEL_GENERATOR)
+	mkdir -p $(@D)
+	$(PYTHON) $(AXPBY_KERNEL_GENERATOR) --fallback-instantiations $* $(AXPBY_KERNEL_JSON_PATHS) > $@.tmp
 	$(FORMAT) $@.tmp || true
 	test -s $@.tmp && mv $@.tmp $@
 

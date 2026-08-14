@@ -1,6 +1,7 @@
 [
 	{
 		"kernel_name": "axpby_fallback<false, complex_float, complex_float, complex_float, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -16,6 +17,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_float, complex_float, complex_float, zero_mode::set, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -31,6 +33,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_float, complex_float, complex_float, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -46,6 +49,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_float, complex_float, complex_float, zero_mode::set, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -61,6 +65,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_float, complex_float, complex_float, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -76,6 +81,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_float, complex_float, complex_float, zero_mode::scale, zero_mode::set>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -91,6 +97,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<false, complex_float, complex_float, complex_float, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
@@ -106,6 +113,7 @@
 	},
 	{
 		"kernel_name": "axpby_fallback<true, complex_float, complex_float, complex_float, zero_mode::scale, zero_mode::scale>",
+		"implementation": { "kind": "fallback" },
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
