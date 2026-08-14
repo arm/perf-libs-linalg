@@ -189,7 +189,7 @@ def generate_live_target_routine_header(routine, pkg):
 
 #include "{pkg.name}/tuned_routine_specs.hpp"
 
-#include "blas/kernels/axpby_kernels.hpp"
+#include "kernel_specs/axpby_kernels.hpp"
 
 #include "packages/{package}/fwd.hpp"
 #include "spec/problem_context.hpp"

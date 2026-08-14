@@ -9,7 +9,15 @@ import sys
 
 from pathlib import Path
 
-import utils
+CPP_TYPE_NAMES = {
+    "bf16": "bfloat16_t",
+    "r16": "half",
+    "r32": "float",
+    "r64": "double",
+    "c16": "complex_half",
+    "c32": "complex_float",
+    "c64": "complex_double",
+}
 
 
 def generate_spec_entry(entry, cpp_type):
@@ -83,7 +91,9 @@ def generate(data):
         datatypes.add((d["a_type"], d["b_type"], d["c_type"]))
 
     for dt_a, dt_b, dt_c in sorted(datatypes):
-        cpp_type = utils.to_cpp_typename("".join([dt_a, dt_b, dt_c]))
+        cpp_type = ", ".join(
+            CPP_TYPE_NAMES[datatype] for datatype in (dt_a, dt_b, dt_c)
+        )
 
         content = ",\n".join(
             generate_spec_entry(x, cpp_type)

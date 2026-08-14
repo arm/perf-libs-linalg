@@ -54,7 +54,7 @@ def generate_tuned_spec(
         headers.append("spec/config.hpp")
     if "kernel_spec" in routine:
         kernel_name = routine["tuned_routine_spec"]["kernel"]["kernel_name"]
-        headers.append(f"{pkg_name}/kernels/{kernel_name}_kernels.hpp")
+        headers.append(f"kernel_specs/{kernel_name}_kernels.hpp")
 
     includes = "\n".join(f'#include "{header}"' for header in sorted(headers))
     live_target_spec_name = (
