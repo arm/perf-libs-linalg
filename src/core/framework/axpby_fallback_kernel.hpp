@@ -6,7 +6,7 @@
 #ifndef PERFLIBS_LINALG_AXPBY_FALLBACK_KERNEL_HPP
 #define PERFLIBS_LINALG_AXPBY_FALLBACK_KERNEL_HPP
 
-#include "framework/linalg_util.hpp"
+#include "framework/axpby_fallback_kernel_fwd.hpp"
 #include "perflibs_assert.hpp"
 
 namespace perflibs::linalg {
@@ -30,9 +30,9 @@ void axpby_fallback_impl(kernel_inttype n, AlphaType alpha, const XType *x, XSte
 	}
 }
 
+} // namespace
 
-template<bool IsConj, typename XType, typename YType, typename ScalType, zero_mode AlphaZero = zero_mode::set, zero_mode BetaZero = zero_mode::set>
-[[maybe_unused]]
+template<bool IsConj, typename ArchitectureSpec, typename XType, typename YType, typename ScalType, zero_mode AlphaZero, zero_mode BetaZero>
 void axpby_fallback(kernel_inttype n, ScalType alpha, const XType *x, ScalType beta, YType *y, kernel_inttype x_step, kernel_inttype y_step) {
 
 	constexpr float_zero<ScalType> fp_zero;
@@ -139,7 +139,6 @@ void axpby_fallback(kernel_inttype n, ScalType alpha, const XType *x, ScalType b
 	}
 }
 
-}
 } // namespace perflibs::linalg
 
 #endif //PERFLIBS_LINALG_AXPBY_FALLBACK_KERNEL_HPP

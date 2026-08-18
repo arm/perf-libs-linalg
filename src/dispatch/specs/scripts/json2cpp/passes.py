@@ -342,8 +342,7 @@ class LiftLiveCases(Visitor):
 
 @dataclass
 class KernelIndexer(Visitor):
-    routine: str
-    cpp_type: str
+    table: str
 
     def statement(self, s):
         match s:
@@ -352,7 +351,7 @@ class KernelIndexer(Visitor):
                 for cond, ret, comment in cases:
                     assert isinstance(ret, Return)
                     v = ret.value.value
-                    v = f"{self.routine}_kernels<{self.cpp_type}>[{v}].second.kernel"
+                    v = f"{self.table}[{v}].second.kernel"
                     cases_new.append((cond, Return(Value(v)), comment))
                 return JumpTable(cases_new)
             case _:

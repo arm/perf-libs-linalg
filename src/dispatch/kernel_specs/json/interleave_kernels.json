@@ -1,0 +1,791 @@
+{
+  "primary<Flags,SrcDataType,DstDataType,ArchitectureSpec>": [
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    }
+  ],
+  "specialization<Flags,r16,r16,ArchitectureSpec>": [],
+  "specialization<kernel_inttype(interleave_flags::None),bf16,bf16,ArchitectureSpec>": [
+    {
+      "cntg_interleave": 4,
+      "strd_interleave": 4,
+      "cntg_interleave_step": 1,
+      "strd_interleave_step": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::any",
+      "kernel": "tile_interleave<4_ki, 4_ki, bf16, bf16>"
+    },
+    {
+      "cntg_interleave": 4,
+      "strd_interleave": 6,
+      "cntg_interleave_step": 1,
+      "strd_interleave_step": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::any",
+      "kernel": "tile_interleave<4_ki, 6_ki, bf16, bf16>"
+    },
+    {
+      "cntg_interleave": 4,
+      "strd_interleave": 8,
+      "cntg_interleave_step": 1,
+      "strd_interleave_step": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::any",
+      "kernel": "tile_interleave<4_ki, 8_ki, bf16, bf16>"
+    },
+    {
+      "cntg_interleave": 4,
+      "strd_interleave": 12,
+      "cntg_interleave_step": 1,
+      "strd_interleave_step": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::any",
+      "kernel": "tile_interleave<4_ki, 12_ki, bf16, bf16>"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 10,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 20,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 24,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 32,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 10,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 20,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 24,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 32,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    }
+  ],
+  "specialization<kernel_inttype(interleave_flags::None),r32,r32,ArchitectureSpec>": [
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s4>"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s8>"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_s2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_s4>"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_s6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_s8>"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    }
+  ],
+  "specialization<kernel_inttype(interleave_flags::None),r64,r64,ArchitectureSpec>": [
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_d2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_d4>"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_d6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_d8>"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 20,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 32,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 64,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_d2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_d4>"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_d6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_d8>"
+    },
+    {
+      "strd_interleave": 9,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 16,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 20,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_kernel_d20>"
+    },
+    {
+      "strd_interleave": 32,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 64,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    }
+  ],
+  "specialization<kernel_inttype(interleave_flags::None),c32,c32,ArchitectureSpec>": [
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_c2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_c4>"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_c6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_c8>"
+    },
+    {
+      "strd_interleave": 10,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 10,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 12,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 4,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_split_complex_ir4<r32>>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 4,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_split_complex_ir4<r32>>"
+    }
+  ],
+  "specialization<kernel_inttype(interleave_flags::None),c64,c64,ArchitectureSpec>": [
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_z2>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_z4>"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_z6>"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_z8>"
+    },
+    {
+      "strd_interleave": 2,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 5,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 6,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 8,
+      "split_factor": 0,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "implementation": "fallback"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 4,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_split_complex_ir4<r64>>"
+    },
+    {
+      "strd_interleave": 4,
+      "split_factor": 4,
+      "vector_size_bits": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_shim<&t_interleave_split_complex_ir4<r64>>"
+    }
+  ],
+  "fallback_instantiations": [
+    {
+      "flags": [],
+      "data_types": ["bf16", "r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["IsConj"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagUnit", "LowerVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagUnit", "UpperVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "LowerVirt"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "UpperVirt"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagReal", "LowerVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["DiagVirt", "DiagReal", "UpperVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["IsConj", "DiagVirt", "LowerVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["IsConj", "DiagVirt", "UpperVirt"],
+      "data_types": ["c32", "c64"]
+    },
+    {
+      "flags": ["LowerVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    },
+    {
+      "flags": ["UpperVirt", "VirtZero"],
+      "data_types": ["r32", "r64", "c32", "c64"]
+    }
+  ]
+}

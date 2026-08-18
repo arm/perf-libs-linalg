@@ -118,29 +118,6 @@ $(HPP_TUNED_ROUTINE_SPECS_PATH): $(JSON_TEMPLATES_PATHS)  $(GENERATE_ROUTINE_SPE
 		($(CLANG_FORMAT) || cat) > $@
 
 
-# ==============================================================
-# PART 3: Generate kernels
-
-# Requires following script:
-GENERATE_KERNELS := $(SCRIPTS_DIR)/generate_kernels.py
-# Add these in an extra folder along with all the target folders
-KERNELS_DIR := $(PKG_HPP_SPECS_DIR)/kernels
-KERNELS_JSON_DIR := $(ALL_SPECS_DIR)/json_kernels
-# For now only enabled for blas
-ifeq ($(PACKAGE), blas)
-# TODO: this needs to be more generic once we handle more than axpby-like
-AXPBY_HPP_PATHS := $(KERNELS_DIR)/axpby_kernels.hpp
-.SECONDEXPANSION:
-$(PKG_HPP_SPECS_DIR)/kernels/%_kernels.hpp: $$(wildcard $(KERNELS_JSON_DIR)/$$*_*.json)
-	mkdir -p $(@D)
-	@echo Generating $@ from $^
-	$(PYTHON) $(GENERATE_KERNELS) $^ | \
-		($(CLANG_FORMAT) || cat) > $@
-endif
-
-.PHONY: kernels
-kernels: $(AXPBY_HPP_PATHS)
-
 # ========================================
 .PHONY: all
-all: hpp-specs routine-specs kernels
+all: hpp-specs routine-specs
