@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Performance
+
+- Improve instruction scheduling in the SVE complex GEMM kernels.
+
 ## [26.07]
 
 This is the initial release of `perf-libs-linalg`.
