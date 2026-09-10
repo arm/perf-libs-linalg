@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Performance
 
 - Improve instruction scheduling in the SVE complex GEMM kernels.
+- Improve SVE transposed GEMV performance with strided output.
 
 ## [26.07]
 
