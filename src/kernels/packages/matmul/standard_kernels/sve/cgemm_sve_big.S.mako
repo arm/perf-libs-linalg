@@ -266,56 +266,56 @@ bne .Lbgeneral_loop_m
 				addvl	x_A_addr, x_A_addr, #3
 
 				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i0zj7.s, z_A_i0z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i0zj7.s, z_A_i0z.s, z_B_j67.s[1], _ROT2
 				ld1w	z_A_i0z.s, p_all/z, [x_A_addr]
 
 				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i1zj7.s, z_A_i1z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i1zj7.s, z_A_i1z.s, z_B_j67.s[1], _ROT2
 				ld1w	z_A_i1z.s, p_all/z, [x_A_addr, #1, mul vl]
 
 				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i2zj7.s, z_A_i2z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i2zj7.s, z_A_i2z.s, z_B_j67.s[1], _ROT2
 				ld1w	z_A_i2z.s, p_all/z, [x_A_addr, #2, mul vl]
 
@@ -331,54 +331,54 @@ bne .Lbgeneral_loop_m
 				ld1rqw	z_B_j67.s, p_all/z, [x_B_addr, #48]
 
 				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i0zj7.s, z_A_i0z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i0zj0.s, z_A_i0z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i0zj1.s, z_A_i0z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i0zj2.s, z_A_i0z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i0zj3.s, z_A_i0z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i0zj4.s, z_A_i0z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i0zj5.s, z_A_i0z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i0zj6.s, z_A_i0z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i0zj7.s, z_A_i0z.s, z_B_j67.s[1], _ROT2
 
 				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i1zj7.s, z_A_i1z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i1zj0.s, z_A_i1z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i1zj1.s, z_A_i1z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i1zj2.s, z_A_i1z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i1zj3.s, z_A_i1z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i1zj4.s, z_A_i1z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i1zj5.s, z_A_i1z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i1zj6.s, z_A_i1z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i1zj7.s, z_A_i1z.s, z_B_j67.s[1], _ROT2
 
 				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT1
-				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT2
 				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT1
-				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT2
 				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT1
-				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT2
 				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT1
-				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT2
 				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT1
-				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT2
 				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT1
-				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT2
 				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT1
-				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i2zj7.s, z_A_i2z.s, z_B_j67.s[1], _ROT1
+				fcmla	z_AB_i2zj0.s, z_A_i2z.s, z_B_j01.s[0], _ROT2
+				fcmla	z_AB_i2zj1.s, z_A_i2z.s, z_B_j01.s[1], _ROT2
+				fcmla	z_AB_i2zj2.s, z_A_i2z.s, z_B_j23.s[0], _ROT2
+				fcmla	z_AB_i2zj3.s, z_A_i2z.s, z_B_j23.s[1], _ROT2
+				fcmla	z_AB_i2zj4.s, z_A_i2z.s, z_B_j45.s[0], _ROT2
+				fcmla	z_AB_i2zj5.s, z_A_i2z.s, z_B_j45.s[1], _ROT2
+				fcmla	z_AB_i2zj6.s, z_A_i2z.s, z_B_j67.s[0], _ROT2
 				fcmla	z_AB_i2zj7.s, z_A_i2z.s, z_B_j67.s[1], _ROT2
 			${L}_loop_k_store:
 				ld1rd	z_alpha.d, p_all/z, [sp, #48]

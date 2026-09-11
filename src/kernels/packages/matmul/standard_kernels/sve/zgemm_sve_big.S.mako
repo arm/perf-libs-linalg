@@ -264,50 +264,50 @@ bne .Lbgeneral_loop_m
 				addvl	x_A_addr, x_A_addr, #4
 
 				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i0zj4.d, p_all/m, z_A_i0z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i0zj4.d, p_all/m, z_A_i0z.d, z_B_j4.d, _ROT2
 				ld1d	z_A_i0z.d, p_all/z, [x_A_addr]
 
 				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i1zj4.d, p_all/m, z_A_i1z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i1zj4.d, p_all/m, z_A_i1z.d, z_B_j4.d, _ROT2
 				ld1d	z_A_i1z.d, p_all/z, [x_A_addr, #1, mul vl]
 
 				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i2zj4.d, p_all/m, z_A_i2z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i2zj4.d, p_all/m, z_A_i2z.d, z_B_j4.d, _ROT2
 				ld1d	z_A_i2z.d, p_all/z, [x_A_addr, #2, mul vl]
 
 				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i3zj4.d, p_all/m, z_A_i3z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i3zj4.d, p_all/m, z_A_i3z.d, z_B_j4.d, _ROT2
 				ld1d	z_A_i3z.d, p_all/z, [x_A_addr, #3, mul vl]
 
@@ -323,47 +323,47 @@ bne .Lbgeneral_loop_m
 				ld1rqd	z_B_j4.d, p_all/z, [x_B_addr, #64]
 
 				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i0zj4.d, p_all/m, z_A_i0z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i0zj0.d, p_all/m, z_A_i0z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i0zj1.d, p_all/m, z_A_i0z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i0zj2.d, p_all/m, z_A_i0z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i0zj3.d, p_all/m, z_A_i0z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i0zj4.d, p_all/m, z_A_i0z.d, z_B_j4.d, _ROT2
 
 				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i1zj4.d, p_all/m, z_A_i1z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i1zj0.d, p_all/m, z_A_i1z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i1zj1.d, p_all/m, z_A_i1z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i1zj2.d, p_all/m, z_A_i1z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i1zj3.d, p_all/m, z_A_i1z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i1zj4.d, p_all/m, z_A_i1z.d, z_B_j4.d, _ROT2
 
 				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i2zj4.d, p_all/m, z_A_i2z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i2zj0.d, p_all/m, z_A_i2z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i2zj1.d, p_all/m, z_A_i2z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i2zj2.d, p_all/m, z_A_i2z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i2zj3.d, p_all/m, z_A_i2z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i2zj4.d, p_all/m, z_A_i2z.d, z_B_j4.d, _ROT2
 
 				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT1
-				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT2
 				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT1
-				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT2
 				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT1
-				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT2
 				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT1
-				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i3zj4.d, p_all/m, z_A_i3z.d, z_B_j4.d, _ROT1
+				fcmla	z_AB_i3zj0.d, p_all/m, z_A_i3z.d, z_B_j0.d, _ROT2
+				fcmla	z_AB_i3zj1.d, p_all/m, z_A_i3z.d, z_B_j1.d, _ROT2
+				fcmla	z_AB_i3zj2.d, p_all/m, z_A_i3z.d, z_B_j2.d, _ROT2
+				fcmla	z_AB_i3zj3.d, p_all/m, z_A_i3z.d, z_B_j3.d, _ROT2
 				fcmla	z_AB_i3zj4.d, p_all/m, z_A_i3z.d, z_B_j4.d, _ROT2
 			${L}_loop_k_store:
 				add	x_temp_0, x_m_idx, x_numquads
