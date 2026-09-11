@@ -434,11 +434,16 @@ get_gemv_sve_kernel(const ProblemContext& pctx, kernel_inttype max_threads) {
 	using b_data_type = std::remove_cv_t<typename ProblemContext::b_matrix_type::value_type>;
 	using c_data_type = std::remove_cv_t<typename ProblemContext::c_matrix_type::value_type>;
 
+	// Only the transpose kernels support non-unit output strides.
+	const auto incy = gemv_incy(pctx);
+	const bool supported_incy =
+		incy == 1 || (incy != 0 && is_cntg_contig(pctx.a));
+
 	if constexpr(std::is_same_v<scalar_type, r32>
 	          && std::is_same_v<a_data_type, r32>
 	          && std::is_same_v<b_data_type, r32>
 	          && std::is_same_v<c_data_type, r32>) {
-		if (gemv_incx(pctx) == 1 && gemv_incy(pctx) == 1) {
+		if (gemv_incx(pctx) == 1 && supported_incy) {
 			if (is_cntg_contig(pctx.a)) {
 				return sgemv_t_sve_spec;
 			}
@@ -451,7 +456,7 @@ get_gemv_sve_kernel(const ProblemContext& pctx, kernel_inttype max_threads) {
 	               && std::is_same_v<a_data_type, r64>
 	               && std::is_same_v<b_data_type, r64>
 	               && std::is_same_v<c_data_type, r64>) {
-		if (gemv_incx(pctx) == 1 && gemv_incy(pctx) == 1) {
+		if (gemv_incx(pctx) == 1 && supported_incy) {
 			if (is_cntg_contig(pctx.a)) {
 				return dgemv_t_sve_spec;
 			}
@@ -464,7 +469,7 @@ get_gemv_sve_kernel(const ProblemContext& pctx, kernel_inttype max_threads) {
 	               && std::is_same_v<a_data_type, c32>
 	               && std::is_same_v<b_data_type, c32>
 	               && std::is_same_v<c_data_type, c32>) {
-		if (gemv_incx(pctx) == 1 && gemv_incy(pctx) == 1) {
+		if (gemv_incx(pctx) == 1 && supported_incy) {
 			if (is_cntg_contig(pctx.a)) {
 				if (pctx.a.is_conj()) {
 					return cgemv_c_sve_spec;
@@ -482,7 +487,7 @@ get_gemv_sve_kernel(const ProblemContext& pctx, kernel_inttype max_threads) {
 	               && std::is_same_v<a_data_type, c64>
 	               && std::is_same_v<b_data_type, c64>
 	               && std::is_same_v<c_data_type, c64>) {
-		if (gemv_incx(pctx) == 1 && gemv_incy(pctx) == 1) {
+		if (gemv_incx(pctx) == 1 && supported_incy) {
 			if (is_cntg_contig(pctx.a)) {
 				if (pctx.a.is_conj()) {
 					return zgemv_c_sve_spec;
