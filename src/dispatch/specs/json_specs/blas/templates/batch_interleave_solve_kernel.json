@@ -1,0 +1,25 @@
+[
+	{
+		"routine": "batch_interleave_solve_kernel",
+		"datatype": [
+			"r64"
+		],
+		"target": "generic_aarch64",
+		"strategy_tag": "batch_interleave_solve_kernel",
+		"problem_context_base": "solve_problem<{0}>",
+		"tuned_routine_spec": {
+			"kernel": {
+				"type": "kernel",
+				"kernel_name": "batch_interleave_trsm",
+				"num_types": 2,
+				"type_source": "data_type",
+				"default": "default"
+			},
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "batch_interleave/solve"
+	}
+]

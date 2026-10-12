@@ -78,7 +78,6 @@ namespace simd {
 	PERFLIBS_LINALG_INLINE void store1(double *ptr, float64x2_t val) { vst1q_f64(ptr, val); }
 	PERFLIBS_LINALG_INLINE void store1(float *ptr, float32x4_t val) { vst1q_f32(ptr, val); }
 
-	//TODO extend these are required
 	PERFLIBS_LINALG_INLINE double add(double v0, double v1) { return v0 + v1; }
 	PERFLIBS_LINALG_INLINE double sub(double v0, double v1) { return v0 - v1; }
 	PERFLIBS_LINALG_INLINE double div(double v0, double v1) { return v0 / v1; }
@@ -338,6 +337,15 @@ class interleave_batch : public BatchBase {
 public:
 	using value_type = typename BatchBase::value_type;
 private:
+	template<optype OP, typename T>
+	static PERFLIBS_LINALG_INLINE
+	T apply_operation(const T lhs, const T rhs) {
+		if constexpr(OP == optype::add) return simd::add(lhs, rhs);
+		else if constexpr(OP == optype::sub) return simd::sub(lhs, rhs);
+		else if constexpr(OP == optype::div) return simd::div(lhs, rhs);
+		else return simd::mul(lhs, rhs);
+	}
+
 	/**
 	 * as +=, -=, /=, *= are effectively the same operation
 	 * with only one instruction different then this function
@@ -353,7 +361,7 @@ private:
 	PERFLIBS_LINALG_INLINE
 	void assign(const ExprRhs& rhs) {
 		const auto cntg = max(BatchBase::cntg(), rhs.cntg());
-		auto data = BatchBase::data();
+		const auto data = BatchBase::data();
 
 /*
 	The loads below are not predicated. Disable for now.
@@ -388,81 +396,54 @@ private:
 		if constexpr(is_same_rem_cv_v<value_type, double> && simd::is_neon) {
 			switch(cntg) {
 			case 8_ki: {
-				auto a0 =              get_as<float64x2x2_t>(0);
-				auto b0 = rhs.template get_as<float64x2x2_t>(0);
-				auto a1 =              get_as<float64x2x2_t>(4);
-				auto b1 = rhs.template get_as<float64x2x2_t>(4);
-
-				if constexpr(OP == optype::add) {
-					b0.val[0] = vaddq_f64(a0.val[0], b0.val[0]);
-					b0.val[1] = vaddq_f64(a0.val[1], b0.val[1]);
-					b1.val[0] = vaddq_f64(a1.val[0], b1.val[0]);
-					b1.val[1] = vaddq_f64(a1.val[1], b1.val[1]);
-				}
-				else if constexpr(OP == optype::sub) {
-					b0.val[0] = vsubq_f64(a0.val[0], b0.val[0]);
-					b0.val[1] = vsubq_f64(a0.val[1], b0.val[1]);
-					b1.val[0] = vsubq_f64(a1.val[0], b1.val[0]);
-					b1.val[1] = vsubq_f64(a1.val[1], b1.val[1]);
-				}
-				else if constexpr(OP == optype::div) {
-					b0.val[0] = vdivq_f64(a0.val[0], b0.val[0]);
-					b0.val[1] = vdivq_f64(a0.val[1], b0.val[1]);
-					b1.val[0] = vdivq_f64(a1.val[0], b1.val[0]);
-					b1.val[1] = vdivq_f64(a1.val[1], b1.val[1]);
-				}
-				else if constexpr(OP == optype::mul) {
-					b0.val[0] = vmulq_f64(a0.val[0], b0.val[0]);
-					b0.val[1] = vmulq_f64(a0.val[1], b0.val[1]);
-					b1.val[0] = vmulq_f64(a1.val[0], b1.val[0]);
-					b1.val[1] = vmulq_f64(a1.val[1], b1.val[1]);
-				}
-
-				simd::store(data,   b0);
-				simd::store(data+4, b1);
+				const auto a0 = get_as<float64x2x2_t>(0);
+				const auto b0 = rhs.template get_as<float64x2x2_t>(0);
+				const auto a1 = get_as<float64x2x2_t>(4);
+				const auto b1 = rhs.template get_as<float64x2x2_t>(4);
+				simd::store(data, apply_operation<OP>(a0, b0));
+				simd::store(data + 4, apply_operation<OP>(a1, b1));
 				return;
 			}
 			case 4_ki: {
-				auto [ a0, a1 ] =              get_as<float64x2x2_t>(0).val;
-				auto [ b0, b1 ] = rhs.template get_as<float64x2x2_t>(0).val;
-
-				float64x2x2_t ret;
-
-				if constexpr(OP == optype::add) {
-					ret.val[0] = vaddq_f64(a0, b0);
-					ret.val[1] = vaddq_f64(a1, b1);
-				}
-				else if constexpr(OP == optype::sub) {
-					ret.val[0] = vsubq_f64(a0, b0);
-					ret.val[1] = vsubq_f64(a1, b1);
-				}
-				else if constexpr(OP == optype::div) {
-					ret.val[0] = vdivq_f64(a0, b0);
-					ret.val[1] = vdivq_f64(a1, b1);
-				}
-				else if constexpr(OP == optype::mul) {
-					ret.val[0] = vmulq_f64(a0, b0);
-					ret.val[1] = vmulq_f64(a1, b1);
-				}
-
-				simd::store(data, ret);
+				const auto a = get_as<float64x2x2_t>(0);
+				const auto b = rhs.template get_as<float64x2x2_t>(0);
+				simd::store(data, apply_operation<OP>(a, b));
 				return;
 			}
 			case 2_ki: {
-				auto a0 =              get_as<float64x2_t>(0);
-				auto b0 = rhs.template get_as<float64x2_t>(0);
-
-				if      constexpr(OP == optype::add) { b0 = vaddq_f64(a0, b0); }
-				else if constexpr(OP == optype::sub) { b0 = vsubq_f64(a0, b0); }
-				else if constexpr(OP == optype::div) { b0 = vdivq_f64(a0, b0); }
-				else if constexpr(OP == optype::mul) { b0 = vmulq_f64(a0, b0); }
-
-				simd::store(data, b0);
+				const auto a = get_as<float64x2_t>(0);
+				const auto b = rhs.template get_as<float64x2_t>(0);
+				simd::store(data, apply_operation<OP>(a, b));
 				return;
 			}
-			//we don't efficiently support this case
 			default: break;
 			}
+			kernel_inttype i = 0;
+			for (; i + 8_ki <= cntg; i += 8_ki) {
+				const auto a0 = get_as<float64x2x2_t>(i);
+				const auto b0 = rhs.template get_as<float64x2x2_t>(i);
+				const auto a1 = get_as<float64x2x2_t>(i + 4_ki);
+				const auto b1 = rhs.template get_as<float64x2x2_t>(i + 4_ki);
+				simd::store(data + i, apply_operation<OP>(a0, b0));
+				simd::store(data + i + 4_ki, apply_operation<OP>(a1, b1));
+			}
+			if (i + 4_ki <= cntg) {
+				const auto a = get_as<float64x2x2_t>(i);
+				const auto b = rhs.template get_as<float64x2x2_t>(i);
+				simd::store(data + i, apply_operation<OP>(a, b));
+				i += 4_ki;
+			}
+			if (i + 2_ki <= cntg) {
+				const auto a = get_as<float64x2_t>(i);
+				const auto b = rhs.template get_as<float64x2_t>(i);
+				simd::store(data + i, apply_operation<OP>(a, b));
+				i += 2_ki;
+			}
+			// At most one lane remains after the two-lane remainder.
+			if (i < cntg) {
+				data[i] = apply_operation<OP>(data[i], rhs[i]);
+			}
+			return;
 		}
 
 		for(kernel_inttype i = 0_ki; i!=cntg; ++i) {
@@ -518,19 +499,20 @@ public:
 		assign<optype::mul>(rhs);
 		return *this;
 	}
+	PERFLIBS_LINALG_INLINE
+	interleave_batch& operator*=(value_type rhs) {
+		return *this = *this * scalar { rhs };
+	}
 	template<typename ExprRhs>
 	PERFLIBS_LINALG_INLINE
 	std::enable_if_t<is_interleave_batch_expr_v<ExprRhs>, interleave_batch&>
 	operator=(const ExprRhs& rhs) {
-		auto data = BatchBase::data();
+		const auto data = BatchBase::data();
 
-		kernel_inttype cntg;
-		if constexpr(std::is_same_v<ExprRhs, scalar<value_type>>) {
-			cntg = BatchBase::cntg();
-		}
-		else {
-			cntg = max(BatchBase::cntg(), rhs.cntg());
-		}
+		const auto cntg = [&]() {
+			if constexpr(std::is_same_v<ExprRhs, scalar<value_type>>) return BatchBase::cntg();
+			else return max(BatchBase::cntg(), rhs.cntg());
+		}();
 /*
 	The loads below are not predicated. Disable for now.
 	We will need to be able to pass predicates through to the get_as function in the ExprRhs type.
@@ -551,18 +533,35 @@ public:
 		if constexpr(is_same_rem_cv_v<value_type, double> && simd::is_neon) {
 			switch(cntg) {
 			case 8_ki:
-				simd::store(data,   rhs.template get_as<float64x2x2_t>(0));
-				simd::store(data+4, rhs.template get_as<float64x2x2_t>(4));
+				simd::store(data, rhs.template get_as<float64x2x2_t>(0));
+				simd::store(data + 4, rhs.template get_as<float64x2x2_t>(4));
 				return *this;
 			case 4_ki:
-				simd::store(data,   rhs.template get_as<float64x2x2_t>(0));
+				simd::store(data, rhs.template get_as<float64x2x2_t>(0));
 				return *this;
 			case 2_ki:
-				simd::store(data,   rhs.template get_as<float64x2_t>(0));
+				simd::store(data, rhs.template get_as<float64x2_t>(0));
 				return *this;
-			//we don't efficiently support this case
 			default: break;
 			}
+			kernel_inttype i = 0;
+			for (; i + 8_ki <= cntg; i += 8_ki) {
+				simd::store(data + i, rhs.template get_as<float64x2x2_t>(i));
+				simd::store(data + i + 4_ki, rhs.template get_as<float64x2x2_t>(i + 4_ki));
+			}
+			if (i + 4_ki <= cntg) {
+				simd::store(data + i, rhs.template get_as<float64x2x2_t>(i));
+				i += 4_ki;
+			}
+			if (i + 2_ki <= cntg) {
+				simd::store(data + i, rhs.template get_as<float64x2_t>(i));
+				i += 2_ki;
+			}
+			// At most one lane remains after the two-lane remainder.
+			if (i < cntg) {
+				data[i] = rhs[i];
+			}
+			return *this;
 		}
 		for(kernel_inttype i = 0_ki; i!=cntg; ++i) {
 			data[i] = rhs[i];
@@ -592,6 +591,24 @@ public:
 	PERFLIBS_LINALG_INLINE
 	value_type& operator()(kernel_inttype cntg) {
 		return BatchBase::data()[cntg];
+	}
+
+	/** Return a non-owning view of a contiguous range of interleaved lanes. */
+	PERFLIBS_LINALG_INLINE
+	interleave_batch<batch_base_reference<value_type>> lanes(
+		kernel_inttype offset, kernel_inttype count) {
+		PERFLIBS_ASSERT(offset >= 0 && count >= 0 && offset + count <= BatchBase::cntg(),
+		             "lane range is out of bounds");
+		return { BatchBase::data() + offset, count };
+	}
+
+	/** Return a read-only, non-owning view of a contiguous range of interleaved lanes. */
+	PERFLIBS_LINALG_INLINE
+	interleave_batch<batch_base_reference<const value_type>> lanes(
+		kernel_inttype offset, kernel_inttype count) const {
+		PERFLIBS_ASSERT(offset >= 0 && count >= 0 && offset + count <= BatchBase::cntg(),
+		             "lane range is out of bounds");
+		return { BatchBase::data() + offset, count };
 	}
 
 	/**

@@ -1,0 +1,18 @@
+[
+	{
+		"routine": "batch_interleave_generate_q_from_qr",
+		"datatype": [
+			"r64"
+		],
+		"target": "generic",
+		"strategy_tag": "batch_interleave_generate_q_from_qr_generic",
+		"problem_context_base": "generate_q_from_qr_problem<{0}, pl_linalg_int_t>",
+		"tuned_routine_spec": {
+			"max_threads": {
+				"default": "MAX",
+				"type": "kernel_inttype"
+			}
+		},
+		"package": "batch_interleave/factorization"
+	}
+]

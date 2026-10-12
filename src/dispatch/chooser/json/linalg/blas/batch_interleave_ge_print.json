@@ -1,0 +1,96 @@
+{
+    "name": "batch_interleave_ge_print",
+    "return_type": "pl_linalg_status_t",
+    "includes": [
+        "framework/linalg_blas_types.hpp",
+        "pl_linalg_status.h"
+    ],
+    "template_parameters": [
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "DataType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "ninter",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "inter",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "nbatch",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "batch",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "DataType",
+            "name": "src",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "batch_step_src",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "istrdSrc",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "jstrdSrc",
+            "is_const": false,
+            "is_pointer": false
+        }
+    ],
+    "instantiations": {
+        "perflibs_dge_print_interleave_batch": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "DataType": "r64"
+            },
+            "symbol_type": "c"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg",
+        "batch_interleave",
+        "misc"
+    ],
+    "interface_header_include": "packages/batch_interleave/misc/interfaces/ge_print.hpp"
+}

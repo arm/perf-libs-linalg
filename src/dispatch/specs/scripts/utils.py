@@ -16,6 +16,11 @@ cpp_name = {
 }
 
 
+def package_namespace(package):
+    """Convert a package include path into its C++ namespace."""
+    return package.replace("/", "::")
+
+
 def get_matrix_types(name, count=3):
     """Split next-gen datatype suffix into AType, BType, CType"""
     base_regex = "(bf16|r16|r32|r64|c16|c32|c64)"

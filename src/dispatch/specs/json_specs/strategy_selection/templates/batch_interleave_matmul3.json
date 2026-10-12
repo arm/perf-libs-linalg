@@ -1,0 +1,32 @@
+[
+	{
+		"routine": "batch_interleave_matmul3",
+		"datatype": [
+			"r64"
+		],
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"default": {
+					"cases": [
+						{
+							"condition": "pctx.interleave_count() < 32",
+							"value": [
+								0,
+								1
+							]
+						}
+					],
+					"default": [
+						1,
+						0
+					]
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "batch_interleave/matmul",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "matmul3_problem<{0}>"
+	}
+]

@@ -12,6 +12,9 @@
 #include "kernel_specs/matmul3_kernels.hpp"
 #include "kernel_specs/interleave_kernels.hpp"
 
+#include "packages/batch_interleave/matmul/kernels/trmm_kernels.hpp"
+#include "packages/batch_interleave/solve/kernels/trsm_kernels.hpp"
+
 #include "packages/misc/problem_context_bases.hpp"
 #include "packages/matmul/strategies/matmul3_interleaved_strategy_tag.hpp"
 
@@ -95,6 +98,52 @@ auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag
 	}
 
 	return interleave_matmul_kernel_specs< interleave_matmul_kernel_spec<c64, c64, c64>, sve_architecture_spec> [ zgemm_sve_big_idx ];
+}
+
+template<typename StrategyTag, typename ProblemContextBase, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_spec_system(
+	batch_interleave_gemm_kernel_tag<StrategyTag>,
+	const problem_context<ProblemContextBase, sve_architecture_spec>& pctx,
+	System)
+	requires std::same_as<typename ProblemContextBase::scalar_type, r64> {
+	if (pctx.alpha == 0.0 && pctx.beta_zero_mode == zero_mode::scale) {
+		return &batch_interleave::matmul::scal_gemm_shim<r64, sve_architecture_spec>;
+	}
+
+	if (pctx.a.matrix().cntg() == 1 && pctx.alpha != 0.0 && pctx.beta == 1.0) {
+		return &batch_interleave::matmul::ger_gemm_shim<batch_interleave::matmul::ger_sve>;
+	}
+
+	return &batch_interleave::matmul::bi_dgemm_sve;
+}
+
+template<typename StrategyTag, typename ProblemContextBase, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_batch_interleave_trmm_kernel_system(
+	StrategyTag,
+	const problem_context<ProblemContextBase, sve_architecture_spec>&,
+	System)
+	requires std::same_as<typename ProblemContextBase::scalar_type, r64> {
+	return &batch_interleave::matmul::dtrmm_sve_kernel;
+}
+
+template<typename StrategyTag, typename ProblemContextBase, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_batch_interleave_trsm_kernel_system(
+	StrategyTag,
+	const problem_context<ProblemContextBase, sve_architecture_spec>&,
+	System)
+	requires std::same_as<typename ProblemContextBase::scalar_type, r64> {
+	return &batch_interleave::solve::dtrsm_sve_kernel;
+}
+
+template<typename StrategyTag, typename ProblemContextBase, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_ger_qr_kernel_system(
+	StrategyTag, const problem_context<ProblemContextBase, sve_architecture_spec>&, System)
+	requires std::same_as<std::remove_cv_t<typename ProblemContextBase::c_matrix_type::data_type>, r64> {
+	return &::perflibs::interleave_batch::ger_qr_sve;
 }
 
 template<typename StrategyTag, typename ProblemContextBase, machine::system System>

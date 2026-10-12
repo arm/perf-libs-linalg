@@ -15,6 +15,8 @@
 #include "kernel_specs/interleave_kernels.hpp"
 
 #include "framework/which.hpp"
+#include "packages/batch_interleave/matmul/kernels/trmm_kernels.hpp"
+#include "packages/batch_interleave/solve/kernels/trsm_kernels.hpp"
 
 #include "packages/matmul/fwd.hpp"
 #include "packages/matmul/strategies/matmul3_interleaved_strategy_tag.hpp"
@@ -112,6 +114,54 @@ auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag
 template<typename StrategyTag, typename ProblemContext, typename System>
 auto get_dot_kernel_system(StrategyTag strat_tag, const ProblemContext& pctx, System) {
 	return get_neon_dot_kernel(pctx);
+}
+
+template<typename StrategyTag, typename ProblemContext, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_spec_system(batch_interleave_gemm_kernel_tag<StrategyTag>,
+                     const ProblemContext& pctx, System)
+	requires std::same_as<typename ProblemContext::scalar_type, r64> {
+	if (pctx.alpha == 0.0 && pctx.beta_zero_mode == zero_mode::scale) {
+		return &batch_interleave::matmul::scal_gemm_shim<r64, typename ProblemContext::architecture_spec_type>;
+	}
+
+	if (pctx.a.matrix().cntg() == 1 && pctx.alpha != 0.0 && pctx.beta == 1.0) {
+		return &batch_interleave::matmul::ger_gemm_shim<batch_interleave::matmul::ger_neon>;
+	}
+
+	return pctx.beta == 0.0
+	     ? &batch_interleave::matmul::bi_dgemm_neon<true>
+	     : &batch_interleave::matmul::bi_dgemm_neon<false>;
+}
+
+template<typename StrategyTag, typename ProblemContext, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_batch_interleave_trmm_kernel_system(StrategyTag, const ProblemContext&, System)
+	requires std::same_as<typename ProblemContext::scalar_type, r64> {
+	return &batch_interleave::matmul::dtrmm_neon_kernel;
+}
+
+template<typename StrategyTag, typename ProblemContext, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_gemv_qr_kernel_system(StrategyTag, const ProblemContext& pctx, System)
+	requires std::same_as<std::remove_cv_t<typename ProblemContext::c_matrix_type::data_type>, r64> {
+	return pctx.interleave_count() % 2 == 0
+	     ? &::perflibs::interleave_batch::dgemv_qr_neon
+	     : &gemv_qr_fallback<r64>;
+}
+
+template<typename StrategyTag, typename ProblemContext, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_ger_qr_kernel_system(StrategyTag, const ProblemContext&, System)
+	requires std::same_as<std::remove_cv_t<typename ProblemContext::c_matrix_type::data_type>, r64> {
+	return &::perflibs::interleave_batch::ger_qr_neon;
+}
+
+template<typename StrategyTag, typename ProblemContext, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_batch_interleave_trsm_kernel_system(StrategyTag, const ProblemContext&, System)
+	requires std::same_as<typename ProblemContext::scalar_type, r64> {
+	return &batch_interleave::solve::dtrsm_neon_kernel;
 }
 
 template<typename ProblemContextBase, typename ArchitectureSpec>

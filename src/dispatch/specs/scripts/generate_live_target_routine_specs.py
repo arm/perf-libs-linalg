@@ -34,6 +34,8 @@ def generate_live_target_routine_source(routine, pkg):
                     return f"get_gemv_kernel(strat_tag, pctx, {self.prefix}max_threads)"
                 case Kernel("axpby"):
                     return f"get_spec(axpby_kernel_tag {{ strat_tag }}, pctx)"
+                case Kernel("batch_interleave_gemm"):
+                    return "get_spec(batch_interleave_gemm_kernel_tag { strat_tag }, pctx)"
                 case Kernel(kernel_name):
                     return f"get_{kernel_name}_kernel(strat_tag, pctx)"
                 case KernelSpec("gemm", params):
@@ -51,16 +53,17 @@ def generate_live_target_routine_source(routine, pkg):
     matrix_datatypes = utils.get_matrix_types(routine["datatype"])
     scalar_type = "promote_t<{}, {}, {}>".format(*matrix_datatypes)
     architecture_spec = "ArchitectureSpec"
+    package_namespace = utils.package_namespace(routine["package"])
     problem_context_base = routine["problem_context_base"].format(
         *matrix_datatypes, scalar_type
     )
-    problem_context = f"problem_context<{routine['package']}::{problem_context_base}, {architecture_spec}>"
+    problem_context = f"problem_context<{package_namespace}::{problem_context_base}, {architecture_spec}>"
 
     if routine["strategy_tag"] == "strategy_selection_tag":
         strategy_tag = "strategy_selection_tag"
     else:
         strategy_tag = "strategy_tag<{}::{}>".format(
-            routine["package"], routine["strategy_tag"]
+            package_namespace, routine["strategy_tag"]
         )
 
     func_name = "load_tuned_routine_spec_from_json"
@@ -220,10 +223,11 @@ namespace perflibs::linalg::spec {{
 
     matrix_datatypes = utils.get_matrix_types(routine["datatype"])
     scalar_type = "promote_t<{}, {}, {}>".format(*matrix_datatypes)
+    package_namespace = utils.package_namespace(routine["package"])
     problem_context_base = routine["problem_context_base"].format(
         *matrix_datatypes, scalar_type
     )
-    problem_context = f"problem_context<{routine['package']}::{problem_context_base}, {architecture_spec}>"
+    problem_context = f"problem_context<{package_namespace}::{problem_context_base}, {architecture_spec}>"
     routine_spec = f"spec<{cpp_type}, {problem_type}, {architecture_spec}>"
 
     header_guard = (

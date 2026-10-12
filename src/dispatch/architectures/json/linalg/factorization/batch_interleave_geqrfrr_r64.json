@@ -1,0 +1,10 @@
+[
+	{
+		"routine": "batch_interleave_geqrfrr",
+		"symbol": "pl_linalg_dgeqrfrr_interleave_batch",
+		"template_values": {
+			"IntType": "pl_linalg_int_t",
+			"DataType": "r64"
+		}
+	}
+]

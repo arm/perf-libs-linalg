@@ -1,0 +1,18 @@
+[
+	{
+		"routine": "batch_interleave_trsm",
+		"symbol": "pl_linalg_dtrsm_interleave_batch",
+		"template_values": {
+			"IntType": "pl_linalg_int_t",
+			"DataType": "r64"
+		}
+	},
+	{
+		"routine": "batch_interleave_trsv",
+		"symbol": "pl_linalg_dtrsv_interleave_batch",
+		"template_values": {
+			"IntType": "pl_linalg_int_t",
+			"DataType": "r64"
+		}
+	}
+]

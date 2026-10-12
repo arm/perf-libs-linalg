@@ -1,0 +1,10 @@
+[
+	{
+		"routine": "batch_interleave_ge_print",
+		"symbol": "perflibs_dge_print_interleave_batch",
+		"template_values": {
+			"IntType": "pl_linalg_int_t",
+			"DataType": "r64"
+		}
+	}
+]

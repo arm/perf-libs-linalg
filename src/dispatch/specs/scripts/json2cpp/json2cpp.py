@@ -117,6 +117,8 @@ class CPPWriter:
                  return f"get_spec_system(axpby_kernel_tag {{ strat_tag }}, pctx, system)"
             case Kernel("gemv"):
                 return f"get_gemv_kernel(strat_tag, pctx, {self.prefix}max_threads)"
+            case Kernel("batch_interleave_gemm"):
+                return "get_spec_system(batch_interleave_gemm_kernel_tag { strat_tag }, pctx, system)"
             case Kernel(kernel_name):
                 return f"get_{kernel_name}_kernel_system(strat_tag, pctx, system)"
             case KernelSpec(kernel_name):
