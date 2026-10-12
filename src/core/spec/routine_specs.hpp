@@ -31,6 +31,9 @@
 #include "kernel_specs/matmul3_kernels.hpp"
 #include "framework/gemv_kernels.hpp"
 #include "framework/trsm_kernels.hpp"
+#include "packages/batch_interleave/factorization/kernels/qr_kernels.hpp"
+#include "packages/batch_interleave/matmul/kernels/gemm_kernels.hpp"
+#include "packages/batch_interleave/solve/kernels/trsm_kernels.hpp"
 
 
 //TODO: delete this file

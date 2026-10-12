@@ -15,20 +15,20 @@ namespace perflibs::linalg {
 /**
  * This is base matrix type for interleave_batch operations (see PERFLIBS_ROOT/libraries/interleave_batch)
  *
- * When you index any element element in this matrix, rather than referring to an single scalar element
- * you are actually referencing a "batch" of elements the size of which is defined by the `batch_cntg`
- * param the matrix is initialized with
+ * When you index any element in this matrix, rather than referring to a single scalar element,
+ * you are actually referencing a group of interleaved scalar lanes. The number of lanes is defined
+ * by the `interleave_count` parameter the matrix is initialized with.
  *
  * We expect the elements to be stored contiguous in memory, these contiguous sequences of memory are
  * then traversed with a given strd & cntg step value - these values are given in terms of the underlying
  * values type (ie double, float, not interleave_batch_val<double> interleave_batch_ref<reference>
  *
- * So if you batch-cntg was 8, and is_cntg_contig(matrix) is true, cntg_step must be at least 8
+ * So if the interleave count is 8, and is_cntg_contig(matrix) is true, cntg_step must be at least 8.
  */
 template<typename T>
 class interleave_batch_matrix {
 	T *data_;
-	kernel_inttype batch_cntg_;
+	kernel_inttype interleave_count_;
 	kernel_inttype cntg_;
 	kernel_inttype strd_;
 	kernel_inttype cntg_step_;
@@ -46,29 +46,48 @@ public:
 	/*
 	 * Constructor
 	 *
-	 * @param data       [in,out] a pointer the data, values in this matrix may be modified via other class member functions
-	 * @param batch_cntg [in]     the size of the batch in number of elements
-	 * @param cntg       [in]     the size of the cntg dimension, for GEMM like operations cntg is the 'k' component (for both A & B) by convention - M for C
-	 * @param strd       [in]     the size of the strd dimension, for GEMM like operations strd is the non-'k' component (for both A & B) by convention - N for C
-	 * @param cntg_step  [in]     the distance between consequentive batches in the cntg dimension represented as number of data_type
-	 * @param strd_step  [in]     the distance between consequentive batches in the strd dimension represented as number of data_type
+	 * @param data             [in,out] a pointer the data, values in this matrix may be modified via other class member functions
+	 * @param interleave_count [in]     the number of interleaved scalar lanes per logical matrix element
+	 * @param cntg             [in]     the size of the cntg dimension, for GEMM like operations cntg is the 'k' component (for both A & B) by convention - M for C
+	 * @param strd             [in]     the size of the strd dimension, for GEMM like operations strd is the non-'k' component (for both A & B) by convention - N for C
+	 * @param cntg_step        [in]     the distance between consequentive batches in the cntg dimension represented as number of data_type
+	 * @param strd_step        [in]     the distance between consequentive batches in the strd dimension represented as number of data_type
 	 *
 	 * @note the "transposed" property of matrix is controlled by switching cntg_step and strd_step
 	 */
-	interleave_batch_matrix(T *data, kernel_inttype batch_cntg, kernel_inttype cntg, kernel_inttype strd, kernel_inttype cntg_step, kernel_inttype strd_step)
-	:	data_       { data       }
-	,	batch_cntg_ { batch_cntg }
-	,	cntg_       { cntg       }
-	,	strd_       { strd       }
-	,	cntg_step_  { cntg_step  }
-	,	strd_step_  { strd_step  }
+	interleave_batch_matrix(T *data, kernel_inttype interleave_count, kernel_inttype cntg, kernel_inttype strd, kernel_inttype cntg_step, kernel_inttype strd_step)
+	:	data_             { data             }
+	,	interleave_count_ { interleave_count }
+	,	cntg_             { cntg             }
+	,	strd_             { strd             }
+	,	cntg_step_        { cntg_step        }
+	,	strd_step_        { strd_step        }
 	{	}
 
 	/**
 	 * @returns a pointer to the the first element of the first batch
 	 */
-	PERFLIBS_LINALG_INLINE       data_type *data()       { return data_; }
-	PERFLIBS_LINALG_INLINE const data_type *data() const { return data_; }
+	PERFLIBS_LINALG_INLINE data_type *data() const { return data_; }
+
+	/// Return a copy rebased on a storage offset from the current data pointer.
+	PERFLIBS_LINALG_INLINE interleave_batch_matrix rebased(kernel_inttype offset) const {
+		auto matrix = *this;
+		matrix.data_ += offset;
+		return matrix;
+	}
+
+	/// Return a view of a contiguous range of interleaved lanes.
+	PERFLIBS_LINALG_INLINE
+	interleave_batch_matrix lanes(kernel_inttype offset, kernel_inttype count) const {
+		PERFLIBS_ASSERT(offset >= 0 && count >= 0 && offset + count <= interleave_count_,
+		             "lane range is out of bounds");
+		return { data_ + offset, count, cntg_, strd_, cntg_step_, strd_step_ };
+	}
+
+	PERFLIBS_LINALG_INLINE
+	interleave_batch_matrix transpose() const {
+		return { data_, interleave_count_, strd_, cntg_, strd_step_, cntg_step_ };
+	}
 
 	/**
 	 * @param cntg position of the batch (not element)
@@ -76,15 +95,11 @@ public:
 	 * @returns a pointer to the beginning of a batch
 	 */
 	PERFLIBS_LINALG_INLINE
-	T *batch_data(kernel_inttype cntg, kernel_inttype strd)
-	{ return data_ + cntg * cntg_step_ + strd * strd_step_; }
-
-	PERFLIBS_LINALG_INLINE
-	const T *batch_data(kernel_inttype cntg, kernel_inttype strd) const
+	data_type *batch_data(kernel_inttype cntg, kernel_inttype strd) const
 	{ return data_ + cntg * cntg_step_ + strd * strd_step_; }
 
 	/// interleaving factor
-	PERFLIBS_LINALG_INLINE kernel_inttype batch_cntg() const { return batch_cntg_; }
+	PERFLIBS_LINALG_INLINE kernel_inttype interleave_count() const { return interleave_count_; }
 
 	/// number of batches in the cntg dimension of the logical representation of the data
 	PERFLIBS_LINALG_INLINE kernel_inttype cntg() const { return cntg_; }
@@ -97,23 +112,26 @@ public:
 	PERFLIBS_LINALG_INLINE kernel_inttype strd_step() const { return strd_step_; }
 
 	PERFLIBS_LINALG_INLINE interleave_batch_matrix sub_matrix(kernel_inttype cntg_pos, kernel_inttype cntg_size,
-                                                         kernel_inttype strd_pos, kernel_inttype strd_size) {
+	                                                     kernel_inttype strd_pos, kernel_inttype strd_size) const {
 		PERFLIBS_ASSERT((cntg_pos + cntg_size) <= cntg(), "sub_matrix cntg dimensions outside of parent range");
 		PERFLIBS_ASSERT((strd_pos + strd_size) <= strd(), "sub_matrix strd dimensions outside of parent range");
 
 		return {
 			batch_data(cntg_pos, strd_pos),
-			batch_cntg_,
+			interleave_count_,
 			cntg_size,
-			strd_size
+			strd_size,
+			cntg_step_,
+			strd_step_
 		};
 	}
 
-	PERFLIBS_LINALG_INLINE reference get_logical_elem(kernel_inttype cntg, kernel_inttype strd) const { return { data_ + cntg * cntg_step_ + strd * strd_step_, batch_cntg_ }; }
+	PERFLIBS_LINALG_INLINE reference get_logical_elem(kernel_inttype cntg, kernel_inttype strd) const { return { data_ + cntg * cntg_step_ + strd * strd_step_, interleave_count_ }; }
 
-	PERFLIBS_LINALG_INLINE matrix_base<data_type> extract(kernel_inttype inter) {
-		PERFLIBS_ASSERT(inter < batch_cntg_, "inter is out of range");
-		auto d = data() + inter;
+	PERFLIBS_LINALG_INLINE
+	matrix_base<data_type> extract(kernel_inttype inter) const {
+		PERFLIBS_ASSERT(inter < interleave_count_, "inter is out of range");
+		const auto d = data() + inter;
 		return matrix_base<data_type> {
 			d, cntg(), strd(), cntg_step(), strd_step()
 		};

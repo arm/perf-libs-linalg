@@ -1,0 +1,32 @@
+[
+	{
+		"routine": "batch_interleave_cholesky_factorization_sym",
+		"datatype": [
+			"r64"
+		],
+		"target": "generic_aarch64",
+		"tuned_routine_spec": {
+			"strategy_preferences": {
+				"default": {
+					"cases": [
+						{
+							"condition": "omp::bounded_get_max_threads(2) > 1 && pctx.batch_count() > 1",
+							"value": [
+								0,
+								1
+							]
+						}
+					],
+					"default": [
+						1,
+						0
+					]
+				},
+				"type": "inplace_vector<kernel_inttype, 2>"
+			}
+		},
+		"package": "batch_interleave/factorization",
+		"strategy_tag": "strategy_selection_tag",
+		"problem_context_base": "cholesky_problem<{0}>"
+	}
+]

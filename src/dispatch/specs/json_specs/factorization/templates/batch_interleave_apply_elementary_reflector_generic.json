@@ -1,0 +1,24 @@
+[
+	{
+		"routine": "batch_interleave_apply_elementary_reflector",
+		"datatype": [
+			"r64"
+		],
+		"target": "generic_aarch64",
+		"strategy_tag": "batch_interleave_apply_elementary_reflector_generic",
+		"problem_context_base": "apply_elementary_reflector_problem<{0}>",
+		"tuned_routine_spec": {
+			"kernel_gemv_qr": {
+				"type": "kernel",
+				"kernel_name": "gemv_qr",
+				"default": "default"
+			},
+			"kernel_ger_qr": {
+				"type": "kernel",
+				"kernel_name": "ger_qr",
+				"default": "default"
+			}
+		},
+		"package": "batch_interleave/factorization"
+	}
+]

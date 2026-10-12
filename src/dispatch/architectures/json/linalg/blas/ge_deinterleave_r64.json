@@ -1,0 +1,10 @@
+[
+	{
+		"routine": "ge_deinterleave",
+		"symbol": "pl_linalg_dge_deinterleave",
+		"template_values": {
+			"IntType": "pl_linalg_int_t",
+			"DataType": "r64"
+		}
+	}
+]

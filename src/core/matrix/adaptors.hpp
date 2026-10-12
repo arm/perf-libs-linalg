@@ -102,6 +102,14 @@ public:
 		return { base_type::sub_matrix(cntg_pos, cntg_size, strd_pos, strd_size), is_conj() };
 	}
 
+	PERFLIBS_LINALG_INLINE general_matrix rebased(kernel_inttype offset) const {
+		return { base_type::rebased(offset), is_conj() };
+	}
+
+	PERFLIBS_LINALG_INLINE general_matrix lanes(kernel_inttype offset, kernel_inttype count) const {
+		return { base_type::lanes(offset, count), is_conj() };
+	}
+
 	PERFLIBS_LINALG_INLINE general_matrix sub_matrix_with_clamp(kernel_inttype cntg_pos, kernel_inttype cntg_size,
 	                                                       kernel_inttype strd_pos, kernel_inttype strd_size) const {
 		return { base_type::sub_matrix_with_clamp(cntg_pos, cntg_size, strd_pos, strd_size), is_conj() };
@@ -207,6 +215,11 @@ public:
 		return { uplo(), diag(), base_type::sub_matrix(cntg_pos, cntg_size, strd_pos, strd_size), is_conj() };
 	}
 
+	PERFLIBS_LINALG_INLINE
+	triangular_matrix rebased(kernel_inttype offset) const {
+		return { uplo(), diag(), base_type::rebased(offset), is_conj() };
+	}
+
 	PERFLIBS_LINALG_INLINE triangular_matrix sub_matrix_with_clamp(kernel_inttype cntg_pos, kernel_inttype cntg_size,
 	                                                          kernel_inttype strd_pos, kernel_inttype strd_size) const {
 		return { uplo(), diag(), base_type::sub_matrix_with_clamp(cntg_pos, cntg_size, strd_pos, strd_size), is_conj() };
@@ -300,6 +313,16 @@ public:
 	PERFLIBS_LINALG_INLINE symmetric_matrix sub_matrix(kernel_inttype cntg_pos, kernel_inttype cntg_size,
                                                   kernel_inttype strd_pos, kernel_inttype strd_size) const {
 		return { uplo(), base_type::sub_matrix(cntg_pos, cntg_size, strd_pos, strd_size) };
+	}
+
+	PERFLIBS_LINALG_INLINE
+	symmetric_matrix rebased(kernel_inttype offset) const {
+		return { uplo(), base_type::rebased(offset) };
+	}
+
+	PERFLIBS_LINALG_INLINE
+	symmetric_matrix lanes(kernel_inttype offset, kernel_inttype count) const {
+		return { uplo(), base_type::lanes(offset, count) };
 	}
 
 	PERFLIBS_LINALG_INLINE symmetric_matrix sub_matrix_with_clamp(kernel_inttype cntg_pos, kernel_inttype cntg_size,

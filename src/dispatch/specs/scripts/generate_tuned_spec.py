@@ -121,21 +121,22 @@ static auto {func_name}({strategy_tag} strat_tag, const {problem_context}& pctx,
 
     scalar_type = "promote_t<{}, {}, {}>".format(*matrix_datatypes)
 
+    package_namespace = utils.package_namespace(routine["package"])
     problem_context_base = routine["problem_context_base"].format(
         *matrix_datatypes, scalar_type
     )
     problem_context = (
-        f"problem_context<{routine['package']}::{problem_context_base}, {arch_spec}>"
+        f"problem_context<{package_namespace}::{problem_context_base}, {arch_spec}>"
     )
     live_problem_context = (
-        f"problem_context<{routine['package']}::{problem_context_base}, ArchitectureSpec>"
+        f"problem_context<{package_namespace}::{problem_context_base}, ArchitectureSpec>"
     )
 
     if routine["strategy_tag"] == "strategy_selection_tag":
         strategy_tag = "strategy_selection_tag"
     else:
         strategy_tag = "strategy_tag<{}::{}>".format(
-            routine["package"], routine["strategy_tag"]
+            package_namespace, routine["strategy_tag"]
         )
 
     passes = [

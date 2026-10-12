@@ -1,0 +1,126 @@
+{
+    "name": "batch_interleave_geqrfrr",
+    "return_type": "pl_linalg_status_t",
+    "includes": [
+        "framework/linalg_blas_types.hpp",
+        "pl_linalg_status.h"
+    ],
+    "template_parameters": [
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "DataType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "IntType",
+            "name": "ninter",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "nbatch",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "m",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "DataType",
+            "name": "A",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "bstrd_A",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "istrd_A",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "jstrd_A",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "pvt",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "bstrd_pvt",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "istrd_pvt",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "DataType",
+            "name": "tau",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "bstrd_tau",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "istrd_tau",
+            "is_const": false,
+            "is_pointer": false
+        },
+        {
+            "type": "IntType",
+            "name": "rank",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "pl_linalg_dgeqrfrr_interleave_batch": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "DataType": "r64"
+            },
+            "symbol_type": "c"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg",
+        "batch_interleave",
+        "factorization"
+    ],
+    "interface_header_include": "packages/batch_interleave/factorization/interfaces/batch_interleave_geqrfrr.hpp"
+}

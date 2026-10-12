@@ -9,6 +9,8 @@ import string
 import json
 import re
 
+import utils
+
 from json2cpp import JSONReader, generate_cpp
 from json2cpp.ast_nodes import *
 
@@ -23,7 +25,20 @@ def generate_tuned_spec(routine, is_live):
             a_type = "std::remove_cv_t<typename problem_context_type::a_matrix_type::value_type>"
             b_type = "std::remove_cv_t<typename problem_context_type::b_matrix_type::value_type>"
             c_type = "std::remove_cv_t<typename problem_context_type::c_matrix_type::value_type>"
+            a_data_type = "std::remove_cv_t<typename problem_context_type::a_matrix_type::data_type>"
+            b_data_type = "std::remove_cv_t<typename problem_context_type::b_matrix_type::data_type>"
+            c_data_type = "std::remove_cv_t<typename problem_context_type::c_matrix_type::data_type>"
+            a_kernel_type, b_kernel_type, c_kernel_type = a_type, b_type, c_type
             scalar_type = "typename problem_context_type::scalar_type"
+
+            if isinstance(value, dict) and value.get("type") == "kernel":
+                match value.get("type_source", "value_type"):
+                    case "value_type":
+                        pass
+                    case "data_type":
+                        a_kernel_type, b_kernel_type, c_kernel_type = a_data_type, b_data_type, c_data_type
+                    case type_source:
+                        raise RuntimeError(f"Unknown kernel type_source: {type_source}")
 
             match value:
                 case {"type": "convert", "tag": tag}:
@@ -31,7 +46,7 @@ def generate_tuned_spec(routine, is_live):
                 case {"type": "convert"}:
                     return Decl(key, f"convert_type<{value['matrix']}_matrix>")
                 case {"type": "kernel", "kernel_name": "gemv"}:
-                    return Decl(key, f"gemv_kernel_spec<{a_type}, {b_type}, {c_type}, {scalar_type}>")
+                    return Decl(key, f"gemv_kernel_spec<{a_kernel_type}, {b_kernel_type}, {c_kernel_type}, {scalar_type}>")
                 case {"type": "kernel", "kernel_name": "rot"}:
                     return Decl(key, f"rot_kernel_t<typename problem_context_type::vector_type, typename problem_context_type::scalar_type>*")
                 case {"type": "kernel", "kernel_name": "rotg"}:
@@ -42,12 +57,15 @@ def generate_tuned_spec(routine, is_live):
                     return Decl(key, f"rotmg_kernel_t<typename problem_context_type::scalar_type>*")
                 case {"type": "kernel", "kernel_name": "swap"}:
                     return Decl(key, f"swap_kernel_t<typename problem_context_type::scalar_type>*")
+                case {"type": "kernel", "kernel_name": kernel_name} if kernel_name in ("gemv_qr", "ger_qr"):
+                    data_type = "std::remove_cv_t<typename problem_context_type::c_matrix_type::data_type>"
+                    return Decl(key, f"{kernel_name}_kernel_t<{data_type}>*")
                 case {"type": "kernel", "kernel_name": kernel_name, "num_types": 1}:
-                    return Decl(key, f"{kernel_name}_kernel_t<{a_type}>*")
+                    return Decl(key, f"{kernel_name}_kernel_t<{a_kernel_type}>*")
                 case {"type": "kernel", "kernel_name": kernel_name, "num_types": 2}:
-                    return Decl(key, f"{kernel_name}_kernel_t<{a_type}, {b_type}>*")
+                    return Decl(key, f"{kernel_name}_kernel_t<{a_kernel_type}, {b_kernel_type}>*")
                 case {"type": "kernel", "kernel_name": kernel_name}:
-                    return Decl(key, f"{kernel_name}_kernel_t<{a_type}, {b_type}, {c_type}>*")
+                    return Decl(key, f"{kernel_name}_kernel_t<{a_kernel_type}, {b_kernel_type}, {c_kernel_type}>*")
                 case {"type": "kernel_spec", "kernel_name": "gemm"}:
                     kernel_type = f"interleave_matmul_kernel_spec<{a_type}, {b_type}, {c_type}>"
                     return Decl(key, kernel_type)
@@ -67,15 +85,15 @@ def generate_tuned_spec(routine, is_live):
     assert "tuned_routine_spec" in routine
 
     spec = routine["tuned_routine_spec"]
-    package = routine["package"]
-    problem_context_base = f"{package}::{routine['problem_context_base']}"
+    package_namespace = utils.package_namespace(routine["package"])
+    problem_context_base = f"{package_namespace}::{routine['problem_context_base']}"
     problem_context = f"problem_context<{problem_context_base}, ArchitectureSpec>"
 
     if routine["strategy_tag"] == "strategy_selection_tag":
         strategy_tag = "strategy_selection_tag"
     else:
         strategy_tag = "strategy_tag<{}::{}>".format(
-            routine["package"], routine["strategy_tag"]
+            package_namespace, routine["strategy_tag"]
         )
 
     # get all of the Type placeholders in the ProblemContext
@@ -163,6 +181,10 @@ def main():
 #include <framework/gemv_kernels.hpp>
 #include <framework/trsm_kernels.hpp>
 #include <framework/dot_kernels.hpp>
+#include <packages/batch_interleave/factorization/kernels/qr_kernels.hpp>
+#include <packages/batch_interleave/matmul/kernels/gemm_kernels.hpp>
+#include <packages/batch_interleave/matmul/kernels/trmm_kernels.hpp>
+#include <packages/batch_interleave/solve/kernels/trsm_kernels.hpp>
 #include <framework/rot_kernels.hpp>
 #include <framework/swap_kernels.hpp>
 #include <framework/inplace_vector.hpp>

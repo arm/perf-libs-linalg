@@ -19,6 +19,7 @@ target_link_libraries(kernels_common INTERFACE
     linalg_core
 )
 
+add_subdirectory("${KERNEL_DIR}/packages/batch_interleave")
 add_subdirectory("${KERNEL_DIR}/packages/matmul/atomic_kernels")
 add_subdirectory("${KERNEL_DIR}/packages/matmul/small_gemm_kernels")
 add_subdirectory("${KERNEL_DIR}/packages/matmul/standard_kernels")
@@ -26,6 +27,7 @@ add_subdirectory("${KERNEL_DIR}/packages/misc")
 add_subdirectory("${KERNEL_DIR}/framework")
 
 set(KERNEL_PROVIDER_TARGETS
+    batch_interleave_kernels_obj
     atomic_kernels_obj
     small_gemm_kernels_obj
     standard_kernels_obj

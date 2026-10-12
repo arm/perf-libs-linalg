@@ -224,7 +224,7 @@ $(ARCHITECTURES_GENERATE_DIR)/%/linalg/get_spec.hpp: $(SCRIPTS_DIR)/generate_get
 		--config-json-path $(CONFIG_JSON_PATH) \
 		--architecture $* \
 		--tuned-routine-spec \
-		--kernel waxpby,dot,trsv,trsm,rot,rotg,rotm,rotmg,find_index,l1_norm,l2_norm,swap\
+		--kernel waxpby,dot,trsv,trsm,rot,rotg,rotm,rotmg,find_index,l1_norm,l2_norm,swap,batch_interleave_trmm,batch_interleave_trsm,gemv_qr,ger_qr\
 		--kernel-spec gemv
 	$(FORMAT) $@ || true
 
