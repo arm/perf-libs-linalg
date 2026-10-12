@@ -19,9 +19,12 @@ if(NOT LINALG_SANITIZER MATCHES "^(none|address)$")
   message(FATAL_ERROR "LINALG_SANITIZER must be none or address")
 endif()
 
+option(LINALG_ENABLE_TUNING_OVERRIDES "Enable runtime tuning parameter overrides" OFF)
+
 include(compile_options)
 
 add_library(build_options INTERFACE)
+target_compile_features(build_options INTERFACE cxx_std_23)
 target_compile_options(build_options INTERFACE
   "$<$<COMPILE_LANGUAGE:C>:${LINALG_C_COMPILE_OPTIONS}>"
   "$<$<COMPILE_LANGUAGE:CXX>:${LINALG_CXX_COMPILE_OPTIONS}>"
@@ -36,3 +39,5 @@ if(LINALG_THREADING_MODEL STREQUAL "openmp")
   find_package(OpenMP REQUIRED COMPONENTS CXX)
   target_link_libraries(build_options INTERFACE OpenMP::OpenMP_CXX)
 endif()
+
+option(LINALG_BUILD_BENCHMARKS "Build benchmarking tools for library development" OFF)

@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - Add double-precision interleaved-batch BLAS and factorization routines.
+- Add `problem_context_bench` for benchmarking individual strategies.
+- Support runtime tuning overrides through JSON.
 - Add optional AddressSanitizer builds.
 
 ### Performance

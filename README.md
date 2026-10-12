@@ -10,13 +10,11 @@ It provides a full BLAS interface and a subset of LAPACK routines, using strateg
 - A toolchain with the required C++ and AArch64 ISA support
   - supported build compilers: GCC 14 and LLVM/Clang 22
   - assembler support is required for `+sve`, `+fp16`, `+bf16`, and `+sme2`
-  - other C++26-capable compilers may work
+  - other C++23-capable compilers may work
 - A Fortran compiler for the Netlib reference sources
 - Python 3.10 or newer with Mako and NumPy
 - `make` and `find`
 - OpenMP development support when building with `LINALG_THREADING_MODEL=openmp`
-
-The CMake project currently requests C++23 because older CMake versions do not provide portable C++26 standard detection.
 
 ## Limitations
 
@@ -42,6 +40,8 @@ This builds the `pl_linalg` target.
 - `BUILD_SHARED_LIBS=ON|OFF`: builds shared or static libraries where supported. The default is `OFF`.
 - `LINALG_INTEGER_MODEL=lp64|ilp64`: selects the public integer ABI. The default is `lp64`.
 - `LINALG_THREADING_MODEL=serial|openmp`: selects the threading backend. The default is `serial`.
+- `LINALG_BUILD_BENCHMARKS=ON|OFF`: builds `problem_context_bench`. The default is `OFF`.
+- `LINALG_ENABLE_TUNING_OVERRIDES=ON|OFF`: enables JSON tuning overrides. The default is `OFF`.
 - `LINALG_SANITIZER=none|address`: selects sanitizer instrumentation. The default is `none`.
 
 Example:
