@@ -40,7 +40,7 @@ B_cur_ptr .req x12
 C_ptr0 .req x15
 C_ptr1 .req x16
 C_ptr2 .req x17
-// x18 may be in use for the Platform Register	
+// x18 may be in use for the Platform Register
 C_ptr3 .req x19
 
 lda .req x20

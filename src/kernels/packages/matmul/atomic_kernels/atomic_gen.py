@@ -59,7 +59,7 @@ def generate_makefile(python_dir, make_output_filename, source_filenames, sve, t
             # Write rules for building dispatch file and SVE kernels with SVE flags
             sve_flags = "-march=armv8-a+sve"
             f.write("$(BUILD_DIR)/atomic_sve_%_kernels$(OBJECT_SUFFIX): $(BUILD_DIR)/atomic_sve_%_kernels.S\n")
-            f.write("\t$(SVE_CC) -c $< -o $@ $(CENTRAL_SVE_ASFLAGS) {} -MMD -MP\n\n".format(sve_flags))
+            f.write("\t$(CC) -c $< -o $@ $(CENTRAL_SVE_ASFLAGS) {} -MMD -MP\n\n".format(sve_flags))
             f.write("$(BUILD_DIR)/atomic_kernels_%$(OBJECT_SUFFIX): $(BUILD_DIR)/atomic_kernels_%.cpp\n")
             f.write("\t$(CXX) -c $< -o $@ $(CENTRAL_CXXFLAGS) {} -MMD -MP\n".format(sve_flags))
 

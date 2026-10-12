@@ -208,7 +208,7 @@ public:
 			spec::problem_context ger_pctx{
 				matmul::matmul3{
 					to_const(pctx.v.sub_matrix(0, lastv, 0, 1).transpose()),
-					to_const(to_conj(pctx.work.sub_matrix(0, lastc, 0, 1).transpose())),
+					to_const(adjoint(pctx.work.sub_matrix(0, lastc, 0, 1))),
 					pctx.c.sub_matrix(0, lastv, 0, lastc),
 					-pctx.tau, one<value_type>
 				},

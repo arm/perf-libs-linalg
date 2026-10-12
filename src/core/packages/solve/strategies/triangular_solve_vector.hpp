@@ -69,7 +69,7 @@ public:
 			driver(pctx.a, packed_b);
 			copy(packed_b, pctx.b);
 
-			return_memory<ScalarType, memory_bank::level2>(b_buffer);
+			return_memory<ScalarType, memory_bank::triangular_solve>(b_buffer);
 		}
 		else {
 			driver(pctx.a, pctx.b);

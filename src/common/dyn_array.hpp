@@ -91,7 +91,7 @@ public:
 	{
 		//initialize the storage type and cache the pointer
 		data_ = is_static()
-		      ? storage_.template emplace<static_storage_type>().array.data()
+		      ? get_static().array.data()
 		      : storage_.template emplace<dynamic_storage_type>(size).data();
 	}
 

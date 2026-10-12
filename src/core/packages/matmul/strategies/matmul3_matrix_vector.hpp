@@ -90,7 +90,7 @@ public:
 
 		auto driver =
 			/*
-			 * Parallelise over the a.strd() / c.cntg() dimension
+			 * Parallelize over the a.strd() / c.cntg() dimension
 			 * this will ensure there are no race conditions as each thread will
 			 * get its own chunk of the destination vector
 			 */

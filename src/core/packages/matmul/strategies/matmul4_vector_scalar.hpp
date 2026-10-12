@@ -37,12 +37,12 @@ public:
 				parallel(split.threads, [=, &pctx](kernel_inttype thread_num) {
 					const auto [start, work] = work_distribution(thread_num, split, 1);
 
-					auto x_panel = get_cntg_panel(pctx.a, start, work);
+					auto x_panel = get_strd_panel(pctx.a, start, work);
 					auto y_panel = get_cntg_panel(pctx.c, start, work);
 					auto w_panel = get_cntg_panel(pctx.d, start, work);
 
 					spec.kernel(work, pctx.alpha, x_panel.data(), pctx.beta,
-						y_panel.data(), w_panel.data(), x_panel.cntg_step(),
+						y_panel.data(), w_panel.data(), x_panel.strd_step(),
 						y_panel.cntg_step(), w_panel.cntg_step());
 				});
 

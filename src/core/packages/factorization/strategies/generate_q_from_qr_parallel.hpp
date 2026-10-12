@@ -32,6 +32,9 @@ public:
 	template<typename MatrixType, typename ArchitectureSpec>
 	PERFLIBS_LINALG_INLINE
 	bool operator()(const generate_q_pctx_t<MatrixType, ArchitectureSpec>& pctx) const {
+#ifndef _OPENMP
+		return false;
+#else
 		if (!can_compute(pctx)) return false;
 
 		// Quick return
@@ -283,6 +286,7 @@ public:
 		}
 
 		return true;
+#endif
 	}
 
 	template<typename ProblemContext>

@@ -38,7 +38,7 @@ ldc .req x6
 t .req x9
 
 k_size_bytes .req x22
-// x23, x24, x28 disallowed in Arm64EC	
+// x23, x24, x28 disallowed in Arm64EC
 a_row_idx .req x25
 b_row_idx .req x26
 k_idx .req x27

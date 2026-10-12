@@ -20,7 +20,9 @@ class set_or_scale;
 class symmetric_matrix_vector;
 class compressed_symmetric_matrix_vector;
 class compressed_rank_one_update;
+class matadd_both_zero;
 class matadd2_buffer_naive;
+class matadd3_vector_scalar;
 class matadd3_naive;
 class matadd3_zero_scalar;
 class rank_k_update_large;
@@ -107,7 +109,7 @@ struct matmul2_axpby_kernel_map {
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>
@@ -129,6 +131,57 @@ struct matmul2_axpby_kernel_map {
 };
 
 } // namespace matmul
+
+
+template<>
+struct waxpby_kernel_tag<spec::strategy_tag<matmul::matmul4_vector_scalar_strategy>> {
+	waxpby_kernel_tag(const spec::strategy_tag<matmul::matmul4_vector_scalar_strategy>&) { }
+
+	template<typename ProblemContext>
+	using value_type = typename ProblemContext::d_matrix_type::value_type;
+
+	template<typename ProblemContext>
+	auto incx(const ProblemContext& pctx) const {
+		return pctx.a.strd_step();
+	}
+
+	template<typename ProblemContext>
+	auto incy(const ProblemContext& pctx) const {
+		return pctx.c.cntg_step();
+	}
+
+	template<typename ProblemContext>
+	auto incw(const ProblemContext& pctx) const {
+		return pctx.d.cntg_step();
+	}
+};
+
+
+template<>
+struct waxpby_kernel_tag<spec::strategy_tag<matmul::matadd3_vector_scalar>> {
+	waxpby_kernel_tag(const spec::strategy_tag<matmul::matadd3_vector_scalar>&) { }
+
+	template<typename ProblemContext>
+	using value_type = typename ProblemContext::c_matrix_type::value_type;
+
+	template<typename ProblemContext>
+	auto incx(const ProblemContext& pctx) const {
+		return pctx.c.cntg_step() == 1 ? pctx.a.cntg_step()
+		                               : pctx.a.strd_step();
+	}
+
+	template<typename ProblemContext>
+	auto incy(const ProblemContext& pctx) const {
+		return pctx.c.cntg_step() == 1 ? pctx.b.cntg_step()
+		                               : pctx.b.strd_step();
+	}
+
+	template<typename ProblemContext>
+	auto incw(const ProblemContext& pctx) const {
+		return pctx.c.cntg_step() == 1 ? pctx.c.cntg_step()
+		                               : pctx.c.strd_step();
+	}
+};
 
 
 template<>
@@ -161,7 +214,7 @@ struct axpby_kernel_tag<spec::strategy_tag<matmul::matmul3_outer_product>> {
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>
@@ -198,7 +251,7 @@ struct axpby_kernel_tag<spec::strategy_tag<matmul::matmul3_outer_product_beta_on
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>
@@ -383,7 +436,7 @@ struct axpby_kernel_tag<spec::strategy_tag<matmul::symmetric_matrix_vector>> {
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>
@@ -403,6 +456,64 @@ struct axpby_kernel_tag<spec::strategy_tag<matmul::symmetric_matrix_vector>> {
 		    && std::is_same_v<ScalarType, typename ProblemContext::scalar_type>;
 	}
 }; // struct axpby_kernel_tag<spec::strategy_tag<matmul::symmetric_matrix_vector>
+
+template<>
+struct axpby_kernel_tag<spec::strategy_tag<matmul::matadd3_zero_scalar>> {
+	axpby_kernel_tag(const spec::strategy_tag<matmul::matadd3_zero_scalar>&) { }
+
+	template<typename ProblemContext>
+	auto incx(const ProblemContext& pctx) const {
+		const bool beta_is_zero = pctx.beta == zero<typename ProblemContext::scalar_type>;
+		const bool use_cntg     = pctx.c.cntg_step() == 1;
+
+		if (beta_is_zero) {
+			return use_cntg ? pctx.a.cntg_step()
+			                : pctx.a.strd_step();
+		}
+
+		return use_cntg ? pctx.b.cntg_step()
+		                : pctx.b.strd_step();
+	}
+
+	template<typename ProblemContext>
+	auto incy(const ProblemContext& pctx) const {
+		return pctx.c.cntg_step() == 1 ? pctx.c.cntg_step()
+		                               : pctx.c.strd_step();
+	}
+
+	template<typename ProblemContext>
+	auto alpha(const ProblemContext& pctx) const {
+		const bool beta_is_zero = pctx.beta == zero<typename ProblemContext::scalar_type>;
+
+		return beta_is_zero ? pctx.alpha
+		                    : pctx.beta;
+	}
+
+	template<typename ProblemContext>
+	auto beta(const ProblemContext& pctx) const {
+		return zero<typename ProblemContext::scalar_type>;
+	}
+
+	template<typename ProblemContext>
+	constexpr auto beta_zero_mode(const ProblemContext&) const {
+		return zero_mode::set;
+	}
+
+	template<typename ProblemContext>
+	auto is_conj(const ProblemContext& pctx) const {
+		const bool beta_is_zero = pctx.beta == zero<typename ProblemContext::scalar_type>;
+
+		return beta_is_zero ? pctx.a.is_conj()
+		                    : pctx.b.is_conj();
+	}
+
+	template<typename XType, typename YType, typename ScalarType, typename ProblemContext>
+	constexpr static bool match() {
+		return std::is_same_v<XType,      std::remove_const_t<typename ProblemContext::a_matrix_type::value_type>>
+		    && std::is_same_v<YType,      typename ProblemContext::c_matrix_type::value_type>
+		    && std::is_same_v<ScalarType, typename ProblemContext::scalar_type>;
+	}
+}; // struct axpby_kernel_tag<spec::strategy_tag<matmul::matadd3_zero_scalar>
 
 template<bool Spawn>
 struct axpby_kernel_tag<spec::strategy_tag<matmul::matmul3_interleaved_large<Spawn>>> {

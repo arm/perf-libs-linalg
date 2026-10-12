@@ -51,7 +51,7 @@ public:
 		 * down cntg as lda as cntg becomes strd
 		 *
 		 * Note, because we have to transpose the trans option,
-		 * if either of the input matrices are CONJTRANS  then we can not continue
+		 * if either of the input matrices are CONJTRANS  then we cannot continue
 		 */
 		else if(pctx.a.strd() == 1 && !pctx.a.is_conj() && !pctx.b.is_conj()) {
 			return kernel(

@@ -97,14 +97,20 @@ auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag
 	return interleave_matmul_kernel_specs< interleave_matmul_kernel_spec<c64, c64, c64>, sve_architecture_spec> [ zgemm_sve_big_idx ];
 }
 
-template<typename ProblemContextBase, machine::system System>
+template<typename StrategyTag, typename ProblemContextBase, machine::system System>
 PERFLIBS_LINALG_INLINE
-auto get_dot_kernel_system(const problem_context<ProblemContextBase, sve_architecture_spec>& pctx, system_t<System>) {
+auto get_dot_kernel_system(StrategyTag, const problem_context<ProblemContextBase, sve_architecture_spec>& pctx, system_t<System>) {
 	if(const auto kernel = get_sve_dot_kernel(pctx); kernel != nullptr) {
 		return kernel;
 	}
 
 	return get_neon_dot_kernel(pctx);
+}
+
+template<typename StrategyTag, typename ProblemContextBase, typename System>
+PERFLIBS_LINALG_INLINE
+auto get_waxpby_kernel_system (StrategyTag strat_tag, const problem_context<ProblemContextBase, sve_architecture_spec>& pctx, System) {
+	return get_sve_waxpby_kernel(strat_tag, pctx);
 }
 
 template<typename ProblemContextBase>
@@ -115,14 +121,15 @@ constexpr auto get_atomic_dispatch_kernel(const problem_context<ProblemContextBa
 	return &dispatch_atomic_sve<data_type>;
 }
 
-template<typename VectorType, typename ScalarType, typename System>
+template<typename StrategyTag, typename VectorType, typename ScalarType, typename System>
 PERFLIBS_LINALG_INLINE
 auto get_rot_kernel_system(
+	StrategyTag,
 	const problem_context<misc::rot<VectorType, ScalarType>, sve_architecture_spec>& pctx,
 	System) {
 	if constexpr (is_complex_v<ScalarType>) { // crot, zrot
 		if (pctx.incx == 1 && pctx.incy == 1)
-			return &rot_neon_kernel_complex<VectorType>;
+			return &rot_kernel_sve_complex<VectorType>;
 	}
 	return &rot_kernel_fallback<VectorType, ScalarType>; // srot, drot, csrot, zdrot
 }

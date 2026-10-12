@@ -31,6 +31,9 @@ public:
 	template<typename MatrixType, typename ArchitectureSpec>
 	PERFLIBS_LINALG_INLINE
 	bool operator()(const qr_pctx_t<MatrixType, ArchitectureSpec>& pctx) const {
+#ifndef _OPENMP
+		return false;
+#else
 		if (!can_compute(pctx)) return false;
 
 		      auto a              = pctx.a;
@@ -71,7 +74,7 @@ public:
 		reflector_mgr.allocate_current_reflector(panel_width);
 
 		// Main parallel region
-		#pragma omp parallel default(none) shared(pctx, a, previous_factorized_panel, panel_width, a_panel_start_point, nt, reflector_mgr, remaining_columns_to_process, effective_workspace) num_threads(nt)
+		#pragma omp parallel default(none) shared(pctx, a, previous_factorized_panel, a_panel_start_point, nt, reflector_mgr, remaining_columns_to_process, effective_workspace) firstprivate(panel_width) num_threads(nt)
 		{
 			auto thread_id = omp::get_thread_num();
 
@@ -234,6 +237,7 @@ public:
 			}
 		}
 		return true;
+#endif
 	}
 
 	template<typename ProblemContext>

@@ -24,7 +24,7 @@ namespace perflibs::linalg {
  * @tparam InParallel is this a team conversion (all threads in a team want the
  *         same data converting in the same order)
  * @tparam InterleaveFunc - Override for SVE implementations / split complex
- * implementations (see framework/interleave_kernels.hpp for defaults)
+ * implementations
  */
 template<
 	typename T0,

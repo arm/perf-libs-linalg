@@ -126,13 +126,13 @@ class parallelize {
 			( Dimension == which_dimension::a_strd && ( is_triangular_form_v<AType> || is_triangular_form_v<CType> ) ) ||
 			( Dimension == which_dimension::b_strd && ( is_triangular_form_v<BType> || is_triangular_form_v<CType> ) ) ||
 			( Dimension == which_dimension::cntg   && ( is_triangular_form_v<AType> || is_triangular_form_v<BType> ) ),
-			"Dimension  over which to parallelise does not belong to a triangular matrix"
+			"Dimension  over which to parallelize does not belong to a triangular matrix"
 		);
 
 		paneller<Dimension, Next> pan(next_);
 		const auto parallelize_dimension_size = pan.size(a, b, c);
 
-		// If the matrix has size one in the dimension we're parallelising over, get straight on with it.
+		// If the matrix has size one in the dimension we're parallelizing over, get straight on with it.
 		if (parallelize_dimension_size <= 1) {
 			// zeroeth block of one.
 			next_(a, b, c, advance(pos, 0, 0, 0, 0, 0, 1), args...);

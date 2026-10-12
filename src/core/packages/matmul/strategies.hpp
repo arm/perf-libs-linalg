@@ -26,8 +26,6 @@
 #include "packages/matmul/strategies/matmul3_interleaved_sequential.hpp"
 #include "packages/matmul/strategies/matmul3_unpacked.hpp"
 
-
-
 #include "packages/matmul/strategies/compressed_general_matrix_vector.hpp"
 #include "packages/matmul/strategies/compressed_rank_one_update.hpp"
 #include "packages/matmul/strategies/compressed_rank_two_update.hpp"
@@ -48,9 +46,12 @@
 #include "packages/matmul/strategies/inplace_matmul_large.hpp"
 #include "packages/matmul/strategies/inplace_matmul_vector.hpp"
 #include "packages/matmul/strategies/naive_matmul.hpp"
+
+#include "packages/matmul/strategies/matadd_both_zero.hpp"
 #include "packages/matmul/strategies/matadd2_buffer_naive.hpp"
-#include "packages/matmul/strategies/matadd3_naive.hpp"
 #include "packages/matmul/strategies/matadd3_zero_scalar.hpp"
+#include "packages/matmul/strategies/matadd3_vector_scalar.hpp"
+#include "packages/matmul/strategies/matadd3_naive.hpp"
 
 #include "packages/matmul/strategies/matmul4_vector_scalar.hpp"
 
@@ -109,11 +110,11 @@ constexpr auto strategies<spec::problem_context<matmul::rank_update_2k<T...>, Ar
 	/*
 	 * Parallel strategy for large rank Two updates
 	 */
-    matmul::rank_two_update { },
+	matmul::rank_two_update { },
 	/*
 	 * Parallel strategy for large rank 2k updates
 	 */
-    matmul::rank_update_2k_interleaved { },
+	matmul::rank_update_2k_interleaved { },
 	/*
 	 * If execution reaches this point, no optimized strategy matched
 	 * and if it has come via the BLAS
@@ -134,6 +135,10 @@ constexpr auto strategies<spec::problem_context<matmul::matmul2<T...>, Architect
 template<typename... T, typename ArchitectureSpec>
 constexpr auto strategies<spec::problem_context<matmul::matadd2<T...>, ArchitectureSpec>> = std::tuple {
 	/*
+	 * Both-zero in-place matadd
+	 */
+	matmul::matadd_both_zero { },
+	/*
 	 * Buffered in-place matadd fallback
 	 */
 	matmul::matadd2_buffer_naive { },
@@ -142,9 +147,17 @@ constexpr auto strategies<spec::problem_context<matmul::matadd2<T...>, Architect
 template<typename... T, typename ArchitectureSpec>
 constexpr auto strategies<spec::problem_context<matmul::matadd3<T...>, ArchitectureSpec>> = std::tuple {
 	/*
+	 * Both-zero out-of-place matadd
+	 */
+	matmul::matadd_both_zero { },
+	/*
 	 * Zero-scalar degenerate omatadd cases
 	 */
 	matmul::matadd3_zero_scalar { },
+	/*
+	 * Out-of-place matadd using waxpby kernels
+	 */
+	matmul::matadd3_vector_scalar { },
 	/*
 	 * Standard out-of-place matadd
 	 */

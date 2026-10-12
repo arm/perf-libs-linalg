@@ -96,7 +96,7 @@ public:
 	}
 
 	void push_back(T val) {
-		insert(std::move(val), end());
+		insert(end(), std::move(val));
 	}
 
 	void pop_back() {

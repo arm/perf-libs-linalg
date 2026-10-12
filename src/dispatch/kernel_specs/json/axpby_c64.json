@@ -286,7 +286,7 @@
 		"a_type": "c64",
 		"b_type": "c64",
 		"c_type": "c64",
-		"is_sve": false,
+		"is_sve": true,
 		"alpha": "zero",
 		"beta": "real",
 		"incx": "all",

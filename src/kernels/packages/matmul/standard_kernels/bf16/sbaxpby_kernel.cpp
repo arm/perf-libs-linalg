@@ -35,7 +35,7 @@ void sbaxpby_kernel_f32_fmla_x8_ldq(kernel_inttype n, float alpha, const __bf16 
 		y1_fp32x4 = vmulq_n_f32(y1_fp32x4, beta);
 
 		float32x4_t x0_fp32x4 = vreinterpretq_f32_u32(vshll_n_u16(vget_low_u16(x0_u16x8), 16));
- 		float32x4_t x1_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x0_u16x8, 16));
+		float32x4_t x1_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x0_u16x8, 16));
 
 		y0_fp32x4 = vfmaq_n_f32(y0_fp32x4, x0_fp32x4, alpha);
 		y1_fp32x4 = vfmaq_n_f32(y1_fp32x4, x1_fp32x4, alpha);
@@ -281,10 +281,10 @@ void sbaxpby_kernel_f32_fmla_x16_ldq(kernel_inttype n, float alpha, const __bf16
 		y3_fp32x4 = vmulq_n_f32(y3_fp32x4, beta);
 
 		float32x4_t x0_fp32x4 = vreinterpretq_f32_u32(vshll_n_u16(vget_low_u16(x0_u16x8), 16));
- 		float32x4_t x1_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x0_u16x8, 16));
+		float32x4_t x1_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x0_u16x8, 16));
 
 		float32x4_t x2_fp32x4 = vreinterpretq_f32_u32(vshll_n_u16(vget_low_u16(x1_u16x8), 16));
- 		float32x4_t x3_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x1_u16x8, 16));
+		float32x4_t x3_fp32x4 = vreinterpretq_f32_u32(vshll_high_n_u16(x1_u16x8, 16));
 
 
 		y0_fp32x4 = vfmaq_n_f32(y0_fp32x4, x0_fp32x4, alpha);

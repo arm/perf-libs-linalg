@@ -75,7 +75,9 @@ void parallel(int nt, Func f) {
 			const int num_spawn = parallel_state.request(nt);
 			PERFLIBS_UNUSED(num_spawn); // suppress erroneous warning from clang
 
+#ifdef _OPENMP
 			#pragma omp parallel for num_threads(num_spawn) firstprivate(f)
+#endif
 			for(int i=0; i<nt; ++i) {
 				f(i);
 			}
@@ -110,7 +112,9 @@ void parallel(int iterations, int nt, Func f) {
 	PERFLIBS_ASSERT(nt > 0, "number of threads must be positive");
 
 	if (nt > 1) {
+#ifdef _OPENMP
 		#pragma omp parallel for num_threads(nt) firstprivate(f)
+#endif
 		for(int i=0;i<iterations;++i) {
 			f(i);
 		}
@@ -153,7 +157,9 @@ T reduce_add_parallel(int nt, F f) {
 	const int num_spawn = parallel_state.request(nt);
 	PERFLIBS_UNUSED(num_spawn); // suppress erroneous warning from clang
 
+#ifdef _OPENMP
 	#pragma omp parallel for default(none) num_threads(num_spawn) firstprivate(f, nt) shared(tmp_result)
+#endif
 	for (int i = 0; i < nt; ++i) {
 		tmp_result[i] = f(i);
 	}

@@ -10,7 +10,24 @@
 		"target": "generic_aarch64",
 		"tuned_routine_spec": {
 			"strategy_preferences": {
-				"value": [0, 1],
+				"default": {
+					"cases": [],
+					"default": {
+						"cases": [
+							{
+								"condition": "scale <= 64",
+								"value": [
+									1,
+									0
+								]
+							}
+						],
+						"default": [
+							0,
+							1
+						]
+					}
+				},
 				"type": "inplace_vector<kernel_inttype, 2>"
 			}
 		},

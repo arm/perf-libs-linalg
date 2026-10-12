@@ -9,6 +9,7 @@
 #include "framework/alloc.hpp"
 #include "framework/linalg_util.hpp"
 #include "matrix/matrix.hpp"
+#include "matrix/operations.hpp"
 
 #include <string_view>
 
@@ -27,8 +28,14 @@ public:
 
 		auto *buffer = get_memory<value_type>(pctx.c.cntg() * pctx.c.strd());
 
+		const bool strd_output   =   pctx.c.strd_step() == 1
+		                         && (pctx.a.strd_step() == 1 || pctx.b.strd_step() == 1);
+
+		const auto tmp_cntg_step = strd_output ? pctx.c.strd() : 1;
+		const auto tmp_strd_step = strd_output ? 1 : pctx.c.cntg();
+
 		auto tmp = general_matrix {
-			matrix_base { buffer, pctx.c.cntg(), pctx.c.strd(), 1, pctx.c.cntg() }
+			matrix_base { buffer, pctx.c.cntg(), pctx.c.strd(), tmp_cntg_step, tmp_strd_step }
 		};
 
 		spec::problem_context pctx3_compute {
@@ -38,8 +45,10 @@ public:
 
 		matmul::compute(pctx3_compute);
 
+		auto tmp_in = to_const(tmp);
+
 		spec::problem_context pctx3_copy {
-			matmul::matadd3 { tmp, tmp, pctx.c, one<value_type>, zero<value_type> },
+			matmul::matadd3 { tmp_in, tmp_in, pctx.c, one<value_type>, zero<value_type> },
 			pctx.architecture_spec
 		};
 

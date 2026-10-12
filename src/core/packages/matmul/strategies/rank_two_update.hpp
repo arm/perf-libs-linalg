@@ -46,7 +46,7 @@ public:
 				sequence        { hermitian_rank_two_update { spec.kernel_axpby },
 				                  drop_imag_diagonal        { no_op{} } } } };
 
-			// Don't produce the parallelised driver unless the OpenMP version of the library is built
+			// Don't produce the parallelized driver unless the OpenMP version of the library is built
 			if constexpr(omp::is_mp){
 				if(spec.max_threads > 1) {
 					// Build and run driver.
@@ -75,7 +75,7 @@ public:
 				crop                      { 1, 1,
 				symmetric_rank_two_update { spec.kernel_axpby } } };
 
-			// Don't produce the parallelised driver unless the OpenMP version of the library is built
+			// Don't produce the parallelized driver unless the OpenMP version of the library is built
 			if constexpr(omp::is_mp){
 				if(spec.max_threads > 1) {
 					// Build and run driver.

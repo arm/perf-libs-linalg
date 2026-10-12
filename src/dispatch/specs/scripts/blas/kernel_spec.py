@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
 
 from dataclasses import dataclass
+from itertools import product
 
 import sys
 from pathlib import Path
@@ -84,7 +85,8 @@ class KernelSpecGenerator:
     const auto incx     = strat_tag.incx(pctx);
     const auto incy     = strat_tag.incy(pctx);
     const auto alpha    = strat_tag.alpha(pctx);
-    const auto beta     = strat_tag.beta(pctx);"""
+    const auto beta     = strat_tag.beta(pctx);
+    const auto beta_zero_mode = get_beta_zero_mode(strat_tag, pctx);"""
 
         if self.is_complex:
             out += "const auto conj_x = strat_tag.is_conj(pctx);"
@@ -103,11 +105,11 @@ class KernelSpecGenerator:
 
         if self.is_complex:
             out += "constexpr auto beta_zero = 0 << 2, beta_one = 1 << 2, beta_real = 2 << 2, beta_all = 3 << 2;"
-            out += "const std::uint8_t beta_mask = beta == zero<compute_type> && pctx.beta_zero_mode == zero_mode::set ? 0 : beta  == one<compute_type> ? 1 : perflibs::imag(beta) == zero<compute_type> ? 2 : 3;"
+            out += "const std::uint8_t beta_mask = beta == zero<compute_type> && beta_zero_mode == zero_mode::set ? 0 : beta  == one<compute_type> ? 1 : perflibs::imag(beta) == zero<compute_type> ? 2 : 3;"
             out += "const std::uint8_t conj_x_mask = conj_x == false ? 0 : 1;"
         else:
             out += "constexpr auto beta_zero = 0 << 2, beta_one = 1 << 2, beta_all = 3 << 2;"
-            out += "const std::uint8_t beta_mask = beta == zero<compute_type> && pctx.beta_zero_mode == zero_mode::set ? 0 : beta  == one<compute_type> ? 1 : 3;"
+            out += "const std::uint8_t beta_mask = beta == zero<compute_type> && beta_zero_mode == zero_mode::set ? 0 : beta  == one<compute_type> ? 1 : 3;"
 
         if self.is_complex:
             out += "const std::uint16_t val = alpha_mask | beta_mask << 2 | incx_mask << 4 | incy_mask << 6 | conj_x_mask << 8;"
@@ -207,12 +209,10 @@ std::optional<{self.kernel_type}> get_{self.kernel_name}_kernel_live(
 }}"""
 
     def _generate_live_reader(self):
-        default_kernel = self.routine["kernel_spec"]
         return f"""
   template<typename ArchitectureSpec>
   inline auto read_{self.file_name}_kernel_spec(const std::filesystem::path& json_dir, const verbosity_level_t verbosity_level, const std::string& case_str) {{
-    static {self.return_type} kernel;
-    if (kernel) return kernel;
+    {self.return_type} kernel;
 
     const auto json_file_path = json_dir / "{self.file_name}.json";
     static nlohmann::json json;
@@ -227,9 +227,10 @@ std::optional<{self.kernel_type}> get_{self.kernel_name}_kernel_live(
 
     if (!json.is_null() && !json.is_discarded()) {{
         for (const auto& entry : json) {{
-            if (entry["routine"] == "{self.routine_name}" && entry["datatype"] == "{self.datatype}") {{
+            if (entry["routine"] == "{self.routine_name}" && entry["datatype"] == "{self.datatype}"
+                    && entry.contains("kernel_spec")) {{
                 const auto& kernel_spec = entry["kernel_spec"];
-                if (kernel_spec.type() == nlohmann::json::value_t::object) {{
+                if (kernel_spec.type() == nlohmann::json::value_t::object && kernel_spec.contains(case_str)) {{
                     kernel = try_get_kernel<{self.arch_spec}, {self.cpp_type}>(kernel_spec[case_str].get<std::string>()).value().kernel;
                 }}
             }}
@@ -238,6 +239,24 @@ std::optional<{self.kernel_type}> get_{self.kernel_name}_kernel_live(
     return kernel;
 }}
 """
+
+    def _live_cases(self):
+        if "cases" in self.routine:
+            return self.routine["cases"]
+
+        # Cover the stride and scalar categories used by _setup_masks.
+        # Keep this order: it determines the case names in the live JSON.
+        axes = {}
+        if self.is_complex:
+            axes["conj_x"] = (False, True)
+        axes["incx"] = ("one", "not_zero", "zero")
+        axes["incy"] = ("one", "not_zero", "zero")
+        axes["alpha"] = ("zero", "one", "all")
+        axes["beta"] = (
+            ("zero", "one", "real", "all") if self.is_complex
+            else ("zero", "one", "all")
+        )
+        return [dict(zip(axes, values)) for values in product(*axes.values())]
 
     def _generate_live_kernels(self):
         live_kernel_template = """
@@ -253,7 +272,7 @@ static {kernel_type} live_{file_name}_kernel_{case_str} = read_{file_name}_kerne
                 case_str=self._case_to_str(case),
                 kernel_type=self.return_type,
             )
-            for case in self.routine["cases"]
+            for case in self._live_cases()
         )
 
     def generate_live_header(self):
@@ -263,16 +282,10 @@ static {kernel_type} live_{file_name}_kernel_{case_str} = read_{file_name}_kerne
                     "condition": case,
                     "value": f"live::live_{self.file_name}_kernel_{self._case_to_str(case)}<ArchitectureSpec>",
                 }
-                for case in self.routine["cases"]
+                for case in self._live_cases()
             ],
         }
 
-        instantiations = "\n".join(
-            [
-                f"extern {self.return_type} live_{self.file_name}_kernel_{self._case_to_str(case)};"
-                for case in self.routine["cases"]
-            ]
-        )
         return f"""
 {self.generate_kernel_spec(kernel_spec)}
 """

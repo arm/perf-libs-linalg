@@ -1,6 +1,6 @@
 [
 	{
-		"routine": "ger",
+		"routine": "matmul3_outer_product",
 		"datatype": [
 			"bf16",
 			"bf16bf16r32",

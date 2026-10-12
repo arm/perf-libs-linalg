@@ -42,6 +42,7 @@ This builds the `pl_linalg` target.
 - `BUILD_SHARED_LIBS=ON|OFF`: builds shared or static libraries where supported. The default is `OFF`.
 - `LINALG_INTEGER_MODEL=lp64|ilp64`: selects the public integer ABI. The default is `lp64`.
 - `LINALG_THREADING_MODEL=serial|openmp`: selects the threading backend. The default is `serial`.
+- `LINALG_SANITIZER=none|address`: selects sanitizer instrumentation. The default is `none`.
 
 Example:
 

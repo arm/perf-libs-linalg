@@ -57,7 +57,11 @@ public:
 	template<typename ProblemContext>
 	requires spec::has_get_spec<spec::strategy_tag<triangular_solve_matrix_large>, ProblemContext>
 	PERFLIBS_LINALG_INLINE
-	constexpr bool can_compute(const ProblemContext&) const { return true; }
+	constexpr bool can_compute(const ProblemContext& pctx) const {
+		// Matrix strategies may fall back to reference TRSM for edge blocks,
+		// so the RHS must provide a valid matrix leading stride.
+		return is_left(pctx.side) ? pctx.b.strd_step() > 0 : pctx.b.cntg_step() > 0;
+	}
 
 	template<typename ProblemContext>
 	PERFLIBS_LINALG_INLINE

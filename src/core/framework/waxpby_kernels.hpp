@@ -13,6 +13,11 @@
 
 namespace perflibs::linalg {
 
+template<typename StrategyTag>
+struct waxpby_kernel_tag {
+	waxpby_kernel_tag(const StrategyTag&) { }
+};
+
 template<typename AType, typename BType=AType, typename CType=AType, typename DType = CType,
          typename ScalarType = promote_t<AType, BType, CType>>
 using waxpby_kernel_t = void(kernel_inttype n, ScalarType alpha, const AType *x, ScalarType beta,
@@ -59,26 +64,29 @@ template<> inline auto waxpby_sve_kernel_fcmla<complex_float>   = cwaxpby_sve_ke
 template<> inline auto waxpby_sve_kernel_fcmla<complex_double>  = zwaxpby_sve_kernel_fcmla;
 
 
-template<typename ProblemContext>
+template<typename StrategyTag, typename ProblemContext>
 PERFLIBS_LINALG_INLINE
-auto get_neon_waxpby_kernel(const ProblemContext& pctx) {
-	return waxpby_neon_kernel<typename ProblemContext::d_matrix_type::value_type >;
+auto get_neon_waxpby_kernel(const StrategyTag&, const ProblemContext&) {
+	using value_type = typename waxpby_kernel_tag<StrategyTag>::template value_type<ProblemContext>;
+
+	return waxpby_neon_kernel<value_type>;
 }
 
-template<typename ProblemContext>
+template<typename StrategyTag, typename ProblemContext>
 PERFLIBS_LINALG_INLINE
-auto get_sve_waxpby_kernel(const ProblemContext& pctx) {
-	const bool is_contig = pctx.a.strd_step() == 1
-	                    && pctx.c.cntg_step() == 1
-	                    && pctx.d.cntg_step() == 1;
+auto get_sve_waxpby_kernel(const StrategyTag& strategy_tag, const ProblemContext& pctx) {
+	const waxpby_kernel_tag<StrategyTag> tag { strategy_tag };
+	using value_type = typename waxpby_kernel_tag<StrategyTag>::template value_type<ProblemContext>;
 
-	using data_type = typename ProblemContext::a_matrix_type::value_type;
+	const bool is_contig =  tag.incx(pctx) == 1
+	                     && tag.incy(pctx) == 1
+	                     && tag.incw(pctx) == 1;
 
 	if (is_contig) {
-		return waxpby_sve_kernel_fcmla<data_type>;
+		return waxpby_sve_kernel_fcmla<value_type>;
 	}
 
-	return get_neon_waxpby_kernel(pctx);
+	return get_neon_waxpby_kernel(strategy_tag, pctx);
 }
 
 } // namespace perflibs::linalg

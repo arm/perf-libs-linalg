@@ -6,10 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Add optional AddressSanitizer builds.
+
 ### Performance
 
+- Reduce build times and library size.
 - Improve instruction scheduling in the SVE complex GEMM kernels.
 - Improve SVE transposed GEMV performance with strided output.
+- Improve IMATADD, OMATADD, IMATCOPY and OMATCOPY performance.
+- Improve Neon performance for CROT and ZROT.
+- Enable SVE kernels for DOT, CROT, ZROT and WAXPBY.
+
+### Fixed
+
+- Fix a data race in parallel QR factorization.
+- Fix excessive memory use in parallel GEMM.
+- Fix incorrect results in parallel WAXPBY.
+- Fix integer overflow in ILP64 ROTM.
+- Prevent spurious parameter errors in TRSV.
+- Respect thread throttling in parallel POTRF.
 
 ## [26.07]
 

@@ -639,4 +639,3 @@ ${prologue(func_name)}
 	ret
 ${epilogue(func_name)}
 % endfor
-

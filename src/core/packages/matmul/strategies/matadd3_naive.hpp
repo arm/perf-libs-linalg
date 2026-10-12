@@ -21,10 +21,44 @@ public:
 	bool operator() (const spec::problem_context<matmul::matadd3<Ts...>, ArchitectureSpec>& pctx) const {
 		if (!this->can_compute(pctx)) return false;
 
-		for (kernel_inttype j = 0; j != pctx.c.strd(); ++j) {
+		using c_data_type = typename decltype(pctx.c)::value_type;
+
+		const bool use_cntg_loop =   pctx.c.cntg_step() == 1
+		                         ||  pctx.c.strd_step() != 1
+		                         || (pctx.a.strd_step() != 1 && pctx.b.strd_step() != 1);
+
+		const auto compute_element = [&](kernel_inttype i, kernel_inttype j) {
+			if (pctx.alpha != zero<>) {
+				if (pctx.beta != zero<>) {
+					pctx.c(i, j, write) = pctx.alpha * pctx.a(i, j)
+					                    + pctx.beta  * pctx.b(i, j);
+				}
+				else {
+					pctx.c(i, j, write) = pctx.alpha * pctx.a(i, j);
+				}
+			}
+			else {
+				if (pctx.beta != zero<>) {
+					pctx.c(i, j, write) = pctx.beta * pctx.b(i, j);
+				}
+				else {
+					pctx.c(i, j, write) = zero<c_data_type>;
+				}
+			}
+		};
+
+		if (use_cntg_loop) {
+			for (kernel_inttype j = 0; j != pctx.c.strd(); ++j) {
+				for (kernel_inttype i = 0; i != pctx.c.cntg(); ++i) {
+					compute_element(i, j);
+				}
+			}
+		}
+		else {
 			for (kernel_inttype i = 0; i != pctx.c.cntg(); ++i) {
-				pctx.c(i, j, write) = pctx.alpha * pctx.a(i, j)
-				                    + pctx.beta  * pctx.b(i, j);
+				for (kernel_inttype j = 0; j != pctx.c.strd(); ++j) {
+					compute_element(i, j);
+				}
 			}
 		}
 
@@ -37,9 +71,8 @@ public:
 
 	template<typename... Ts, typename ArchitectureSpec>
 	PERFLIBS_LINALG_INLINE
-	constexpr bool can_compute(const spec::problem_context<matmul::matadd3<Ts...>, ArchitectureSpec>& pctx) const {
-		return pctx.alpha != zero<>
-		    && pctx.beta  != zero<>;
+	constexpr bool can_compute(const spec::problem_context<matmul::matadd3<Ts...>, ArchitectureSpec>&) const {
+		return true;
 	}
 
 	template<typename ProblemContext>

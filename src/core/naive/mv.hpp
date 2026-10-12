@@ -19,7 +19,7 @@ struct naive_mv {
 	void operator()(AType& a, BType& x, CType& y, compute_position pos, ScalarType alpha, ScalarType beta, Args&&... args) {
 		//sanity checks
 		PERFLIBS_ASSERT(y.cntg() == a.strd(), "y cntg doesn't match a strd");
-		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x ctng doesn't match a cntg");
+		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x cntg doesn't match a cntg");
 		PERFLIBS_ASSERT(x.strd() == 1, "x strd is not 1");
 		PERFLIBS_ASSERT(y.strd() == 1, "y strd is not 1");
 

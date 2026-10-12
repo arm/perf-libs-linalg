@@ -85,7 +85,7 @@ struct l2_norm_accumulator {
 	real_type_t ssq_med {};
 	real_type_t ssq_big {};
 	PERFLIBS_LINALG_INLINE
-  	void add(real_type_t x) { // only applicable for real positive values (norms)
+	void add(real_type_t x) { // only applicable for real positive values (norms)
 		// Combine per-thread partial norms using safe scaling
 		using scale_constants = l2_norm_scale_constants<real_type_t>;
 		constexpr real_type_t zero = 0;

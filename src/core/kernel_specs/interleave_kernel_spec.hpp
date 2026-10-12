@@ -217,8 +217,8 @@ struct interleave_kernel_spec {
 	kernel_inttype                                 split_factor;
 
 	/*
-	 * This is a strong requirement, ie 512 mean it can only run on a 512 machine
-	 * neon or VL kernels should set this to 0 so it can be pick up by any machine
+	 * This is a strong requirement, i.e. 512 means it can only run on a 512 machine
+	 * Neon or VL kernels should set this to 0 so it can be picked up by any machine
 	 */
 	kernel_inttype                                 vector_size_bits;
 	matrix_requirement                             matrix_req;

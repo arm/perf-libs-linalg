@@ -81,7 +81,7 @@ public:
 		auto V_update_pctx = spec::problem_context{
 			matmul::matmul3{
 				to_const(pctx.a.sub_matrix(nb, pctx.a.cntg()-nb, 0, nb).transpose()),
-				to_const(to_conj(get_cntg_panel(y, nb, y.cntg()-nb).transpose())),
+				to_const(adjoint(get_cntg_panel(y, nb, y.cntg()-nb))),
 				pctx.a.sub_matrix(nb, pctx.a.cntg()-nb, nb, pctx.a.strd()-nb),
 				-one<value_type>, one<value_type>
 			},

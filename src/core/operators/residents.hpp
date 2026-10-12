@@ -55,7 +55,7 @@ public:
 	resident(which_matrix_constant<WhichMatrix>, kernel_inttype cntg_block_size, kernel_inttype strd_block_size, bool cntg_first, Next next)
 	: resident(cntg_block_size, strd_block_size, cntg_first, std::move(next)) { }
 
-	PERFLIBS_LINALG_INLINE
+	inline
 	void operator()(const auto& a, const auto& b, const auto& c, compute_position pos, const auto&... args) {
 		if constexpr (WhichMatrix == which_matrix::a) {
 			const kernel_inttype cntg_size = a.cntg();

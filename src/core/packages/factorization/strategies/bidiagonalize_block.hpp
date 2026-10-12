@@ -52,7 +52,7 @@ public:
 						const auto gemv_pctx = spec::problem_context{
 							matmul::matmul3{
 								to_const(pctx.a.sub_matrix(i, pctx.a.cntg()-i, 0, i).transpose()),
-								to_const(to_conj(pctx.y.sub_matrix(i, 1, 0, i).transpose())),
+								to_const(adjoint(pctx.y.sub_matrix(i, 1, 0, i))),
 								pctx.a.sub_matrix(i, pctx.a.cntg()-i, i, 1),
 								-one, one
 							},
@@ -202,7 +202,7 @@ public:
 						const auto gemv_pctx = spec::problem_context{
 							matmul::matmul3{
 								to_const(to_conj(pctx.a.sub_matrix(0, i, i+1, pctx.a.strd()-i-1))),
-								to_const(to_conj(pctx.x.sub_matrix(i, 1, 0, i).transpose())),
+								to_const(adjoint(pctx.x.sub_matrix(i, 1, 0, i))),
 								householder_vec,
 								-one, one
 							},
@@ -362,7 +362,7 @@ public:
 						const auto gemv_pctx = spec::problem_context{
 							matmul::matmul3{
 								to_const(to_conj(pctx.a.sub_matrix(0, i, i, pctx.a.strd()-i))),
-								to_const(to_conj(pctx.x.sub_matrix(i, 1, 0, i).transpose())),
+								to_const(adjoint(pctx.x.sub_matrix(i, 1, 0, i))),
 								householder_vec,
 								-one, one
 							},
@@ -485,7 +485,7 @@ public:
 						const auto gemv_pctx = spec::problem_context{
 							matmul::matmul3{
 								to_const(pctx.a.sub_matrix(i+1, pctx.a.cntg()-i-1, 0, i).transpose()),
-								to_const(to_conj(pctx.y.sub_matrix(i, 1, 0, i).transpose())),
+								to_const(adjoint(pctx.y.sub_matrix(i, 1, 0, i))),
 								pctx.a.sub_matrix(i+1, pctx.a.cntg()-i-1, i, 1),
 								-one, one
 							},

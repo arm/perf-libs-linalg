@@ -235,13 +235,13 @@ void domatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, do
 void dimatadd(char order, char transa, char transb, pl_linalg_int_t m, pl_linalg_int_t n, double alpha, double *a, pl_linalg_int_t lda, double beta, const double *b, pl_linalg_int_t ldb);
 void dimatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, double alpha, double *a, pl_linalg_int_t lda, pl_linalg_int_t ldb);
 void somatadd(char order, char transa, char transb, pl_linalg_int_t m, pl_linalg_int_t n, float alpha, const float *a, pl_linalg_int_t lda, float beta, const float *b, pl_linalg_int_t ldb, float *c, pl_linalg_int_t ldc);
+void somatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, float alpha, const float *a, pl_linalg_int_t lda, float *b, pl_linalg_int_t ldb);
 void simatadd(char order, char transa, char transb, pl_linalg_int_t m, pl_linalg_int_t n, float alpha, float *a, pl_linalg_int_t lda, float beta, const float *b, pl_linalg_int_t ldb);
 void simatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, float alpha, float *a, pl_linalg_int_t lda, pl_linalg_int_t ldb);
-void somatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, float alpha, const float *a, pl_linalg_int_t lda, float *b, pl_linalg_int_t ldb);
 void zomatadd(char order, char transa, char transb, pl_linalg_int_t m, pl_linalg_int_t n, pl_linalg_doublecomplex_t alpha, const pl_linalg_doublecomplex_t *a, pl_linalg_int_t lda, pl_linalg_doublecomplex_t beta, const pl_linalg_doublecomplex_t *b, pl_linalg_int_t ldb, pl_linalg_doublecomplex_t *c, pl_linalg_int_t ldc);
+void zomatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, pl_linalg_doublecomplex_t alpha, const pl_linalg_doublecomplex_t *a, pl_linalg_int_t lda, pl_linalg_doublecomplex_t *b, pl_linalg_int_t ldb);
 void zimatadd(char order, char transa, char transb, pl_linalg_int_t m, pl_linalg_int_t n, pl_linalg_doublecomplex_t alpha, pl_linalg_doublecomplex_t *a, pl_linalg_int_t lda, pl_linalg_doublecomplex_t beta, const pl_linalg_doublecomplex_t *b, pl_linalg_int_t ldb);
 void zimatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, pl_linalg_doublecomplex_t alpha, pl_linalg_doublecomplex_t *a, pl_linalg_int_t lda, pl_linalg_int_t ldb);
-void zomatcopy(char order, char transa, pl_linalg_int_t m, pl_linalg_int_t n, pl_linalg_doublecomplex_t alpha, const pl_linalg_doublecomplex_t *a, pl_linalg_int_t lda, pl_linalg_doublecomplex_t *b, pl_linalg_int_t ldb);
 
 #ifdef __cplusplus
 }

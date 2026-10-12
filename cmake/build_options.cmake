@@ -13,7 +13,20 @@ if(NOT LINALG_INTEGER_MODEL MATCHES "^(lp64|ilp64)$")
   message(FATAL_ERROR "LINALG_INTEGER_MODEL must be lp64 or ilp64")
 endif()
 
+set(LINALG_SANITIZER "none" CACHE STRING "Sanitizer instrumentation: none or address")
+set_property(CACHE LINALG_SANITIZER PROPERTY STRINGS none address)
+if(NOT LINALG_SANITIZER MATCHES "^(none|address)$")
+  message(FATAL_ERROR "LINALG_SANITIZER must be none or address")
+endif()
+
+include(compile_options)
+
 add_library(build_options INTERFACE)
+target_compile_options(build_options INTERFACE
+  "$<$<COMPILE_LANGUAGE:C>:${LINALG_C_COMPILE_OPTIONS}>"
+  "$<$<COMPILE_LANGUAGE:CXX>:${LINALG_CXX_COMPILE_OPTIONS}>"
+  "$<$<COMPILE_LANGUAGE:Fortran>:${LINALG_Fortran_COMPILE_OPTIONS}>"
+)
 
 if(LINALG_INTEGER_MODEL STREQUAL "ilp64")
   target_compile_definitions(build_options INTERFACE INTEGER64)

@@ -376,7 +376,7 @@ void gemm_small_driver(int_type nota, int_type notb, kernel_inttype m, kernel_in
 		num_threads(nt)
 	{
 
-		// Parallelise by tiles
+		// Parallelize by tiles
 
 		/*
 		 * Use static scheduling here to avoid

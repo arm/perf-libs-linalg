@@ -13,8 +13,8 @@ namespace perflibs::linalg {
 struct compute_position {
 	/// m, n & k in old money
 	/// iteration is used to denote iteration number - used for syr2k and frieds which does multiple passes
-	/// block is used to uniquely label the submatrix being considered when parallelising
-	/// blocks is the total number of blocks for this thread when parallelising
+	/// block is used to uniquely label the submatrix being considered when parallelizing
+	/// blocks is the total number of blocks for this thread when parallelizing
 	kernel_inttype a_strd, b_strd, cntg, iteration { 0 }, block { 0 }, blocks { 0 }, thread_num { 0 };
 }; //struct compute_position
 

@@ -23,8 +23,8 @@
 #include "operators/copy_matrix.hpp"
 #include "operators/residents.hpp"
 #include "operators/kernel_exec.hpp"
-#include "operators/parallelise_2d.hpp"
-#include "operators/parallelise_3d.hpp"
+#include "operators/parallelize_2d.hpp"
+#include "operators/parallelize_3d.hpp"
 #include "operators/gemm_reduce.hpp"
 
 #include "nonowning_vector.hpp"
@@ -144,7 +144,7 @@ class matmul3_interleaved_large {
 			 * Spawns the threads and divides up the problem space based on the
 			 * scheme determined by a_strd_split and b_strd_split
 			 */
-			parallelise_2d { spawn_t{}, check_threads_t{}, a_strd_split, b_strd_split,
+			parallelize_2d { spawn_t{}, check_threads_t{}, a_strd_split, b_strd_split,
 			/*
 			 * Blocks over B (typically packing into L3)
 			 */
@@ -231,7 +231,8 @@ class matmul3_interleaved_large {
 			  cntg_threads, pctx.a.cntg(), kspec.cntg_unroll);
 
 
-		const kernel_inttype total_threads = a_strd_split.threads * b_strd_split.threads * cntg_split.threads;
+		const kernel_inttype a_b_threads   = a_strd_split.threads * b_strd_split.threads;
+		const kernel_inttype total_threads = a_b_threads * cntg_split.threads;
 
 		/*
 		 * Calculate how much memory we need for A, B & (if hetrogenious) C buffers
@@ -271,7 +272,7 @@ class matmul3_interleaved_large {
 			 * Spawns the threads and divides up the problem space based on the
 			 * scheme determined by a_strd_split and b_strd_split
 			 */
-			parallelise_3d { check_threads_t{}, a_strd_split, b_strd_split, cntg_split, active_buffer_pool{ total_threads, cntg_threads, kblk_alloc },
+			parallelize_3d { check_threads_t{}, a_strd_split, b_strd_split, cntg_split, active_buffer_pool{ total_threads, a_b_threads, kblk_alloc },
 				/*
 				 * Blocks over B (typically packing into L3)
 				 */
