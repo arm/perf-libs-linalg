@@ -33,6 +33,12 @@ if(_dispatch_msvc_runtime_variant)
   string(APPEND _dispatch_variant "-${_dispatch_msvc_runtime_variant}")
 endif()
 
+set(_dispatch_live 0)
+if(LINALG_ENABLE_TUNING_OVERRIDES)
+  set(_dispatch_live 1)
+  string(APPEND _dispatch_variant "-live")
+endif()
+
 set(_dispatch_generate_dir "${CMAKE_CURRENT_BINARY_DIR}/${_dispatch_variant}/generated")
 set(_dispatch_build_dir "${CMAKE_CURRENT_BINARY_DIR}/${_dispatch_variant}/obj")
 
@@ -80,6 +86,11 @@ if(_kernel_include_dirs)
   list(APPEND _dispatch_include_dirs ${_kernel_include_dirs})
 endif()
 
+if(LINALG_ENABLE_TUNING_OVERRIDES)
+  FetchContent_GetProperties(nlohmann_json SOURCE_DIR _dispatch_json_source_dir)
+  list(APPEND _dispatch_include_dirs "${_dispatch_json_source_dir}/single_include")
+endif()
+
 # The dispatch Makefile takes raw compiler flags, not CMake target usage.
 set(_dispatch_make_cxx_flags ${_dispatch_include_dirs})
 list(TRANSFORM _dispatch_make_cxx_flags PREPEND "-I")
@@ -119,6 +130,7 @@ set(_dispatch_make_vars
     "use_openmp=${_dispatch_use_openmp}"
     "int64=${_dispatch_int64}"
     "debug=${_dispatch_debug}"
+    "live=${_dispatch_live}"
     "dev=${_dispatch_make_dev}"
 )
 

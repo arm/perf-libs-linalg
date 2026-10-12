@@ -3,9 +3,6 @@
 
 add_library(runtime_common INTERFACE)
 target_link_libraries(runtime_common INTERFACE build_options)
-if(WIN32)
-  target_link_libraries(runtime_common INTERFACE advapi32)
-endif()
 target_include_directories(runtime_common INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_SOURCE_DIR}/src/common"
@@ -14,6 +11,9 @@ target_include_directories(runtime_common INTERFACE
 
 add_library(linalg_runtime INTERFACE)
 target_link_libraries(linalg_runtime INTERFACE runtime_common)
+if(WIN32)
+  target_link_libraries(linalg_runtime INTERFACE advapi32)
+endif()
 
 add_library(linalg_runtime_obj OBJECT
     detect/cpu_info.cpp

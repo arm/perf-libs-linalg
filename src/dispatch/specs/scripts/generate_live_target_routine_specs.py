@@ -198,9 +198,9 @@ def generate_live_target_routine_header(routine, pkg):
 #include "packages/{package}/fwd.hpp"
 #include "spec/problem_context.hpp"
 
-#include "live_target.hpp"
+#include "spec/live_target.hpp"
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <filesystem>
 #include <fstream>
 #include <optional>

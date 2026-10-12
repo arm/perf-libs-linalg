@@ -24,3 +24,14 @@ https://github.com/ARM-software/ComputeLibrary (commit
 afd38f0c617d6f89b2b4532c6c44f116617e2b6f).
 
 License: MIT. See `LICENSES/MIT.txt`.
+
+## JSON for Modern C++ (nlohmann/json)
+
+This project depends on the nlohmann/json library for JSON parsing and
+serialization.
+
+Version 3.12.0 from https://github.com/nlohmann/json (tag commit
+55f93686c01528224f448c19128836e7df245f72).
+
+License: MIT. See upstream's
+[`LICENSE.MIT`](https://github.com/nlohmann/json/blob/v3.12.0/LICENSE.MIT).

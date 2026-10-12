@@ -7,4 +7,10 @@ target_include_directories(linalg_core INTERFACE
     "${CMAKE_SOURCE_DIR}/src/common"
     "${CMAKE_SOURCE_DIR}/include"
 )
-target_link_libraries(linalg_core INTERFACE linalg_runtime)
+target_link_libraries(linalg_core INTERFACE runtime_common)
+
+if(LINALG_ENABLE_TUNING_OVERRIDES)
+  include("${PROJECT_SOURCE_DIR}/cmake/dependencies/json.cmake")
+  target_compile_definitions(linalg_core INTERFACE PL_LINALG_LIVE_TARGET=1)
+  target_link_libraries(linalg_core INTERFACE nlohmann_json::nlohmann_json)
+endif()

@@ -4,8 +4,6 @@
 cmake_minimum_required(VERSION 3.21)
 project(perf-libs-linalg VERSION 26.07 LANGUAGES C CXX Fortran ASM)
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -18,24 +16,14 @@ include(CTest)
 include(GNUInstallDirs)
 
 add_subdirectory(netlib)
-add_subdirectory(src/runtime)
-add_subdirectory(src/core)
-add_subdirectory(src/kernels)
-add_subdirectory(src/dispatch)
-
 add_library(pl_linalg)
-set_target_properties(pl_linalg PROPERTIES LINKER_LANGUAGE CXX)
-target_link_options(pl_linalg PUBLIC ${LINALG_LINK_OPTIONS})
-target_link_libraries(pl_linalg PRIVATE
-    linalg_core
-    linalg_kernels
-    linalg_dispatch
-    linalg_netlib
-)
+add_subdirectory(src)
 
-install(TARGETS pl_linalg)
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" TYPE INCLUDE)
+add_subdirectory(tools)
 
 if(BUILD_TESTING)
   add_subdirectory(netlib/tests)
 endif()
+
+install(TARGETS pl_linalg)
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" TYPE INCLUDE)
