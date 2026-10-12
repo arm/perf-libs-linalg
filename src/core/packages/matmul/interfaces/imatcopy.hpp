@@ -86,57 +86,33 @@ void imatcopy(
 
 		if(! res) return;
 	}
-	// TODO: Add column alignment for buffer
 	const bool is_colmajor = option_matches(order, 'C');
 
-	const     auto           atrans        = c_to_trans(transa);
-	const     bool           is_trans_a    = is_trans(atrans);
-	          bool           c_is_conj     = is_conj(atrans);
+	const auto           atrans        = c_to_trans(transa);
+	const bool           is_trans_a    = is_trans(atrans);
+	const bool           a_is_conj     = is_conj(atrans);
 
-	const     kernel_inttype a_strd        = m;
-	const     kernel_inttype b_strd        = n;
-	constexpr kernel_inttype cntg          = 0;
+	const kernel_inttype a_strd        = m;
+	const kernel_inttype b_strd        = n;
 
-	          auto           buffer        = get_memory<AType>(a_strd * b_strd);
+	const kernel_inttype a_cntg_stride = is_colmajor  ? 1 : lda;
+	const kernel_inttype a_strd_stride = is_colmajor  ? lda : 1;
 
-	constexpr kernel_inttype a_cntg_stride = 0;
-	constexpr kernel_inttype a_strd_stride = 0;
-	constexpr kernel_inttype b_cntg_stride = 0;
-	constexpr kernel_inttype b_strd_stride = 0;
+	const kernel_inttype c_cntg_stride = (is_colmajor ^ is_trans_a) ? 1 : ldb;
+	const kernel_inttype c_strd_stride = (is_colmajor ^ is_trans_a) ? ldb : 1;
 
-	const     kernel_inttype c_cntg_stride = is_colmajor ? 1 : lda;
-	const     kernel_inttype c_strd_stride = is_colmajor ? lda : 1;
-
-	const     kernel_inttype d_cntg_stride = (is_colmajor ^ is_trans_a) ? 1 : ldb;
-	const     kernel_inttype d_strd_stride = (is_colmajor ^ is_trans_a) ? ldb : 1;
-
-	spec::problem_context pctx_in {
-		matmul::matmul4 {
-			general_matrix { matrix_base { &zero<AType>,                  cntg,   a_strd, a_cntg_stride, a_strd_stride }            },
-			general_matrix { matrix_base { &zero<AType>,                  cntg,   b_strd, b_cntg_stride, b_strd_stride }            },
-			general_matrix { matrix_base { static_cast<const AType*>(ab), a_strd, b_strd, c_cntg_stride, c_strd_stride }, c_is_conj },
-			general_matrix { matrix_base { buffer,                        a_strd, b_strd, 1,             a_strd        }            },
-			zero<AType>, alpha
+	spec::problem_context pctx {
+		matmul::matadd2 {
+			general_matrix { matrix_base { static_cast<const AType*>(ab), a_strd, b_strd, a_cntg_stride, a_strd_stride }, a_is_conj },
+			general_matrix { matrix_base { static_cast<const AType*>(ab), a_strd, b_strd, a_cntg_stride, a_strd_stride }, a_is_conj },
+			general_matrix { matrix_base { ab,                            a_strd, b_strd, c_cntg_stride, c_strd_stride }            },
+			alpha,
+			zero<AType>
 		},
 		ArchitectureSpec { machine::get_system_unsafe() }
 	};
 
-	matmul::compute(pctx_in);
-
-	spec::problem_context pctx_out {
-		matmul::matmul4 {
-			general_matrix { matrix_base { &zero<AType>,                      cntg,   a_strd, a_cntg_stride, a_strd_stride } },
-			general_matrix { matrix_base { &zero<AType>,                      cntg,   b_strd, b_cntg_stride, b_strd_stride } },
-			general_matrix { matrix_base { static_cast<const AType*>(buffer), a_strd, b_strd, 1,             a_strd        } },
-			general_matrix { matrix_base { ab,                                a_strd, b_strd, d_cntg_stride, d_strd_stride } },
-			zero<AType>, one<AType>
-		},
-		ArchitectureSpec { machine::get_system_unsafe() }
-	};
-
-	matmul::compute(pctx_out);
-
-	return_memory<AType>(buffer);
+	matmul::compute(pctx);
 }
 
 } //namespace perflibs::linalg

@@ -26,6 +26,7 @@ namespace perflibs::linalg::factorization {
  * n: Number of elements to process
  * num_threads: Number of threads participating in the reduction
  */
+#ifdef _OPENMP
 template<typename ArchitectureSpec, typename MatrixType>
 PERFLIBS_LINALG_INLINE void vectors_reduction(const typename MatrixType::value_type *thread_workspace,
                                          MatrixType& output_matrix, kernel_inttype n,
@@ -41,6 +42,7 @@ PERFLIBS_LINALG_INLINE void vectors_reduction(const typename MatrixType::value_t
 		output_matrix(j, 0, write) = sum;
 	}
 }
+#endif
 } // namespace perflibs::linalg::factorization
 
 #endif // PERFLIBS_LINALG_FACTORIZATION_REDUCTION_KERNEL_HPP

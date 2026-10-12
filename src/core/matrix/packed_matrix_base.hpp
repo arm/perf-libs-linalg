@@ -129,7 +129,7 @@ public:
 	constexpr
 	PERFLIBS_LINALG_INLINE kernel_inttype cntg_step() const {
 		// This assert is not always met. These are accessed by
-		//               banded_mv_common contrary to the is_strd_unit flag.
+		// banded_mv_common contrary to the is_strd_unit flag.
 		/* PERFLIBS_ASSERT(!is_strd_unit_, "Contiguous dimension stride is not constant"); */
 		return 1;
 	}
@@ -138,7 +138,7 @@ public:
 	constexpr
 	PERFLIBS_LINALG_INLINE kernel_inttype strd_step() const {
 		// This assert is not always met. These are accessed by
-		//               banded_mv_common contrary to the is_strd_unit flag.
+		// banded_mv_common contrary to the is_strd_unit flag.
 		/* PERFLIBS_ASSERT(is_strd_unit_, "Stride dimension stride is not constant"); */
 		return 1;
 	}
@@ -148,7 +148,7 @@ public:
 	PERFLIBS_LINALG_INLINE kernel_inttype kl() const { return uplo_ == PERFLIBS_LOWER ? parent_cntg_ : 0; }
 	PERFLIBS_LINALG_INLINE kernel_inttype ku() const { return uplo_ == PERFLIBS_UPPER ? parent_cntg_ : 0; }
 
-	// assumptions: 1) absolute_cntg_pos_ == 0 because we parallelise only in the strd dimension
+	// assumptions: 1) absolute_cntg_pos_ == 0 because we parallelize only in the strd dimension
 	//              2) this function is called within a loop from first_band_cntg and last_band_cntg
 	PERFLIBS_LINALG_INLINE std::pair<kernel_inttype,kernel_inttype> get_strd_band_pos(kernel_inttype cntg)const {
 		PERFLIBS_ASSERT(absolute_cntg_pos_ == 0, "absolute_cntg_pos_ must be 0");
@@ -158,7 +158,7 @@ public:
 		return std::make_pair(band_start_pos, band_end_pos);
 	}
 
-	// assumptions: 1) absolute_strd_pos_ == 0 because we parallelise only in the cntg dimension
+	// assumptions: 1) absolute_strd_pos_ == 0 because we parallelize only in the cntg dimension
 	PERFLIBS_LINALG_INLINE std::pair<kernel_inttype,kernel_inttype> get_cntg_band_pos(kernel_inttype strd) const {
 		PERFLIBS_ASSERT(absolute_strd_pos_ == 0, "absolute_cntg_pos_ must be 0");
 

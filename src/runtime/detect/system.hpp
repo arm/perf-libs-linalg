@@ -16,7 +16,6 @@ enum class system {
 
 	// Neoverse N1
 	n1_c6g,
-	n1_c6g_arm64ec,
 	n1_altra_x80,
 	n1_altra_max_x128,
 

@@ -23,7 +23,6 @@ constexpr std::pair<system, std::string_view> names[]{
 	{ system::taishan,           "Cortex A72 (generic)"                          },
 
 	{ system::n1_c6g,            "Neoverse N1 (AWS)"                             },
-	{ system::n1_c6g_arm64ec,    "Neoverse N1 (Arm64EC ABI)"                     },
 	{ system::n1_altra_x80,      "Neoverse N1 (80-core/socket Ampere Altra)"     },
 	{ system::n1_altra_max_x128, "Neoverse N1 (128-core/socket Ampere Altra Max)"},
 
@@ -101,14 +100,7 @@ system get_system_impl() {
 	// Neoverse N3 uses N2 settings for now
 	case micro_arch::neoverse_n2:
 	case micro_arch::neoverse_n3: {
-		const auto implementer = cpu_info::get_cpu_implementer();
-		const auto& dmi = get_dmi_info();
-		// Microsoft implementer or DMI info -> assume Microsoft Azure Cobalt 100
-		if (implementer == 'm' || (dmi && dmi->sys_vendor == "Microsoft Corporation")) {
-			return system::n2_cobalt100;
-		}
-		// Fall back to Yitian 710
-		return system::n2_y710;
+		return system::n2_cobalt100;
 	}
 
 	case micro_arch::neoverse_v2: {

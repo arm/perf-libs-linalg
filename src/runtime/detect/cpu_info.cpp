@@ -230,9 +230,8 @@ perflibs::machine::cpu_info::cpu_features perflibs::machine::cpu_info::get_cpu_f
 #if !defined(__APPLE__) && !defined(_WIN32)
 		else if (unsigned long cap1 = getauxval(AT_HWCAP)) {
 			unsigned long cap2 = getauxval(AT_HWCAP2);
-			// Else try to read the feature set from getauxval, since QEMU
-			// and other emulators will augment this vector with the
-			// set of emulated features but won't replace /proc/cpuinfo.
+			// Emulators can report their feature set through getauxval while
+			// /proc/cpuinfo still describes the host.
 			features = parse_features_from_hwcap(cap1, cap2, "getauxval(AT_HWCAP); getauxval(AT_HWCAP2);");
 		}
 		else {

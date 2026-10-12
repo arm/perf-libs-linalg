@@ -16,6 +16,8 @@ def header(routine):
 
 
 def source(routine):
-    if "kernel_spec" in routine:
+    # The shared AXPBY selection comes from matmul3_vector_scalar.
+    # Its template has no kernel_spec field.
+    if routine["routine"] == "matmul3_vector_scalar":
         return _kspec_gen(routine).generate_live_source()
     return ""

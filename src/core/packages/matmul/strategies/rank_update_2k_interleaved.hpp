@@ -55,7 +55,7 @@ public:
 		const auto l2_strd = spec::get_l2_strd(spec);
 
 		//sanity check
-		PERFLIBS_ASSERT(l1_cntg % kspec.cntg_unroll == 0,                         "l1_ctng must be multiple of kspec.cntg_unroll");
+		PERFLIBS_ASSERT(l1_cntg % kspec.cntg_unroll == 0,                         "l1_cntg must be multiple of kspec.cntg_unroll");
 		PERFLIBS_ASSERT(l1_strd % kspec.a_interleave_spec.strd_interleave() == 0, "l1_strd must be multiple of kspec.a_interleave_spec.strd_interleave");
 		PERFLIBS_ASSERT(l2_strd % kspec.b_interleave_spec.strd_interleave() == 0, "l2_strd must be multiple of kspec.b_interleave_spec.strd_interleave");
 

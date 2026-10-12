@@ -286,7 +286,7 @@
 		"a_type": "c32",
 		"b_type": "c32",
 		"c_type": "c32",
-		"is_sve": false,
+		"is_sve": true,
 		"alpha": "zero",
 		"beta": "real",
 		"incx": "all",

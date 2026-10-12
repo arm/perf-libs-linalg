@@ -72,11 +72,11 @@ namespace simd {
 	PERFLIBS_LINALG_INLINE float64x2x2_t load_batch2(const double *ptr) { return vld1q_f64_x2(ptr); }
 	PERFLIBS_LINALG_INLINE float32x4x2_t load_batch2(const float *ptr) { return vld1q_f32_x2(ptr); }
 
-	PERFLIBS_LINALG_INLINE float64x2x2_t load2(double *ptr) { return vld2q_f64(ptr); }
-	PERFLIBS_LINALG_INLINE float32x4x2_t load2(float *ptr) { return vld2q_f32(ptr); }
+	PERFLIBS_LINALG_INLINE float64x2_t load1(const double *ptr) { return vld1q_f64(ptr); }
+	PERFLIBS_LINALG_INLINE float32x4_t load1(const float *ptr) { return vld1q_f32(ptr); }
 
-	PERFLIBS_LINALG_INLINE void store2(double *ptr, float64x2x2_t val) { return vst2q_f64(ptr, val); }
-	PERFLIBS_LINALG_INLINE void store2(float *ptr, float32x4x2_t val) { return vst2q_f32(ptr, val); }
+	PERFLIBS_LINALG_INLINE void store1(double *ptr, float64x2_t val) { vst1q_f64(ptr, val); }
+	PERFLIBS_LINALG_INLINE void store1(float *ptr, float32x4_t val) { vst1q_f32(ptr, val); }
 
 	//TODO extend these are required
 	PERFLIBS_LINALG_INLINE double add(double v0, double v1) { return v0 + v1; }
@@ -101,6 +101,20 @@ namespace simd {
 
 	template<typename return_type = float64x2_t> return_type dup(float64_t v0){ return vdupq_n_f64(v0); };
 	template<typename return_type = float32x4_t> return_type dup(float32_t v0){ return vdupq_n_f32(v0); };
+
+	// Repeat a pair of values across the vector.
+	PERFLIBS_LINALG_INLINE float64x2_t dup_pair(double even, double odd) {
+		return vsetq_lane_f64(odd, vdupq_n_f64(even), 1);
+	}
+	PERFLIBS_LINALG_INLINE float32x4_t dup_pair(float even, float odd) {
+		auto v = vsetq_lane_f32(odd, vdupq_n_f32(even), 1);
+		return vsetq_lane_f32(odd, v, 3);
+	}
+
+	// Swap adjacent lanes within each pair.
+	PERFLIBS_LINALG_INLINE float64x2_t swap_pairs(float64x2_t v) { return vextq_f64(v, v, 1); }
+	PERFLIBS_LINALG_INLINE float32x4_t swap_pairs(float32x4_t v) { return vrev64q_f32(v); }
+
 #ifdef __ARM_FEATURE_SVE
 	template<> PERFLIBS_LINALG_INLINE svfloat64_t dup(float64_t v0) { return svdup_f64(v0); }
 	template<> PERFLIBS_LINALG_INLINE svfloat32_t dup(float32_t v0) { return svdup_f32(v0); }

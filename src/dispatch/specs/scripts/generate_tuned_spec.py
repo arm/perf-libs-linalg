@@ -11,6 +11,7 @@ from importlib import import_module
 from pathlib import Path
 
 import utils
+import specs
 
 from json2cpp import JSONReader, generate_cpp
 from json2cpp.ast_nodes import *
@@ -191,17 +192,29 @@ def main():
     parser.add_argument("--untuned", action="store_true")
     parser.add_argument("-p", "--package")
 
+    parser.add_argument("--spec-key", help="routine_datatype to select from the input")
+    parser.add_argument("--target", help="system to generate for, overriding the input target")
+
     args = parser.parse_args()
 
     pkg = import_module(args.package)
 
-    with open(args.input_json_file) as f:
-        input_data = json.load(f)
-    live_target_spec_name = Path(args.input_json_file).with_suffix("").name
+    if args.spec_key:
+        try:
+            input_data = [specs.load_spec(args.input_json_file, args.spec_key)]
+        except ValueError as error:
+            parser.error(str(error))
+    else:
+        with open(args.input_json_file) as f:
+            input_data = json.load(f)
+    live_target_spec_name = args.spec_key or Path(args.input_json_file).stem
+    systems = utils.read_json(Path(__file__).parent / "systems.json")
     for entry in input_data:
         if "tuned_routine_spec" in entry:
-            ROOT_DIR = Path(__file__).parent
-            systems = utils.read_json(ROOT_DIR / "systems.json")
+            if args.target:
+                entry = {**entry, "target": args.target}
+            if entry.get("target") not in systems:
+                parser.error(f"unknown target: {entry.get('target')}")
             system = systems[entry["target"]]
             spec = generate_tuned_spec(
                 entry, system, args.untuned, args.package, pkg, live_target_spec_name

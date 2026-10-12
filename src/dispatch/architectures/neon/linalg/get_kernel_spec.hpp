@@ -221,7 +221,7 @@ auto get_swap_kernel_system(StrategyTag strat_tag, const ProblemContext& pctx, S
 template<typename StrategyTag, typename ProblemContextBase, typename ArchitectureSpec, typename System>
 PERFLIBS_LINALG_INLINE
 auto get_waxpby_kernel_system (StrategyTag strat_tag, const problem_context<ProblemContextBase, ArchitectureSpec>& pctx, System) {
-	return get_neon_waxpby_kernel(pctx);
+	return get_neon_waxpby_kernel(strat_tag, pctx);
 }
 
 

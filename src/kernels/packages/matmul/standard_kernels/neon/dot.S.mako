@@ -122,7 +122,8 @@ output_registers = ["0", "1", "2", "3", "4", "5", "6", "7"]
 	dup v${element}.2d, xzr
 	%endfor
 
-	// Unrolling by 16 is the largest acceptable unroll factor for this loop.
+	// Limit the single-precision variant to 16 elements per iteration
+	// for accuracy.
 	%if T != 's':
 		.L${name}_loop32:
 		cmp ${n}, 32

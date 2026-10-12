@@ -54,7 +54,7 @@ public:
 		const pl_linalg_int_t ldb = gemm_ldb(pctx);
 		const auto beta       = pctx.beta;
 		      auto c          = pctx.c.data();
-		//if we've got here from a vector interface like GEMV) then we strd_step may be set to 1 or 0
+		//if we've got here from a vector interface like GEMV then strd_step may be set to 1 or 0
 		const pl_linalg_int_t ldc = n == 1 ? m : pctx.c.strd_step();
 
 		if(pctx.c.cntg_step() == 1) {

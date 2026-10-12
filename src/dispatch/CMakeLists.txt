@@ -18,6 +18,9 @@ endif()
 
 # Keep generated dispatch sources and objects in variant-specific build dirs.
 set(_dispatch_variant "${LINALG_INTEGER_MODEL}-${LINALG_THREADING_MODEL}")
+if(NOT LINALG_SANITIZER STREQUAL "none")
+  string(APPEND _dispatch_variant "-${LINALG_SANITIZER}")
+endif()
 if(CMAKE_BUILD_TYPE)
   string(TOLOWER "${CMAKE_BUILD_TYPE}" _dispatch_build_type)
   string(APPEND _dispatch_variant "-${_dispatch_build_type}")
@@ -29,6 +32,7 @@ dispatch_get_msvc_runtime_compile_options(
 if(_dispatch_msvc_runtime_variant)
   string(APPEND _dispatch_variant "-${_dispatch_msvc_runtime_variant}")
 endif()
+
 set(_dispatch_generate_dir "${CMAKE_CURRENT_BINARY_DIR}/${_dispatch_variant}/generated")
 set(_dispatch_build_dir "${CMAKE_CURRENT_BINARY_DIR}/${_dispatch_variant}/obj")
 
@@ -82,6 +86,7 @@ list(TRANSFORM _dispatch_make_cxx_flags PREPEND "-I")
 if(_dispatch_msvc_runtime_options)
   list(PREPEND _dispatch_make_cxx_flags ${_dispatch_msvc_runtime_options})
 endif()
+list(APPEND _dispatch_make_cxx_flags ${LINALG_CXX_COMPILE_OPTIONS})
 if(APPLE AND CMAKE_OSX_SYSROOT)
   list(PREPEND _dispatch_make_cxx_flags
       "-isysroot" "${CMAKE_OSX_SYSROOT}")
@@ -145,6 +150,10 @@ set(_dispatch_make_build_command
 )
 
 # Ask the Makefile for the objects it will build so CMake can archive them.
+file(GLOB_RECURSE _dispatch_json_inputs CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/architectures/json/*.json"
+    "${CMAKE_CURRENT_SOURCE_DIR}/chooser/json/*.json"
+)
 execute_process(
     COMMAND ${_dispatch_make_base_command} print-objects
     OUTPUT_VARIABLE _dispatch_object_output

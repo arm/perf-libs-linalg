@@ -10,7 +10,7 @@
 		"target": "generic_aarch64",
 		"tuned_routine_spec": {
 			"strategy_preferences": {
-				"value": [1, 2, 0],
+				"value": [0],
 				"type": "inplace_vector<kernel_inttype, 3>"
 			}
 		},

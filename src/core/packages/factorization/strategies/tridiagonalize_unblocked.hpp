@@ -112,7 +112,7 @@ public:
 					auto her2_pctx = spec::problem_context{
 						matmul::rank_update_2k {
 							to_const(general_matrix             {              matrix_base { householder_vec.data(), 1, i, 0, 1                  }, false }),
-							to_const(to_conj(work.transpose())),
+							to_const(adjoint(work)),
 							         AMatrixType { PERFLIBS_UPPER, matrix_base { pctx.a.data(),          i, i, 1, pctx.a.strd_step() }        },
 							-one, one
 						},
@@ -193,7 +193,7 @@ public:
 					auto her2_pctx = spec::problem_context{
 						matmul::rank_update_2k {
 							to_const(general_matrix   { matrix_base { householder_vec.data(),  1, pctx.a.cntg()-i-1, 0, pctx.a.cntg_step() }, false }),
-							to_const(to_conj(work.transpose())),
+							to_const(adjoint(work)),
 							trailing_matrix, -one, one
 						},
 						pctx.architecture_spec

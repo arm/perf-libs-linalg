@@ -47,7 +47,7 @@ struct axpby_kernel_tag<spec::strategy_tag<solve::triangular_solve_vector>> {
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>
@@ -84,7 +84,7 @@ struct axpby_kernel_tag<spec::strategy_tag<solve::compressed_triangular_solve_ve
 
 	template<typename ProblemContext>
 	auto alpha(const ProblemContext& pctx) const {
-		return typename ProblemContext::scalar_type { 1.1 };
+		return static_cast<typename ProblemContext::scalar_type>(1.1);
 	}
 
 	template<typename ProblemContext>

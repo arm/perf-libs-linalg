@@ -19,54 +19,69 @@ PERFLIBS_LINALG_INLINE void rot_neon_kernel_complex(kernel_inttype n, T *x, T *y
                              const kernel_inttype incy, const remove_complex_t<T> c, const T s) {
 	PERFLIBS_ASSERT(incx == 1 && incy == 1);
 
-	// We de-interleave real & imaginary values, so
-	// twice the number of elements per iteration
-	constexpr int batch_size = 2 * 16 / sizeof(T);
-	kernel_inttype i = 0;
-	kernel_inttype remain_n = n % batch_size;
+	if (n <= 0)
+		return;
 
-	// Scalar loop
-	for (; i < remain_n; i++) {
-		T tmp = c * x[i] + s * y[i];
-		y[i] = c * y[i] - std::conj(s) * x[i];
-		x[i] = tmp;
+	using real_type = remove_complex_t<T>;
+	constexpr int batch_size = 16 / sizeof(T);
+	// Avoid vector setup for a single complex float.
+	if constexpr (batch_size == 2) {
+		if (n == 1) {
+			const T tmp = c * x[0] + s * y[0];
+			y[0] = c * y[0] - std::conj(s) * x[0];
+			x[0] = tmp;
+			return;
+		}
 	}
 
-	// Vectorized loop
-	auto c_vec = simd::dup(c);
-	auto s_vec_real = simd::dup(s.real());
-	auto s_vec_imag = simd::dup(s.imag());
-	for (; i < n; i += batch_size) {
-		auto xi = reinterpret_cast<remove_complex_t<T> *>(&x[i]);
-		auto yi = reinterpret_cast<remove_complex_t<T> *>(&y[i]);
+	const auto c_vec = simd::dup(c);
+	const auto s_vec_real = simd::dup(s.real());
+	const auto s_vec_imag = simd::dup_pair(-s.imag(), s.imag());
 
-		// LD2s
-		auto x_vec = simd::load2(xi);
-		auto y_vec = simd::load2(yi);
+	// Keep real/imaginary lanes interleaved. Swapping adjacent lanes and
+	// multiplying by (-imag(s), imag(s)) supplies the imaginary products.
+	auto rotate = [&](auto &x_vec, auto &y_vec) {
+		auto new_x = simd::mul(c_vec, x_vec);
+		auto new_y = simd::mul(c_vec, y_vec);
+		new_x = simd::mla(new_x, s_vec_real, y_vec);
+		new_y = simd::mls(new_y, s_vec_real, x_vec);
+		new_x = simd::mla(new_x, s_vec_imag, simd::swap_pairs(y_vec));
+		new_y = simd::mla(new_y, s_vec_imag, simd::swap_pairs(x_vec));
+		x_vec = new_x;
+		y_vec = new_y;
+	};
 
-		// c * x
-		auto mul_1_real = simd::mul(c_vec, x_vec.val[0]);
-		auto mul_1_imag = simd::mul(c_vec, x_vec.val[1]);
-
-		// c * y
-		auto mul_2_real = simd::mul(c_vec, y_vec.val[0]);
-		auto mul_2_imag = simd::mul(c_vec, y_vec.val[1]);
-
-		// c * x + s * y
-		mul_1_real = simd::mla(mul_1_real, s_vec_real, y_vec.val[0]);
-		mul_1_imag = simd::mla(mul_1_imag, s_vec_imag, y_vec.val[0]);
-		mul_1_real = simd::mls(mul_1_real, s_vec_imag, y_vec.val[1]);
-		mul_1_imag = simd::mla(mul_1_imag, s_vec_real, y_vec.val[1]);
-
-		// c * y - s_conj * x
-		mul_2_real = simd::mls(mul_2_real, s_vec_real, x_vec.val[0]);
-		mul_2_imag = simd::mla(mul_2_imag, s_vec_imag, x_vec.val[0]);
-		mul_2_real = simd::mls(mul_2_real, s_vec_imag, x_vec.val[1]);
-		mul_2_imag = simd::mls(mul_2_imag, s_vec_real, x_vec.val[1]);
-
-		// ST2s
-		simd::store2(xi, { mul_1_real, mul_1_imag });
-		simd::store2(yi, { mul_2_real, mul_2_imag });
+	kernel_inttype i = 0;
+	for (; n - i >= 2 * batch_size; i += 2 * batch_size) {
+		auto xi = reinterpret_cast<real_type *>(x + i);
+		auto yi = reinterpret_cast<real_type *>(y + i);
+		auto x0 = simd::load1(xi);
+		auto y0 = simd::load1(yi);
+		auto x1 = simd::load1(xi + 2 * batch_size);
+		auto y1 = simd::load1(yi + 2 * batch_size);
+		rotate(x0, y0);
+		rotate(x1, y1);
+		simd::store1(xi, x0);
+		simd::store1(yi, y0);
+		simd::store1(xi + 2 * batch_size, x1);
+		simd::store1(yi + 2 * batch_size, y1);
+	}
+	if (n - i >= batch_size) {
+		auto xi = reinterpret_cast<real_type *>(x + i);
+		auto yi = reinterpret_cast<real_type *>(y + i);
+		auto x_vec = simd::load1(xi);
+		auto y_vec = simd::load1(yi);
+		rotate(x_vec, y_vec);
+		simd::store1(xi, x_vec);
+		simd::store1(yi, y_vec);
+		i += batch_size;
+	}
+	if constexpr (batch_size == 2) {
+		if (i < n) {
+			const T tmp = c * x[i] + s * y[i];
+			y[i] = c * y[i] - std::conj(s) * x[i];
+			x[i] = tmp;
+		}
 	}
 }
 } // namespace

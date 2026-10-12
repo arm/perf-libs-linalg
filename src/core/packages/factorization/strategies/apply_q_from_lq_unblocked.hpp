@@ -79,7 +79,7 @@ static constexpr std::string_view name() { return "apply_q_from_lq_unblocked"; }
 			const auto nq               = left ? pctx.c.cntg() : pctx.c.strd();
 			const auto reflector_length = nq - i;
 
-			auto householder_vector = to_const(to_conj(pctx.a.sub_matrix(i, 1, i, reflector_length).transpose()));
+			auto householder_vector = to_const(adjoint(pctx.a.sub_matrix(i, 1, i, reflector_length)));
 			auto larf_pctx = spec::problem_context{
 				apply_elementary_reflector{
 					pctx.side,

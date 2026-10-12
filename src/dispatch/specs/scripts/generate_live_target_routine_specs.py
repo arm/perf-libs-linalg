@@ -9,6 +9,7 @@ from importlib import import_module
 from pathlib import Path
 
 import utils
+import specs
 
 from json2cpp import CPPWriter, JSONReader, generate_cpp
 from json2cpp.ast_nodes import *
@@ -248,11 +249,19 @@ def main():
     parser.add_argument("-i", "--input-json-file", required=True)
     parser.add_argument("-p", "--package")
 
+    parser.add_argument("--spec-key", help="routine_datatype to select from the input")
+
     args = parser.parse_args()
 
     pkg = import_module(args.package)
 
-    input_data = json.loads(Path(args.input_json_file).read_text())
+    if args.spec_key:
+        try:
+            input_data = [specs.load_spec(args.input_json_file, args.spec_key)]
+        except ValueError as error:
+            parser.error(str(error))
+    else:
+        input_data = json.loads(Path(args.input_json_file).read_text())
 
     for entry in input_data:
         if "tuned_routine_spec" in entry:

@@ -12,7 +12,6 @@
 	{ "routine": "copy", "symbol": "zcopy" },
 	{ "routine": "dotu", "symbol": "zdotu" },
 	{ "routine": "dotc", "symbol": "zdotc" },
-	{ "routine": "gemm_batch_dispatch_arch", "symbol": "gemm_batch_dispatch", "template_values": { "T": "c64" }},
 	{ "routine": "get_n_strategies_arch", "symbol": "get_n_strategies", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" } },
 	{ "routine": "get_strategy_name_arch", "symbol": "get_strategy_name", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" } },
 	{ "routine": "compute_index_arch", "symbol": "compute_index", "template_values": { "ProblemContextBase": "perflibs::linalg::matmul::matmul3<perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<const c64>>, perflibs::linalg::general_matrix<perflibs::linalg::matrix_base<c64>>, c64>" } }

@@ -19,7 +19,7 @@
 #include "operators/copy_matrix.hpp"
 #include "operators/residents.hpp"
 #include "operators/kernel_exec.hpp"
-#include "operators/parallelise_2d.hpp"
+#include "operators/parallelize_2d.hpp"
 
 #include "spec/get_block_sizes.hpp"
 
@@ -31,7 +31,12 @@ namespace perflibs::linalg::matmul {
 template<bool UseAccelerator>
 class matmul3_interleaved_large_no_sync {
 public:
-	static constexpr std::string_view name() { return "matmul3_interleaved_large_no_sync"; }
+	static constexpr std::string_view name() {
+		if constexpr(UseAccelerator) {
+			return "matmul3_interleaved_large_no_sync_accelerator";
+		}
+		return "matmul3_interleaved_large_no_sync";
+	}
 
 	using strategy_t = std::conditional_t<UseAccelerator
 	                 , matmul3_interleaved_strategy_tag_accelerator
@@ -138,7 +143,7 @@ public:
 			 * Spawns the threads and divides up the problem space based on the
 			 * scheme determined by a_strd_split and b_strd_split
 			 */
-			parallelise_2d { spawn, check_threads, a_strd_split, b_strd_split,
+			parallelize_2d { spawn, check_threads, a_strd_split, b_strd_split,
 			/*
 			 * Blocks over B (typically packing into L3)
 			 */

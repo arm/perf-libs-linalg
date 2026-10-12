@@ -22,6 +22,10 @@ void tile_interleave_impl(
 	std::size_t src_cntg, std::size_t src_strd, const SrcDataType *src, SrcCntgStepType src_cntg_step, SrcStrdStepType src_strd_step,
 	std::size_t dst_cntg, std::size_t dst_strd,       DstDataType *dst,                                std::size_t     dst_strd_step) {
 
+	static_assert(CntgInterleave > 0_ki);
+	static_assert(StrdInterleave > 0_ki);
+	constexpr std::size_t cntg_interleave_count = static_cast<std::size_t>(CntgInterleave);
+	constexpr std::size_t strd_interleave_count = static_cast<std::size_t>(StrdInterleave);
 
 	constexpr kernel_inttype cntg_interleave_step = 1_ki;
 	constexpr kernel_inttype strd_interleave_step = CntgInterleave;
@@ -31,6 +35,7 @@ void tile_interleave_impl(
 
 
 	auto full_cntg_tile_interleave = [&](auto& src, auto& dst, auto strd) {
+		const std::size_t strd_count = strd;
 
 		constexpr bool can_optimise = std::is_same_v<SrcCntgStepType, step_val_fixed<1>>
 		                           && std::is_same_v<decltype(strd), step_val_fixed<StrdInterleave> >
@@ -199,8 +204,8 @@ void tile_interleave_impl(
 			}
 		}
 
-		for(kernel_inttype si = 0_ki; si != strd; ++si) {
-			for(kernel_inttype ci = 0_ki; ci != CntgInterleave; ++ci) {
+		for(std::size_t si = 0; si != strd_count; ++si) {
+			for(std::size_t ci = 0; ci != cntg_interleave_count; ++ci) {
 				dst[ ci * cntg_interleave_step  + si * strd_interleave_step ] =
 					src[ ci * src_cntg_step + si * src_strd_step ];
 			}
@@ -208,20 +213,23 @@ void tile_interleave_impl(
 	};
 
 	auto partial_cntg_tile_interleave = [&](auto& src, auto& dst, auto cntg_split, auto strd) {
-		for(kernel_inttype si = 0_ki; si != strd; ++si) {
-			for(kernel_inttype ci = 0_ki; ci != cntg_split; ++ci) {
+		const std::size_t cntg_split_count = cntg_split;
+		const std::size_t strd_count = strd;
+		for(std::size_t si = 0; si != strd_count; ++si) {
+			for(std::size_t ci = 0; ci != cntg_split_count; ++ci) {
 				dst[ ci * cntg_interleave_step  + si * strd_interleave_step ] =
 					src[ ci * src_cntg_step + si * src_strd_step ];
 			}
-			for(kernel_inttype ci = cntg_split; ci < CntgInterleave; ++ci) {
+			for(std::size_t ci = cntg_split_count; ci < cntg_interleave_count; ++ci) {
 				dst[ ci * cntg_interleave_step  + si * strd_interleave_step ] = zero<>;
 			}
 		}
 	};
 
 	auto empty_cntg_tile_interleave = [&](auto& dst, auto strd) {
-		for(kernel_inttype si = 0_ki; si != strd; ++si) {
-			for(kernel_inttype ci = 0_ki; ci != CntgInterleave; ++ci) {
+		const std::size_t strd_count = strd;
+		for(std::size_t si = 0; si != strd_count; ++si) {
+			for(std::size_t ci = 0; ci != cntg_interleave_count; ++ci) {
 				dst[ ci * cntg_interleave_step  + si * strd_interleave_step ] = zero<>;
 			}
 		}
@@ -229,25 +237,25 @@ void tile_interleave_impl(
 
 	const auto cntg = min(src_cntg, dst_cntg);
 	auto cntg_loops = [&](auto strd, auto src_row, auto dst_row) {
-		kernel_inttype c = 0_ki, ct = 0_ki;
-		for(; ( c + CntgInterleave ) <= cntg; c += CntgInterleave, ++ct) {
+		std::size_t c = 0, ct = 0;
+		for(; (c + cntg_interleave_count) <= cntg; c += cntg_interleave_count, ++ct) {
 			auto dst_tile = dst_row + ct * cntg_tile_step;
 			auto src_tile = src_row + c  * src_cntg_step;
 
 			full_cntg_tile_interleave(src_tile, dst_tile, strd);
 		}
 
-		if(const auto remaining_cntg = cntg - c; remaining_cntg != 0_ki) {
+		if(const auto remaining_cntg = cntg - c; remaining_cntg != 0) {
 			auto dst_tile = dst_row + ct * cntg_tile_step;
 			auto src_tile = src_row + c  * src_cntg_step;
 
 			partial_cntg_tile_interleave(src_tile, dst_tile, remaining_cntg, strd);
 
-			c += CntgInterleave;
+			c += cntg_interleave_count;
 			++ct;
 		}
 
-		for(; c < dst_cntg; c += CntgInterleave, ++ct) {
+		for(; c < dst_cntg; c += cntg_interleave_count, ++ct) {
 			auto dst_tile = dst_row + ct * cntg_tile_step;
 
 			empty_cntg_tile_interleave(dst_tile, strd);
@@ -257,13 +265,13 @@ void tile_interleave_impl(
 	const auto strd = min(src_strd, dst_strd);
 	constexpr step_val_fixed<StrdInterleave> strd_interleave;
 
-	kernel_inttype s = 0_ki, st = 0_ki;
-	for(; (s + StrdInterleave ) <= strd; s += StrdInterleave, ++st) {
+	std::size_t s = 0, st = 0;
+	for(; (s + strd_interleave_count) <= strd; s += strd_interleave_count, ++st) {
 		cntg_loops(strd_interleave, src + s * src_strd_step, dst + st * strd_tile_step);
 	}
 
 	if(s < strd) {
-		const auto strd_chunk = min(StrdInterleave, strd - s);
+		const auto strd_chunk = min(strd_interleave_count, strd - s);
 		cntg_loops(strd_chunk, src + s * src_strd_step, dst + st * strd_tile_step);
 	}
 }

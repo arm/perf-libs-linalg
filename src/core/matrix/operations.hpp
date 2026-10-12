@@ -161,8 +161,8 @@ std::pair<kernel_inttype, kernel_inttype> get_non_virtual_strd_bounds_for_cntg(c
 		const auto astrd = mat.absolute_strd();
 		const auto acntg = mat.absolute_cntg() + cntg;
 
-		//please see the comment in adapators.hpp symmetrix_matrix::operator()
-		//for any explanation to the storage of the triangle.
+		// See adaptors.hpp symmetric_matrix::operator() for an explanation
+		// of triangle storage.
 
 		if(mat.is_lower()) {
 			kernel_inttype diag_is_physical = 1;

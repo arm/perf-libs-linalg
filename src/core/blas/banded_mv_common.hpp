@@ -82,7 +82,7 @@ public:
 	                ScalarType alpha, ScalarType beta, Args&&... args) {
 		// Sanity checks
 		PERFLIBS_ASSERT(y.cntg() == a.strd(), "y cntg doesn't match a strd");
-		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x ctng doesn't match a cntg");
+		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x cntg doesn't match a cntg");
 		PERFLIBS_ASSERT(x.strd() == y.strd(), "x strd doesn't match y strd");
 
 		scale(beta, y);
@@ -152,7 +152,7 @@ public:
 			}
 
 			for (kernel_inttype j = 0; j < a.strd(); ++j) {
-				// Assuming that matrix A is decomposed only in the strd dimension for parallelisation
+				// Assuming that matrix A is decomposed only in the strd dimension for parallelization
 				// (j + absolute_strd) gives us the diagonal position. Then, we take into account the kl and ku, and
 				// and crop the start and end indices to 0 and cntg-1. Add a shift of +1 and -1 for unit triangular matrices
 
@@ -315,7 +315,7 @@ public:
 	                ScalarType alpha, ScalarType beta, Args&&... args) {
 		// Sanity checks
 		PERFLIBS_ASSERT(y.cntg() == a.strd(), "y cntg doesn't match a strd");
-		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x ctng doesn't match a cntg");
+		PERFLIBS_ASSERT(x.cntg() == a.cntg(), "x cntg doesn't match a cntg");
 		PERFLIBS_ASSERT(x.strd() == y.strd(), "x strd doesn't match y strd");
 
 		scale(beta, y);

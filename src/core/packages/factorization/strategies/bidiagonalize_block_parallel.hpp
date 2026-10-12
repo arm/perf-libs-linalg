@@ -29,6 +29,9 @@ public:
 	template<typename MatrixType, typename ArchitectureSpec>
 	PERFLIBS_LINALG_INLINE
 	bool operator()(const bidiag_pctx_t<MatrixType, ArchitectureSpec>& pctx) const {
+#ifndef _OPENMP
+		return false;
+#else
 		if (!can_compute(pctx)) return false;
 
 		using value_type = typename MatrixType::value_type;
@@ -74,7 +77,7 @@ public:
 							const auto gemv_pctx1 = spec::problem_context{
 								matmul::matmul3{
 									to_const(get_strd_panel(a1, start, size)),
-									to_const(to_conj(pctx.y.sub_matrix(i, 1, 0, i).transpose())),
+									to_const(adjoint(pctx.y.sub_matrix(i, 1, 0, i))),
 									get_cntg_panel(y, start, size),
 									-one, one
 								},
@@ -287,7 +290,7 @@ public:
 								const auto gemv_pctx = spec::problem_context{
 									matmul::matmul3{
 										to_const(get_strd_panel(a, start, size)),
-										to_const(to_conj(pctx.x.sub_matrix(i, 1, 0, i).transpose())),
+										to_const(adjoint(pctx.x.sub_matrix(i, 1, 0, i))),
 										get_cntg_panel(householder_vec, start, size),
 										-one, one
 									},
@@ -531,7 +534,7 @@ public:
 								const auto gemv_pctx = spec::problem_context{
 									matmul::matmul3{
 										to_const(get_strd_panel(a, start, size)),
-										to_const(to_conj(pctx.x.sub_matrix(i, 1, 0, i).transpose())),
+										to_const(adjoint(pctx.x.sub_matrix(i, 1, 0, i))),
 										get_cntg_panel(householder_vec, start, size),
 										-one, one
 									},
@@ -738,7 +741,7 @@ public:
 								const auto gemv_pctx = spec::problem_context{
 									matmul::matmul3{
 										to_const(get_strd_panel(a, start, size)),
-										to_const(to_conj(pctx.y.sub_matrix(i, 1, 0, i).transpose())),
+										to_const(adjoint(pctx.y.sub_matrix(i, 1, 0, i))),
 										get_cntg_panel(result, start, size),
 										-one, one
 									},
@@ -938,6 +941,7 @@ public:
 			} // #pragma parallel
 		} // end main else condition
 		return true;
+#endif
 	}
 
 	template<typename ProblemContext>

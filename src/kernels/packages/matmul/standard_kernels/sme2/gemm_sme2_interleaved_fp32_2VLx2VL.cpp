@@ -55,7 +55,7 @@ void sme2_interleaved_nomerge_fp32_mopa_2VLx2VL(const float *const A, const floa
 		alpha, beta);
 
   __asm__ __volatile__(
-      ".inst 0xd503477f  // SMSTART ZA\n"
+      ".inst 0xd503477f  // SMSTART\n"
       "ldr x16, [%x[args], %[offsetof_flags]]\n"
       "mov x15, #0x0\n"
       "mov x14, #0x0\n"

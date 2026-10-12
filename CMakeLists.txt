@@ -25,6 +25,7 @@ add_subdirectory(src/dispatch)
 
 add_library(pl_linalg)
 set_target_properties(pl_linalg PROPERTIES LINKER_LANGUAGE CXX)
+target_link_options(pl_linalg PUBLIC ${LINALG_LINK_OPTIONS})
 target_link_libraries(pl_linalg PRIVATE
     linalg_core
     linalg_kernels

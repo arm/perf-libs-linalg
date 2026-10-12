@@ -37,11 +37,7 @@ public:
 	bool operator() (const ProblemContext& pctx) const {
 		if( !this->can_compute(pctx) ) return false;
 
-		auto pctx_local = pctx;
-
-		pctx_local.a.estrange_parent();
-		pctx_local.b.estrange_parent();
-		pctx_local.c.estrange_parent();
+		auto pctx_local = estrange(pctx);
 
 		const auto spec         = get_spec(spec::strategy_tag<rank_update_generic>{}, pctx_local);
 		const auto kspec        = spec.kernel_spec;

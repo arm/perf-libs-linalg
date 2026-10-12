@@ -1,0 +1,49 @@
+{
+    "name": "abs1",
+    "template_parameters": [
+        {
+            "name": "ParamCheck",
+            "type": "bool"
+        },
+        {
+            "name": "FloatType",
+            "type": "typename"
+        },
+        {
+            "name": "RealType",
+            "type": "typename"
+        }
+    ],
+    "return_type": "RealType",
+    "parameters": [
+        {
+            "name": "z",
+            "type": "FloatType",
+            "is_const": true,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "scabs1": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c32",
+                "RealType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dcabs1": {
+            "template_values": {
+                "ParamCheck": "true",
+                "FloatType": "c64",
+                "RealType": "r64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/misc/interfaces/asum.hpp"
+}

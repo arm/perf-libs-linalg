@@ -77,7 +77,7 @@ public:
 					auto larf_pctx = spec::problem_context{
 						apply_elementary_reflector{
 							PERFLIBS_RIGHT,
-							to_const(to_conj(pctx.a.sub_matrix(i, 1, i, householder_size).transpose())),
+							to_const(adjoint(pctx.a.sub_matrix(i, 1, i, householder_size))),
 							pctx.a.sub_matrix(i + 1, rows_below_i, i, householder_size),
 							pctx.work.sub_matrix(0, rows_below_i, 0, 1),
 							pctx.tau(i, 0)

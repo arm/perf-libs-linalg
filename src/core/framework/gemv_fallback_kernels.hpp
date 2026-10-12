@@ -387,7 +387,7 @@ void gemv_a_cntg_first_impl(
 	for(; as != a_strd; ++as) {
 		const auto as_col = a + as * a_strd_step;
 
-	 	auto tmp = zero<compute_type>;
+		auto tmp = zero<compute_type>;
 
 		for(kernel_inttype ac = 0; ac != a_cntg; ++ac) {
 			if constexpr(IsConj) {

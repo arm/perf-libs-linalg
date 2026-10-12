@@ -63,7 +63,7 @@ public:
 		 * When you compare the non-virtual dimensions at the extremes you can then determinen the shape of the matrix
 		 *
 		 * Left is strd 0, Right is strd max
-	 	 * Top is cntg 0, Bottom is cntg max
+		 * Top is cntg 0, Bottom is cntg max
 		 */
 		const auto [left_cntg_first, left_cntg_last ] = get_non_virtual_cntg_bounds_for_strd(c, 0, include_diag::no);
 		const auto [rght_cntg_first, rght_cntg_last ] = get_non_virtual_cntg_bounds_for_strd(c, c.strd() - 1, include_diag::no);
@@ -174,7 +174,7 @@ public:
 		}
 		//is upper
 		else if(left_cntg_first == 0
-		     && left_cntg_first == 0) {
+		     && rght_cntg_first == 0) {
 			//split along strd
 			if(btm_strd_first > left_cntg_last) {
 				/*    strd

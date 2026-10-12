@@ -247,9 +247,9 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 		return;
 	}
 	if (incx == incy && incx > 0) {
-		int_type nsteps = n * incx;
+		const kernel_inttype nsteps = n * incx;
 		if (flag < 0) {
-			for (int i = 0; i < nsteps; i += incx) {
+			for (kernel_inttype i = 0; i < nsteps; i += incx) {
 				T w = x[i];
 				T z = y[i];
 				x[i] = w * sh11 + z * sh12;
@@ -257,7 +257,7 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 			}
 		}
 		else if (flag == 0) {
-			for (int i = 0; i < nsteps; i += incx) {
+			for (kernel_inttype i = 0; i < nsteps; i += incx) {
 				T w = x[i];
 				T z = y[i];
 				x[i] = w + z * sh12;
@@ -265,7 +265,7 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 			}
 		}
 		else {
-			for (int i = 0; i < nsteps; i += incx) {
+			for (kernel_inttype i = 0; i < nsteps; i += incx) {
 				T w = x[i];
 				T z = y[i];
 				x[i] = w * sh11 + z;
@@ -274,11 +274,11 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 		}
 	}
 	else {
-		int_type kx = incx < 0 ? (1 - n) * incx : 0;
-		int_type ky = incy < 0 ? (1 - n) * incy : 0;
+		kernel_inttype kx = incx < 0 ? (1 - n) * incx : 0;
+		kernel_inttype ky = incy < 0 ? (1 - n) * incy : 0;
 
 		if (flag < 0) {
-			for (int_type i = 0; i < n; i++) {
+			for (kernel_inttype i = 0; i < n; i++) {
 				T w = x[kx];
 				T z = y[ky];
 				x[kx] = w * sh11 + z * sh12;
@@ -288,7 +288,7 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 			}
 		}
 		else if (flag == 0) {
-			for (int_type i = 0; i < n; i++) {
+			for (kernel_inttype i = 0; i < n; i++) {
 				T w = x[kx];
 				T z = y[ky];
 				x[kx] = w + z * sh12;
@@ -298,7 +298,7 @@ void rotm_kernel(kernel_inttype n, T *x, kernel_inttype incx, T *y, kernel_intty
 			}
 		}
 		else {
-			for (int_type i = 0; i < n; i++) {
+			for (kernel_inttype i = 0; i < n; i++) {
 				T w = x[kx];
 				T z = y[ky];
 				x[kx] = w * sh11 + z;

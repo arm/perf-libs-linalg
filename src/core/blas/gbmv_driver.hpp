@@ -55,7 +55,7 @@ struct gbmv_driver {
 	                ScalarType alpha, ScalarType beta, Args&&... args) {
 		// Sanity checks
 		PERFLIBS_ASSERT(c.cntg() == a.strd(), "c cntg doesn't match a strd");
-		PERFLIBS_ASSERT(b.cntg() == a.cntg(), "b ctng doesn't match a cntg");
+		PERFLIBS_ASSERT(b.cntg() == a.cntg(), "b cntg doesn't match a cntg");
 		PERFLIBS_ASSERT(b.strd() == c.strd(), "b strd doesn't match c strd");
 
 		// Fix if y is nan

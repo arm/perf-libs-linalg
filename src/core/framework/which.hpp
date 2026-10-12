@@ -25,12 +25,12 @@ enum class which_dimension : std::uint8_t {
 
 enum class which_parallel_strat : std::uint8_t {
 	/**
-	 * Each thread processes a single panel across the dimension we're parallelising over.
+	 * Each thread processes a single panel across the dimension we're parallelizing over.
 	 */
 	general,
 
 	/**
-	 * Each thread processes two panels at opposite ends of the matrix in the dimension we're parallelising
+	 * Each thread processes two panels at opposite ends of the matrix in the dimension we're parallelizing
 	 * over. Gives better thread balancing for triangular matrices.
 	 */
 	triangular,

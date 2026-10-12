@@ -50,7 +50,7 @@ public:
 	template<typename MatrixTypeA, typename MatrixTypeB, typename MatrixTypeC, typename ScalarType, typename... Args>
 	PERFLIBS_LINALG_INLINE
 	void operator() (MatrixTypeA& a, MatrixTypeB& b, MatrixTypeC& c, compute_position pos, ScalarType alpha, Args&&... args) {
-		PERFLIBS_ASSERT(a.cntg() == b.cntg(), "A and B must have an equal ctng dimension");
+		PERFLIBS_ASSERT(a.cntg() == b.cntg(), "A and B must have an equal cntg dimension");
 		PERFLIBS_ASSERT(c.strd() == b.strd(), "A, B, and C must share a strd dimension");
 		auto a_parent = a.get_parent();
 		auto b_parent = b.get_parent();

@@ -45,6 +45,9 @@ public:
 	>
 	PERFLIBS_LINALG_INLINE bool
 	operator()(const cholesky_pctx_t<MatrixAdaptorType, ADataType, IntType, ArchitectureSpec>& pctx) const {
+#ifndef _OPENMP
+		return false;
+#else
 		if (!can_compute(pctx)) return false;
 
 		// Ensures there are at least two blocks, and then adjusts the block size
@@ -58,7 +61,7 @@ public:
 		const auto trans = is_hermitian_matrix_v<decltype(pctx.a)> ? PERFLIBS_CONJTRANS : PERFLIBS_TRANS;
 
 		if (pctx.a.uplo() == PERFLIBS_LOWER) {
-			#pragma omp parallel default(none) shared(pctx, nb, trans)
+			#pragma omp parallel default(none) shared(pctx, nb, trans) num_threads(spec.max_threads)
 			{
 				#pragma omp single
 				#pragma omp taskgroup
@@ -71,7 +74,7 @@ public:
 						auto tile            = get_cntg_panel(panel, 0, tile_size);
 						auto *tile_ptr       = tile.data();
 
-						#pragma omp task depend(inout: tile_ptr[0:tile_size])
+						#pragma omp task depend(inout: tile_ptr[0])
 						{
 							if (pctx.info == 0) {
 								auto tile_factorization_pctx = spec::problem_context{
@@ -103,7 +106,7 @@ public:
 						for (auto i = 0_ki; i < b.strd(); i += tile_size) {
 							auto  b_tile     = get_strd_panel(b, i, min(tile_size, b.strd() - i));
 							auto *b_tile_ptr = b_tile.data();
-							#pragma omp task depend(in: tile_ptr[0:tile_size]) depend(inout: b_tile_ptr[0:tile_size])
+							#pragma omp task depend(in: tile_ptr[0]) depend(inout: b_tile_ptr[0])
 							{
 								auto solve_pctx = spec::problem_context{
 									solve::solve{ PERFLIBS_RIGHT, trans, to_const(a_solve), b_tile, ADataType{1} },
@@ -126,7 +129,7 @@ public:
 						for (auto i = 0_ki; i < a21.cntg(); i += tile_size) {
 							auto  a21_tile     = get_cntg_panel(a21, i, min(tile_size, a21.cntg() - i));
 							auto *a21_tile_ptr = a21_tile.data();
-							#pragma omp task depend(in: a21_tile_ptr[0:tile_size]) depend(inout: a22_ptr[0:tile_size])
+							#pragma omp task depend(in: a21_tile_ptr[0]) depend(inout: a22_ptr[0])
 							{
 								auto herk_pctx = spec::problem_context{
 									matmul::matmul3{
@@ -159,7 +162,7 @@ public:
 									auto *a21_tile_ptr = a21_tile.data();
 									auto *a31_tile_ptr = a31_tile.data();
 
-									#pragma omp task depend(in: a31_tile_ptr[0:tile_size], a21_tile_ptr[0:tile_size]) depend(inout: a32_tile_ptr[0:tile_size])
+									#pragma omp task depend(in: a31_tile_ptr[0], a21_tile_ptr[0]) depend(inout: a32_tile_ptr[0])
 									{
 										auto gemm_pctx = spec::problem_context{
 											matmul::matmul3{
@@ -185,7 +188,7 @@ public:
 			}
 		}
 		else { // PERFLIBS_UPPER
-			#pragma omp parallel default(none) shared(pctx, nb, trans)
+			#pragma omp parallel default(none) shared(pctx, nb, trans) num_threads(spec.max_threads)
 			{
 				#pragma omp single
 				#pragma omp taskgroup
@@ -199,7 +202,7 @@ public:
 						auto  tile       = get_strd_panel(stripe, 0, tile_size);
 						auto *tile_ptr   = tile.data();
 
-						#pragma omp task depend(inout: tile_ptr[0:tile_size])
+						#pragma omp task depend(inout: tile_ptr[0])
 						{
 							if (pctx.info == 0) {
 								auto tile_factorization_pctx = spec::problem_context{
@@ -226,7 +229,7 @@ public:
 							auto  b_tile     = get_strd_panel(b, j, min(tile_size, b.strd() - j));
 							auto *b_tile_ptr = b_tile.data();
 
-							#pragma omp task depend(in: tile_ptr[0:tile_size]) depend(inout: b_tile_ptr[0:tile_size])
+							#pragma omp task depend(in: tile_ptr[0]) depend(inout: b_tile_ptr[0])
 							{
 								auto solve_pctx = spec::problem_context{
 									solve::solve{ PERFLIBS_LEFT, trans, to_const(a_solve), b_tile, ADataType{1} },
@@ -248,7 +251,7 @@ public:
 						for (auto i = 0_ki; i < a12.cntg(); i += tile_size) {
 							auto  a12_tile     = get_cntg_panel(a12, i, min(tile_size, a12.cntg() - i));
 							auto *a12_tile_ptr = a12_tile.data();
-							#pragma omp task depend(in: a12_tile_ptr[0:tile_size]) depend(inout: a22_ptr[0:tile_size])
+							#pragma omp task depend(in: a12_tile_ptr[0]) depend(inout: a22_ptr[0])
 							{
 								auto herk_pctx = spec::problem_context{
 									matmul::matmul3{
@@ -280,7 +283,7 @@ public:
 									auto *a13_tile_ptr = a13_tile.data();
 									auto *a12_tile_ptr = a12_tile.data();
 
-									#pragma omp task depend(in: a13_tile_ptr[0:tile_size]) depend(in: a12_tile_ptr[0:tile_size]) depend(inout: a23_tile_ptr[0:tile_size])
+									#pragma omp task depend(in: a13_tile_ptr[0]) depend(in: a12_tile_ptr[0]) depend(inout: a23_tile_ptr[0])
 									{
 										auto gemm_pctx = spec::problem_context{
 											matmul::matmul3{
@@ -305,6 +308,7 @@ public:
 			}
 		}
 		return true;
+#endif
 	}
 	template<typename ProblemContext>
 	constexpr bool operator()(const ProblemContext&) const {

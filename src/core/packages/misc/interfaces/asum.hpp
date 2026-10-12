@@ -16,13 +16,19 @@
 
 namespace perflibs::linalg {
 
+template<bool ParamCheck, typename T, typename RealType, typename ArchitectureSpec>
+PERFLIBS_LINALG_INLINE
+RealType abs1(const T *z) {
+	return static_cast<RealType>(perflibs::sum_abs(*z));
+}
+
 template<bool ParamCheck, typename IntType, typename T, typename RealType, typename ArchitectureSpec>
 PERFLIBS_LINALG_INLINE
 RealType asum(const IntType *n, const T *x, const IntType *incx) {
 
 	// Special case for empty vectors, to avoid the overhead of the strategy system in this case
 	if (*n <= 0 || *incx <= 0) return RealType(0);
-	if (*n == 1) return static_cast<RealType>(perflibs::sum_abs(x[0]));
+	if (*n == 1) return abs1<ParamCheck, T, RealType, ArchitectureSpec>(x);
 
 	RealType out;
 	spec::problem_context pctx {

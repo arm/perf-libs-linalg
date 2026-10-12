@@ -68,7 +68,7 @@ public:
 
 		/*
 		* Calculate the size of the buffers for each thread using the conversion objects
-		* We are using the size of the blocks as the dimension to allocate, whislt we could
+		* We are using the size of the blocks as the dimension to allocate, whilst we could
 		* min() the size of the blocks with the size of the matrices this creates an issue
 		* when the inplace matmul is invoked repeatedly with slightly increasing problem sizes
 		* as it will constantly be reallocating.
@@ -116,7 +116,7 @@ public:
 		auto driver =
 			/*
 			* Each row on the A matrix is in effect a separate operation
-			* So we will parallelise over this dimension
+			* So we will parallelize over this dimension
 			*/
 			parallelize       { general_parallel_strat, a_strd, spec.max_threads, spec.a_convert.strd_interleave(),
 			/*

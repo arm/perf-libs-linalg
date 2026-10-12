@@ -111,8 +111,8 @@ split_complex_matrix<T> split_complex_matrix<T>::sub_matrix(kernel_inttype cntg_
 
 	PERFLIBS_ASSERT((cntg_pos + cntg_size) <= cntg(), "sub_matrix cntg dimensions outside of parent range");
 	PERFLIBS_ASSERT((strd_pos + strd_size) <= strd(), "sub_matrix strd dimensions outside of parent range");
-	// This assert is not always met. This will be
-	//               resolved when we generalize this matrix type.
+	// This assert is not always met. This will be resolved when we
+	// generalize this matrix type.
 	/* PERFLIBS_ASSERT(strd_pos % interleave_ == 0, "strd pos must be divisible by interleave"); */
 
 	auto new_data = reinterpret_cast<value_type*>(

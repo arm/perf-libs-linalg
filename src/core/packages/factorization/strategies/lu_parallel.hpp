@@ -39,6 +39,9 @@ public:
 	template<typename ADataType, typename IntType, typename ArchitectureSpec>
 	PERFLIBS_LINALG_INLINE bool
 	operator()(const lu_pctx_t<ADataType, IntType, ArchitectureSpec>& pctx) const {
+#ifndef _OPENMP
+		return false;
+#else
 		if (!can_compute(pctx)) return false;
 
 		// This algorithm performs a parallel LU factorization where the matrix is subdivided in submatrices
@@ -101,7 +104,7 @@ public:
 		{
 			const auto thread_id = omp::get_thread_num();
 
-		   // First iteration: Only one thread contributes, as there is only a panel factorization
+			// First iteration: Only one thread contributes, as there is only a panel factorization
 			#pragma omp single
 			{
 				panel_width    = min(nb, min(a.cntg(), a.strd()));
@@ -149,14 +152,14 @@ public:
 				const auto weight_factor            = spec.weight_factor;
 				const auto current_panel_length     = a.cntg() - previous_panel.strd();
 				const auto panel_width              = min(nb, min(current_panel_length, a.strd()));
-    			      auto only_trailing_update     = panel_width != 0 && panel_width == current_panel_length && a.strd() > panel_width;
+				auto only_trailing_update     = panel_width != 0 && panel_width == current_panel_length && a.strd() > panel_width;
 
 				auto [start_col, end_col] = distribute_trailing_matrix_update<ArchitectureSpec>(a.strd(), panel_width, nt, thread_id, min_columns_per_thread, weight_factor);
 				const auto trailing_update_size = end_col - start_col;
 				auto previous_pivot = pivot_mgr.get_previous_local_pivot();
 
-				//Thread 0: Panel update, factorization, and partial trailing update
-				if (thread_id == 0){
+				// Thread 0: Panel update, factorization, and partial trailing update
+				if (thread_id == 0) {
 
 					// Update the panel
 					if(panel_width > 0) {
@@ -180,10 +183,11 @@ public:
 							pctx.info = iinfo + a_panel_start_point;
 						}
 					}
+
 					// Help with trailing matrix update
 					if (trailing_update_size > 0) {
 						auto trailing_contribution = get_strd_panel(a, start_col, trailing_update_size);
-						auto panel_update_pctx          = spec::problem_context{
+						auto panel_update_pctx = spec::problem_context{
 							lu_panel_update{ previous_panel, trailing_contribution, previous_pivot },
 							pctx.architecture_spec
 						};
@@ -205,10 +209,10 @@ public:
 				#pragma omp single
 				{
 					// Accumulate pivot
-					 if (panel_width > 0) {
+					if (panel_width > 0) {
 						pivot_size  = min(current_panel.cntg(), current_panel.strd());
 						pivot_mgr.accumulate_pivots(a_panel_start_point, pivot_size);
-					 }
+					}
 
 					// Prepare for next iteration
 					previous_panel                  = a.sub_matrix(previous_panel.strd(), a.cntg() - previous_panel.strd(), 0, panel_width);
@@ -251,6 +255,7 @@ public:
 			}
 		}
 		return true;
+#endif
 	}
 
 	template<typename ProblemContext>

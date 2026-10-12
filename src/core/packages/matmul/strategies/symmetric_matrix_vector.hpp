@@ -132,7 +132,7 @@ public:
 
 			auto driver =
 				/**
-				* We are going to parallelise over the a.cntg() dimension
+				* We are going to parallelize over the a.cntg() dimension
 				*/
 				parallelize { triangular_parallel_strat, cntg, num_threads,
 				reduce { parallel_reduction_strat, num_threads, threads_buffer_pool, synchro,

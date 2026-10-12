@@ -47,14 +47,3 @@ typedef double _Complex pl_linalg_doublecomplex_t;
 #endif
 #define pl_linalg_doublecomplex_t pl_linalg_doublecomplex_t
 #endif
-
-/*
-  The LAPACKE interface uses the macros lapack_complex_float and lapack_complex_double,
-  which are compatible with the corresponding perflibs types.
-*/
-#ifndef lapack_complex_float
-#define lapack_complex_float pl_linalg_singlecomplex_t
-#endif
-#ifndef lapack_complex_double
-#define lapack_complex_double pl_linalg_doublecomplex_t
-#endif

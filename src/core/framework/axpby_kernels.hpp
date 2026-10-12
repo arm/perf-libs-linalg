@@ -53,6 +53,20 @@ struct axpby_kernel_tag {
 	}
 };
 
+template<typename StrategyTag, typename ProblemContext>
+PERFLIBS_LINALG_INLINE
+auto get_beta_zero_mode(
+	const axpby_kernel_tag<StrategyTag>& strat_tag,
+	const ProblemContext& pctx
+) {
+	if constexpr (requires { strat_tag.beta_zero_mode(pctx); }) {
+		return strat_tag.beta_zero_mode(pctx);
+	}
+	else {
+		return pctx.beta_zero_mode;
+	}
+}
+
 template<typename AType, typename BType=AType, typename CType=AType,
          typename ScalarType = promote_t<AType, BType, CType>>
 using axpy_kernel_t = void (kernel_inttype n, ScalarType alpha, const AType *x, CType *y,

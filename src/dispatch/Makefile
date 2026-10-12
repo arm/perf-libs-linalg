@@ -91,7 +91,12 @@ SOURCE_DEPENDENCIES += ${KERNEL_SPECS_OBJ_PATHS:.o=.d}
 -include $(SOURCE_DEPENDENCIES)
 
 
-CONFIG_CXXFLAGS=$(NO_TARGET_COPTS) -std=c++23 -Wall -Wno-error=unknown-pragmas -MMD -fno-rtti -fno-exceptions -nostdlib
+CONFIG_CXXFLAGS=$(NO_TARGET_COPTS) -std=c++23 -Wall -MMD -fno-rtti -fno-exceptions -nostdlib
+
+werror ?= 0
+ifeq ($(werror),1)
+	CONFIG_CXXFLAGS += -Werror
+endif
 
 # -Wmaybe-uninitialized often reports false positives
 ifeq ($(COMPILER_NAME), gfortran)
@@ -212,7 +217,7 @@ $(ARCHITECTURES_GENERATE_DIR)/linalg/specs.hpp: $(SCRIPTS_DIR)/generate_architec
 	$(FORMAT) $@ || true
 
 .PRECIOUS: $(ARCHITECTURES_GENERATE_DIR)/%/linalg/get_spec.hpp
-$(ARCHITECTURES_GENERATE_DIR)/%/linalg/get_spec.hpp: $(SCRIPTS_DIR)/generate_get_spec.py $(CONFIG_JSON_PATH)
+$(ARCHITECTURES_GENERATE_DIR)/%/linalg/get_spec.hpp: $(SCRIPTS_DIR)/generate_get_spec.py $(CONFIG_JSON_PATH) $(SOURCE_DIR)/Makefile
 	mkdir -p $(@D)
 	$(PYTHON) $(SCRIPTS_DIR)/generate_get_spec.py \
 		--output-file-path $@ \
