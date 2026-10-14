@@ -14,11 +14,15 @@
 							"value": 1
 						},
 						{
-							"condition": "scale <= 42436",
+							"condition": "scale <= 32041",
+							"value": 4
+						},
+						{
+							"condition": "scale <= 89401",
 							"value": 6
 						},
 						{
-							"condition": "scale <= 111556",
+							"condition": "scale <= 137641",
 							"value": 8
 						},
 						{
@@ -26,19 +30,39 @@
 							"value": 16
 						},
 						{
-							"condition": "scale <= 1069156",
+							"condition": "scale <= 724201",
 							"value": 24
 						},
 						{
-							"condition": "scale <= 1705636",
+							"condition": "scale <= 828100",
+							"value": 32
+						},
+						{
+							"condition": "scale <= 2859481",
 							"value": 40
 						},
 						{
-							"condition": "scale <= 3786916",
-							"value": 48
+							"condition": "scale <= 5354596",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 7365796",
+							"value": 64
+						},
+						{
+							"condition": "scale <= 9211225",
+							"value": 72
+						},
+						{
+							"condition": "scale <= 10621081",
+							"value": 80
+						},
+						{
+							"condition": "scale <= 16777216",
+							"value": 104
 						}
 					],
-					"default": 48
+					"default": 104
 				},
 				"type": "kernel_inttype",
 				"default": "MAX"
@@ -51,8 +75,8 @@
 		},
 		"package": "matmul",
 		"manifest": {
-			"last_tuned_at": "2026-07-15T23:44:38.938674Z",
-			"spec_sha256": "83906bf67951716497a4871c71521ece25237a3b3c992372f511fd79b75027a8"
+			"last_tuned_at": "2026-10-09T16:20:23.601138Z",
+			"spec_sha256": "ba15196739363407b0269c02aa8015753d3b1e3e186d6fe845ab6e365c7c7796"
 		}
 	}
 ]

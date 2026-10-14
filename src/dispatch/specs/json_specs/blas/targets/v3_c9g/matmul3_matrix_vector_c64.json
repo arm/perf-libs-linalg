@@ -14,8 +14,12 @@
 							"value": 1
 						},
 						{
-							"condition": "scale <= 23716",
+							"condition": "scale <= 17161",
 							"value": 4
+						},
+						{
+							"condition": "scale <= 32041",
+							"value": 6
 						},
 						{
 							"condition": "scale <= 70756",
@@ -26,24 +30,28 @@
 							"value": 16
 						},
 						{
-							"condition": "scale <= 470596",
+							"condition": "scale <= 403225",
 							"value": 24
 						},
 						{
-							"condition": "scale <= 1207801",
+							"condition": "scale <= 724201",
 							"value": 40
 						},
 						{
-							"condition": "scale <= 1901641",
+							"condition": "scale <= 1207801",
+							"value": 48
+						},
+						{
+							"condition": "scale <= 1525225",
+							"value": 56
+						},
+						{
+							"condition": "scale <= 1705636",
 							"value": 64
 						},
 						{
-							"condition": "scale <= 2343961",
+							"condition": "scale <= 2592100",
 							"value": 72
-						},
-						{
-							"condition": "scale <= 2859481",
-							"value": 80
 						},
 						{
 							"condition": "scale <= 3455881",
@@ -52,9 +60,37 @@
 						{
 							"condition": "scale <= 3786916",
 							"value": 96
+						},
+						{
+							"condition": "scale <= 4519876",
+							"value": 104
+						},
+						{
+							"condition": "scale <= 5812921",
+							"value": 112
+						},
+						{
+							"condition": "scale <= 7365796",
+							"value": 120
+						},
+						{
+							"condition": "scale <= 8561476",
+							"value": 136
+						},
+						{
+							"condition": "scale <= 10621081",
+							"value": 160
+						},
+						{
+							"condition": "scale <= 11383876",
+							"value": 184
+						},
+						{
+							"condition": "scale <= 16777216",
+							"value": "MAX"
 						}
 					],
-					"default": 96
+					"default": "MAX"
 				},
 				"type": "kernel_inttype",
 				"default": "MAX"
@@ -67,8 +103,8 @@
 		},
 		"package": "matmul",
 		"manifest": {
-			"last_tuned_at": "2026-07-15T23:40:53.509681Z",
-			"spec_sha256": "0a9703333b6d2c052c3ff353d7605a3c406291351eb19ad862604b6787584aa8"
+			"last_tuned_at": "2026-10-09T16:14:29.731326Z",
+			"spec_sha256": "052e4733f04c3431c7d85531592fb74b20c9d275cb76c16ba3eb2a81af944804"
 		}
 	}
 ]
