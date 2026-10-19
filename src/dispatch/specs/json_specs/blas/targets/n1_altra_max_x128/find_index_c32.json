@@ -122,7 +122,7 @@
 										"value": 96
 									}
 								],
-								"default": "MAX"
+								"default": 96
 							}
 						}
 					],
@@ -277,7 +277,7 @@
 								"value": 112
 							}
 						],
-						"default": "MAX"
+						"default": 112
 					}
 				},
 				"type": "kernel_inttype",

@@ -106,7 +106,7 @@
 										"value": 80
 									}
 								],
-								"default": "MAX"
+								"default": 80
 							}
 						}
 					],

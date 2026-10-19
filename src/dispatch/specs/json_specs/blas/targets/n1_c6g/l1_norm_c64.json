@@ -46,7 +46,7 @@
 										"value": 40
 									}
 								],
-								"default": "MAX"
+								"default": 40
 							}
 						}
 					],

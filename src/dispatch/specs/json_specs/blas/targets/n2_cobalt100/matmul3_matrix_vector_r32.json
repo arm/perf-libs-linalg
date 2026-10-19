@@ -50,7 +50,7 @@
 							"value": 72
 						}
 					],
-					"default": "MAX"
+					"default": 72
 				},
 				"type": "kernel_inttype",
 				"default": "MAX"

@@ -34,7 +34,7 @@
 							"value": 8
 						}
 					],
-					"default": "MAX"
+					"default": 8
 				},
 				"type": "kernel_inttype",
 				"default": "MAX"
