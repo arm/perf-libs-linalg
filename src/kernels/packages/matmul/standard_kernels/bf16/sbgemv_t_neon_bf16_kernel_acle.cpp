@@ -10,7 +10,7 @@
 
 extern "C" {
 
-void sbgemv_t_bfdot_4x24_acle(
+void sbgemv_t_neon_bf16_kernel_acle(
 		kernel_inttype a_cntg, kernel_inttype a_strd,
 		float alpha,
 		const bfloat16_t *a, kernel_inttype lda,

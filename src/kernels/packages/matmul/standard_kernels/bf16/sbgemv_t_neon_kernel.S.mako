@@ -79,31 +79,31 @@ bf16_to_r32_options = {
 }
 
 functions={
-	"bgemv_t_bfdot_4x24": {
+	"bgemv_t_neon_bf16_kernel": {
 		"in": bf16_options,
 		"out": bf16_to_r32_options,
 		"multiply_accumulate": "bfdot {0}v.4s, {1}v.8h, {2}v.8h",
 		"adjust_scalar":       "shll {0}v.4s, {0}v.4h, #16"
 	},
-	"bgemv_t_fp32_fmla_4x12": {
+	"bgemv_t_neon_kernel": {
 		"in": bf16_to_r32_options,
 		"out": bf16_to_r32_options,
 		"multiply_accumulate": "fmla {0}v.4s, {1}v.4s, {2}v.4s",
 		"adjust_scalar":       "shll {0}v.4s, {0}v.4h, #16"
 	},
-	"sbgemv_t_bfdot_4x24": {
+	"sbgemv_t_neon_bf16_kernel": {
 		"in": bf16_options,
 		"out": r32_options,
 		"multiply_accumulate": "bfdot {0}v.4s, {1}v.8h, {2}v.8h",
 		"adjust_scalar":       ""
 	},
-	"sbgemv_t_fp32_fmla_4x12": {
+	"sbgemv_t_neon_kernel": {
 		"in": bf16_to_r32_options,
 		"out": r32_options,
 		"multiply_accumulate" : "fmla {0}v.4s, {1}v.4s, {2}v.4s",
 		"adjust_scalar":       ""
 	},
-	"sgemv_t_fmla_4x12": {
+	"sgemv_t_neon_4x12_kernel": {
 		"in":  r32_options,
 		"out": r32_options,
 		"multiply_accumulate" : "fmla {0}v.4s, {1}v.4s, {2}v.4s",
@@ -169,19 +169,19 @@ ${vreg("b2", 28)}
 %for func_name, opts in functions.items():
 ${prologue(func_name)}
 
-	stp     x29, x30, [sp, #-16]!
+	stp     x29, x30, [sp, #-160]!
 	mov     x29, sp
 
-	stp     x19, x20, [sp, #-16]!
-	stp     x21, x22, [sp, #-16]!
-	stp     x23, x24, [sp, #-16]!
-	stp     x25, x26, [sp, #-16]!
-	stp     x27, x28, [sp, #-16]!
+	stp     x19, x20, [sp, #16]
+	stp     x21, x22, [sp, #32]
+	stp     x23, x24, [sp, #48]
+	stp     x25, x26, [sp, #64]
+	stp     x27, x28, [sp, #80]
 
-	stp     d8,  d9,  [sp, #-16]!
-	stp     d10, d11, [sp, #-16]!
-	stp     d12, d13, [sp, #-16]!
-	stp     d14, d15, [sp, #-16]!
+	stp     d8,  d9,  [sp, #96]
+	stp     d10, d11, [sp, #112]
+	stp     d12, d13, [sp, #128]
+	stp     d14, d15, [sp, #144]
 
 .L${func_name}_as_loop_preamble:
 	${adjust_scalar(opts, "alpha_")}
@@ -623,18 +623,18 @@ ${prologue(func_name)}
 
 
 .L${func_name}_epilogue:
-	ldp     d14, d15, [sp], #16
-	ldp     d12, d13, [sp], #16
-	ldp     d10, d11, [sp], #16
-	ldp     d8,  d9,  [sp], #16
+	ldp     d14, d15, [sp, #144]
+	ldp     d12, d13, [sp, #128]
+	ldp     d10, d11, [sp, #112]
+	ldp     d8,  d9,  [sp, #96]
 
-	ldp     x27, x28, [sp], #16
-	ldp     x25, x26, [sp], #16
-	ldp     x23, x24, [sp], #16
-	ldp     x21, x22, [sp], #16
-	ldp     x19, x20, [sp], #16
+	ldp     x27, x28, [sp, #80]
+	ldp     x25, x26, [sp, #64]
+	ldp     x23, x24, [sp, #48]
+	ldp     x21, x22, [sp, #32]
+	ldp     x19, x20, [sp, #16]
 
-	ldp     x29, x30, [sp], #16
+	ldp     x29, x30, [sp], #160
 
 	ret
 ${epilogue(func_name)}

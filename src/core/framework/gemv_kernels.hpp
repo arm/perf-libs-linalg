@@ -43,15 +43,15 @@ using gemv_new_kernel_t =
  * Declarations of asm kernels
  */
 extern "C" {
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_n_bfmlal_16x8;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_n_fp32_fmla;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_t_bfdot_4x24;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_t_fp32_fmla_4x12;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_n_bfmlal_16x8;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_n_fp32_fmla;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_t_bfdot_4x24;
-	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_t_fp32_fmla_4x12;
-	perflibs::linalg::gemv_kernel_t<r32,  r32,  r32,  r32>  sgemv_t_fmla_4x12;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_n_neon_bf16_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_n_neon_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_t_neon_bf16_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, bf16, bf16> bgemv_t_neon_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_n_neon_bf16_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_n_neon_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_t_neon_bf16_kernel;
+	perflibs::linalg::gemv_kernel_t<bf16, bf16, r32,  r32>  sbgemv_t_neon_kernel;
+	perflibs::linalg::gemv_kernel_t<r32,  r32,  r32,  r32>  sgemv_t_neon_4x12_kernel;
 
 	perflibs::linalg::gemv_kernel_t<r32, r32, r32, r32> sgemv_t_neon_kernel;
 	perflibs::linalg::gemv_kernel_t<r32, r32, r32, r32> sgemv_n_neon_kernel;
@@ -160,16 +160,16 @@ void gemv_shim(
 }
 
 
-constexpr gemv_kernel_spec bgemv_n_fp32_fmla_spec  { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_fp32_fmla>,      16, false,  true };
-constexpr gemv_kernel_spec bgemv_n_bfmlal_spec     { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_bfmlal_16x8>,    16, false,  true };
-constexpr gemv_kernel_spec bgemv_t_bfdot_spec      { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_bfdot_4x24>,      4, false, false };
-constexpr gemv_kernel_spec bgemv_t_fp32_fmla_spec  { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_fp32_fmla_4x12>,  4, false, false };
+constexpr gemv_kernel_spec bgemv_n_neon_spec       { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_kernel>,      16, false,  true };
+constexpr gemv_kernel_spec bgemv_n_neon_bf16_spec  { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_bf16_kernel>, 16, false,  true };
+constexpr gemv_kernel_spec bgemv_t_neon_bf16_spec  { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_bf16_kernel>, 4, false, false };
+constexpr gemv_kernel_spec bgemv_t_neon_spec       { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_kernel>,      4, false, false };
 
-constexpr gemv_kernel_spec sbgemv_n_fp32_fmla_spec { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_fp32_fmla>,     16, false,  true };
-constexpr gemv_kernel_spec sbgemv_n_bfmlal_spec    { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_bfmlal_16x8>,   16, false,  true };
-constexpr gemv_kernel_spec sbgemv_t_bfdot_spec     { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_bfdot_4x24>,     4, false, false };
-constexpr gemv_kernel_spec sbgemv_t_fp32_fmla_spec { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_fp32_fmla_4x12>, 4, false, false };
-constexpr gemv_kernel_spec sgemv_t_fmla_spec       { &gemv_shim<true,  r32,  r32,   r32,  r32, sgemv_t_fmla_4x12>,       4, false, false };
+constexpr gemv_kernel_spec sbgemv_n_neon_spec      { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_kernel>,     16, false,  true };
+constexpr gemv_kernel_spec sbgemv_n_neon_bf16_spec { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_bf16_kernel>, 16, false,  true };
+constexpr gemv_kernel_spec sbgemv_t_neon_bf16_spec { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_bf16_kernel>, 4, false, false };
+constexpr gemv_kernel_spec sbgemv_t_neon_spec      { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_kernel>,      4, false, false };
+constexpr gemv_kernel_spec sgemv_t_neon_4x12_spec  { &gemv_shim<true,  r32,  r32,   r32,  r32, sgemv_t_neon_4x12_kernel>, 4, false, false };
 
 constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_n_neon_spec {
 	&gemv_shim<false, r32, r32, r32, r32, sgemv_n_neon_kernel>, 14, true, true
@@ -311,17 +311,17 @@ auto get_gemv_neon_kernel(const ProblemContext& pctx, kernel_inttype max_threads
 			if (is_cntg_contig(pctx.a)) {
 
 				if(features.neon_bf16) {
-					return bgemv_t_bfdot_spec;
+					return bgemv_t_neon_bf16_spec;
 				}
 				else {
-					return bgemv_t_fp32_fmla_spec;
+					return bgemv_t_neon_spec;
 				}
 			}
 			else {
 				if(features.neon_bf16) {
-					return bgemv_n_bfmlal_spec;
+					return bgemv_n_neon_bf16_spec;
 				}
-				return bgemv_n_fp32_fmla_spec;
+				return bgemv_n_neon_spec;
 			}
 		}
 	}
@@ -334,18 +334,18 @@ auto get_gemv_neon_kernel(const ProblemContext& pctx, kernel_inttype max_threads
 			const auto features = perflibs::machine::cpu_info::get_cpu_features();
 			if (is_cntg_contig(pctx.a)) {
 				if(features.neon_bf16) {
-					return sbgemv_t_bfdot_spec;
+					return sbgemv_t_neon_bf16_spec;
 				}
 				else {
-					return sbgemv_t_fp32_fmla_spec;
+					return sbgemv_t_neon_spec;
 				}
 			}
 			else {
 				if(features.neon_bf16) {
-					return sbgemv_n_bfmlal_spec;
+					return sbgemv_n_neon_bf16_spec;
 				}
 				else {
-					return sbgemv_n_fp32_fmla_spec;
+					return sbgemv_n_neon_spec;
 				}
 			}
 		}
