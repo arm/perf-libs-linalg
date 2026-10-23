@@ -68,25 +68,27 @@ namespace {
 template <typename T1, typename T2>
 [[maybe_unused]]
 T2 dotu_fallback(kernel_inttype n, const T1 *x, const T1 *y, kernel_inttype incx, kernel_inttype incy){
-	T2 result = zero<T2>;
+	using accum_type = at_least_fp32_t<T2>;
+	accum_type result = zero<accum_type>;
 	kernel_inttype ix = 0;
 	kernel_inttype iy = 0;
 	for (kernel_inttype i = 0; i < n; ++i, ix += incx, iy += incy) {
-		result+= T2(y[iy]) * T2(x[ix]);
+		result += accum_type(y[iy]) * accum_type(x[ix]);
 	}
-	return result;
+	return static_cast<T2>(result);
 }
 
 template <typename T1, typename T2>
 [[maybe_unused]]
 T2 dotc_fallback(kernel_inttype n, const T1 *x, const T1 *y, kernel_inttype incx, kernel_inttype incy){
-	T2 result = zero<T2>;
+	using accum_type = at_least_fp32_t<T2>;
+	accum_type result = zero<accum_type>;
 	kernel_inttype ix = 0;
 	kernel_inttype iy = 0;
 	for (kernel_inttype i = 0; i < n; ++i, ix += incx, iy += incy) {
-		result+= T2(y[iy]) * conj(T2(x[ix]));
+		result += accum_type(y[iy]) * conj(accum_type(x[ix]));
 	}
-	return result;
+	return static_cast<T2>(result);
 }
 
 } // namespace <anon>
