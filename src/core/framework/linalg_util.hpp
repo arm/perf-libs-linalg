@@ -171,6 +171,12 @@ auto array_concat(const std::array<Type, Sizes>&... arrays) {
 	return result;
 }
 
+enum class packing_format {
+	interleaved =0,
+	split_complex =1,
+	expanded_complex =2
+};
+
 enum class matrix_requirement {
 	any, cntg_one=1, strd_one=2
 };

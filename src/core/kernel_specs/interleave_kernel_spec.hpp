@@ -225,6 +225,7 @@ struct interleave_kernel_spec {
 	kernel_inttype                                 vector_size_bits;
 	matrix_requirement                             matrix_req;
 	interleave_kernel_f<SrcDataType, DstDataType> *kernel;
+	packing_format                                 packed_format = packing_format::interleaved;
 };
 
 template<kernel_inttype Flags, typename SrcDataType, typename DstDataType>
@@ -268,7 +269,8 @@ auto find_interleave_spec(const InterleaveKernelSpecsType& specs, const SrcMatri
 	}();
 
 	const auto it = std::find_if(std::begin(specs), std::end(specs), [&](const auto& spec) {
-			return spec.cntg_interleave() == dst_mat_spec.cntg_interleave()
+			return spec.packed_format == dst_mat_spec.packed_format
+			   && spec.cntg_interleave() == dst_mat_spec.cntg_interleave()
 			   &&  spec.strd_interleave() == dst_mat_spec.strd_interleave()
 			   && ( spec.cntg_interleave() == 1 || spec.cntg_interleave_step == dst_mat_spec.cntg_interleave_step )
 			   && ( spec.strd_interleave() == 1 || spec.strd_interleave_step == dst_mat_spec.strd_interleave_step )
@@ -286,7 +288,8 @@ auto find_interleave_spec(const InterleaveKernelSpecsType& specs, const SrcMatri
 		dst_mat_spec.split_factor,
 		0_ki,
 		matrix_requirement::any,
-		nullptr //will force driver to use fallback
+		nullptr, // use copy() fallback when no interleave kernel is found.
+		dst_mat_spec.packed_format
 	};
 }
 

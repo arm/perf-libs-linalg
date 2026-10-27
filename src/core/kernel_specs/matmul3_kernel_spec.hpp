@@ -62,6 +62,7 @@ struct matrix_interleave_spec {
 	kernel_inttype       strd_interleave_step;
 	kernel_inttype       split_factor;
 	kernel_inttype       strd_unroll;
+	packing_format       packed_format = packing_format::interleaved;
 };
 
 template <typename AType, typename BType = AType, typename CType = AType>

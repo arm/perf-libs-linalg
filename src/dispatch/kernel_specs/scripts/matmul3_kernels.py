@@ -30,6 +30,7 @@ class MatrixInterleaveSpec:
 	strd_unroll: int
 	strd_interleave_step: int
 	cntg_interleave_step: int
+	packed_format: str = "interleaved"
 
 	def get_interleave(self, value: InterleaveValue, extension: str):
 		if isinstance(value, int):
@@ -44,7 +45,7 @@ class MatrixInterleaveSpec:
 			f"matrix_interleave_spec<{self.datatype}> {{ "
 			f"{cntg_interleave}, {strd_interleave}, "
 			f"{self.cntg_interleave_step}_ki, {self.strd_interleave_step}_ki, "
-			f"{self.split_factor}_ki, {self.strd_unroll}_ki }}"
+			f"{self.split_factor}_ki, {self.strd_unroll}_ki, packing_format::{self.packed_format} }}"
 		)
 
 @dataclass

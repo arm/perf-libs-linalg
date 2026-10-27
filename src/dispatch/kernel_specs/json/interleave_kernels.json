@@ -773,6 +773,7 @@
     {
       "strd_interleave": 4,
       "split_factor": 4,
+      "packed_format": "split_complex",
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
       "kernel": "n_interleave_shim<&n_interleave_split_complex_ir4<r32>>"
@@ -780,6 +781,7 @@
     {
       "strd_interleave": 4,
       "split_factor": 4,
+      "packed_format": "split_complex",
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
       "kernel": "t_interleave_shim<&t_interleave_split_complex_ir4<r32>>"
@@ -882,6 +884,7 @@
     {
       "strd_interleave": 4,
       "split_factor": 4,
+      "packed_format": "split_complex",
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
       "kernel": "n_interleave_shim<&n_interleave_split_complex_ir4<r64>>"
@@ -889,6 +892,7 @@
     {
       "strd_interleave": 4,
       "split_factor": 4,
+      "packed_format": "split_complex",
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::strd_one",
       "kernel": "t_interleave_shim<&t_interleave_split_complex_ir4<r64>>"

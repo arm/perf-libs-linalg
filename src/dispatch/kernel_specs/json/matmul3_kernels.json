@@ -606,6 +606,7 @@
 		"extensions": "neon",
 		"a_interleave_spec": {
 			"datatype": "c32",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 4,
@@ -615,6 +616,7 @@
 		},
 		"b_interleave_spec": {
 			"datatype": "c32",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 10,
@@ -632,6 +634,7 @@
 		"extensions": "sve",
 		"a_interleave_spec": {
 			"datatype": "c32",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": {"vector_length_multiplier": 3},
@@ -641,6 +644,7 @@
 		},
 		"b_interleave_spec": {
 			"datatype": "c32",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 8,
@@ -658,6 +662,7 @@
 		"extensions": "neon",
 		"a_interleave_spec": {
 			"datatype": "c64",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 4,
@@ -667,6 +672,7 @@
 		},
 		"b_interleave_spec": {
 			"datatype": "c64",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 4,
@@ -684,6 +690,7 @@
 		"extensions": "sve",
 		"a_interleave_spec": {
 			"datatype": "c64",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": {"vector_length_multiplier": 4},
@@ -693,6 +700,7 @@
 		},
 		"b_interleave_spec": {
 			"datatype": "c64",
+			"packed_format": "split_complex",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 5,

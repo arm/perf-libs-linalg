@@ -63,6 +63,7 @@ class InterleaveKernelSpec:
     kernel: str = "nullptr"
     implementation: str | None = None
     extensions: str = "neon"
+    packed_format: str = "interleaved"
 
     def implementation_function(self) -> str:
         return {
@@ -77,6 +78,7 @@ class InterleaveKernelSpec:
         if (
             requirement["datatype"] != data_type
             or self.split_factor != requirement["split_factor"]
+            or self.packed_format != requirement.get("packed_format", "interleaved")
         ):
             return False
 
@@ -126,6 +128,7 @@ class InterleaveKernelSpec:
             f"{self.vector_size_bits}_ki",
             self.matrix_req,
             kernel,
+            f"packing_format::{self.packed_format}",
         )
         return f"    interleave_kernel_spec {{ {', '.join(values)} }},"
 
