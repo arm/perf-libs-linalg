@@ -11,6 +11,7 @@
 
 #include "detect/os.hpp"
 #include "perflibs_assert.hpp"
+#include "perflibs_numeric_utils.hpp"
 #include "perflibs_util.hpp"
 
 #include "detect/cpu_info.hpp" //features.neon_bf16
@@ -71,6 +72,7 @@ extern "C" {
 	perflibs::linalg::gemv_kernel_t<r64, r64, r64, r64> dgemv_inc2_t_neon_kernel_parallel;
 
 	perflibs::linalg::gemv_kernel_t<r32, r32, r32, r32> sgemv_t_sve_kernel;
+	perflibs::linalg::gemv_new_kernel_t<r32, r32, r32, r32> sgemv_t_sve_3col_kernel;
 	perflibs::linalg::gemv_kernel_t<r32, r32, r32, r32> sgemv_n_sve_kernel;
 	perflibs::linalg::gemv_kernel_t<r64, r64, r64, r64> dgemv_t_sve_kernel;
 	perflibs::linalg::gemv_kernel_t<r64, r64, r64, r64> dgemv_n_sve_kernel;
@@ -89,17 +91,19 @@ struct gemv_kernel_spec {
 	gemv_new_kernel_t<AType, BType, CType, ScalarType> *gemv_kernel;
 	kernel_inttype num_cols;
 	bool scale_b;
-	bool apply_beta;
+	// Supporting beta=0 means overwriting Y without reading its previous contents.
+	value_support beta_support;
 
 	constexpr
 	gemv_kernel_spec() = default;
 
 	constexpr
-	gemv_kernel_spec(gemv_new_kernel_t<AType, BType, CType, ScalarType> *kernel, kernel_inttype num_cols, bool scale_b, bool apply_beta)
-	:	gemv_kernel { kernel }
-	,	num_cols    { num_cols }
-	,	scale_b     { scale_b }
-	,	apply_beta  { apply_beta }
+	gemv_kernel_spec(gemv_new_kernel_t<AType, BType, CType, ScalarType> *kernel,
+	                 kernel_inttype num_cols, bool scale_b, value_support beta_support)
+	:	gemv_kernel  { kernel }
+	,	num_cols     { num_cols }
+	,	scale_b      { scale_b }
+	,	beta_support { beta_support }
 	{	}
 }; //struct gemv_kernel_spec
 
@@ -160,96 +164,99 @@ void gemv_shim(
 }
 
 
-constexpr gemv_kernel_spec bgemv_n_neon_spec       { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_kernel>,      16, false,  true };
-constexpr gemv_kernel_spec bgemv_n_neon_bf16_spec  { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_bf16_kernel>, 16, false,  true };
-constexpr gemv_kernel_spec bgemv_t_neon_bf16_spec  { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_bf16_kernel>, 4, false, false };
-constexpr gemv_kernel_spec bgemv_t_neon_spec       { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_kernel>,      4, false, false };
+constexpr gemv_kernel_spec bgemv_n_neon_spec       { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_kernel>,      16, false, value_support::one };
+constexpr gemv_kernel_spec bgemv_n_neon_bf16_spec  { &gemv_shim<false, bf16, bf16, bf16, bf16, bgemv_n_neon_bf16_kernel>, 16, false, value_support::one };
+constexpr gemv_kernel_spec bgemv_t_neon_bf16_spec  { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_bf16_kernel>, 4, false, value_support::not_zero };
+constexpr gemv_kernel_spec bgemv_t_neon_spec       { &gemv_shim<true,  bf16, bf16, bf16, bf16, bgemv_t_neon_kernel>,      4, false, value_support::not_zero };
 
-constexpr gemv_kernel_spec sbgemv_n_neon_spec      { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_kernel>,     16, false,  true };
-constexpr gemv_kernel_spec sbgemv_n_neon_bf16_spec { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_bf16_kernel>, 16, false,  true };
-constexpr gemv_kernel_spec sbgemv_t_neon_bf16_spec { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_bf16_kernel>, 4, false, false };
-constexpr gemv_kernel_spec sbgemv_t_neon_spec      { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_kernel>,      4, false, false };
-constexpr gemv_kernel_spec sgemv_t_neon_4x12_spec  { &gemv_shim<true,  r32,  r32,   r32,  r32, sgemv_t_neon_4x12_kernel>, 4, false, false };
+constexpr gemv_kernel_spec sbgemv_n_neon_spec      { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_kernel>,     16, false, value_support::one };
+constexpr gemv_kernel_spec sbgemv_n_neon_bf16_spec { &gemv_shim<false, bf16, bf16,  r32,  r32, sbgemv_n_neon_bf16_kernel>, 16, false, value_support::one };
+constexpr gemv_kernel_spec sbgemv_t_neon_bf16_spec { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_bf16_kernel>, 4, false, value_support::not_zero };
+constexpr gemv_kernel_spec sbgemv_t_neon_spec      { &gemv_shim<true,  bf16, bf16,  r32,  r32, sbgemv_t_neon_kernel>,      4, false, value_support::not_zero };
+constexpr gemv_kernel_spec sgemv_t_neon_4x12_spec  { &gemv_shim<true,  r32,  r32,   r32,  r32, sgemv_t_neon_4x12_kernel>, 4, false, value_support::not_zero };
 
 constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_n_neon_spec {
-	&gemv_shim<false, r32, r32, r32, r32, sgemv_n_neon_kernel>, 14, true, true
+	&gemv_shim<false, r32, r32, r32, r32, sgemv_n_neon_kernel>, 14, true, value_support::one
 };
 
 constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_t_neon_spec {
-	&gemv_shim<true, r32, r32, r32, r32, sgemv_t_neon_kernel>, 14, false, true
+	&gemv_shim<true, r32, r32, r32, r32, sgemv_t_neon_kernel>, 14, false, value_support::one
 };
 constexpr gemv_kernel_spec<r64, r64, r64, r64> dgemv_n_neon_spec {
-	&gemv_shim<false, r64, r64, r64, r64, dgemv_n_neon_kernel>, 14, true, true
+	&gemv_shim<false, r64, r64, r64, r64, dgemv_n_neon_kernel>, 14, true, value_support::one
 };
 constexpr gemv_kernel_spec<r64, r64, r64, r64> dgemv_t_neon_parallel_spec {
-	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_neon_kernel_parallel>, 8, false, true
+	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_neon_kernel_parallel>, 8, false, value_support::one
 };
 constexpr gemv_kernel_spec<r64, r64, r64, r64> dgemv_t_neon_serial_spec {
-	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_neon_kernel_serial>, 14, false, true
+	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_neon_kernel_serial>, 14, false, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_n_neon_spec {
-	&gemv_shim<false, c32, c32, c32, c32, cgemv_n_neon_kernel>, 7, true, true
+	&gemv_shim<false, c32, c32, c32, c32, cgemv_n_neon_kernel>, 7, true, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_t_neon_spec {
-	&gemv_shim<true, c32, c32, c32, c32, cgemv_t_neon_kernel>, 7, false, true
+	&gemv_shim<true, c32, c32, c32, c32, cgemv_t_neon_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_c_neon_spec {
-	&gemv_shim<true, c32, c32, c32, c32, cgemv_c_neon_kernel>, 7, false, true
+	&gemv_shim<true, c32, c32, c32, c32, cgemv_c_neon_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_n_neon_spec {
-	&gemv_shim<false, c64, c64, c64, c64, zgemv_n_neon_kernel>, 7, true, true
+	&gemv_shim<false, c64, c64, c64, c64, zgemv_n_neon_kernel>, 7, true, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_t_neon_spec {
-	&gemv_shim<true, c64, c64, c64, c64, zgemv_t_neon_kernel>, 7, false, true
+	&gemv_shim<true, c64, c64, c64, c64, zgemv_t_neon_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_c_neon_spec {
-	&gemv_shim<true, c64, c64, c64, c64, zgemv_c_neon_kernel>, 7, false, true
+	&gemv_shim<true, c64, c64, c64, c64, zgemv_c_neon_kernel>, 7, false, value_support::one
 };
 ///SVE
 constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_n_sve_spec {
-	&gemv_shim<false, r32, r32, r32, r32, sgemv_n_sve_kernel>, 14, true, true
+	&gemv_shim<false, r32, r32, r32, r32, sgemv_n_sve_kernel>, 14, true, value_support::one
 };
 constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_t_sve_spec {
-	&gemv_shim<true, r32, r32, r32, r32, sgemv_t_sve_kernel>, 14, false, true
+	&gemv_shim<true, r32, r32, r32, r32, sgemv_t_sve_kernel>, 14, false, value_support::all
+};
+constexpr gemv_kernel_spec<r32, r32, r32, r32> sgemv_t_sve_3col_spec {
+	&sgemv_t_sve_3col_kernel, 14, false, value_support::all
 };
 constexpr gemv_kernel_spec<r64, r64, r64, r64> dgemv_n_sve_spec {
-	&gemv_shim<false, r64, r64, r64, r64, dgemv_n_sve_kernel>, 14, true, true
+	&gemv_shim<false, r64, r64, r64, r64, dgemv_n_sve_kernel>, 14, true, value_support::one
 };
 constexpr gemv_kernel_spec<r64, r64, r64, r64> dgemv_t_sve_spec {
-	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_sve_kernel>, 14, false, true
+	&gemv_shim<true, r64, r64, r64, r64, dgemv_t_sve_kernel>, 14, false, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_n_sve_spec {
-	&gemv_shim<false, c32, c32, c32, c32, cgemv_n_sve_kernel>, 7, true, true
+	&gemv_shim<false, c32, c32, c32, c32, cgemv_n_sve_kernel>, 7, true, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_t_sve_spec {
-	&gemv_shim<true, c32, c32, c32, c32, cgemv_t_sve_kernel>, 7, false, true
+	&gemv_shim<true, c32, c32, c32, c32, cgemv_t_sve_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c32, c32, c32, c32> cgemv_c_sve_spec {
-	&gemv_shim<true, c32, c32, c32, c32, cgemv_c_sve_kernel>, 7, false, true
+	&gemv_shim<true, c32, c32, c32, c32, cgemv_c_sve_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_n_sve_spec {
-	&gemv_shim<false, c64, c64, c64, c64, zgemv_n_sve_kernel>, 7, true, true
+	&gemv_shim<false, c64, c64, c64, c64, zgemv_n_sve_kernel>, 7, true, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_t_sve_spec {
-	&gemv_shim<true, c64, c64, c64, c64, zgemv_t_sve_kernel>, 7, false, true
+	&gemv_shim<true, c64, c64, c64, c64, zgemv_t_sve_kernel>, 7, false, value_support::one
 };
 constexpr gemv_kernel_spec<c64, c64, c64, c64> zgemv_c_sve_spec {
-	&gemv_shim<true, c64, c64, c64, c64, zgemv_c_sve_kernel>, 7, false, true
+	&gemv_shim<true, c64, c64, c64, c64, zgemv_c_sve_kernel>, 7, false, value_support::one
 };
 
 template<typename AType, typename BType, typename CType, typename ScalarType, typename ArchitectureSpec>
 constexpr gemv_kernel_spec<AType, BType, CType, ScalarType> gemv_n_fallback_spec {
-	&gemv_a_strd_first<false, ArchitectureSpec, AType, BType, CType, ScalarType>, 1, true, false
+	&gemv_a_strd_first<false, ArchitectureSpec, AType, BType, CType, ScalarType>, 1, true, value_support::not_zero
 };
 
 template<typename AType, typename CType, typename ArchitectureSpec>
 constexpr gemv_kernel_spec<AType, bf16, CType, r32> gemv_n_fallback_spec<AType, bf16, CType, r32, ArchitectureSpec> {
-	&gemv_a_strd_first<false, ArchitectureSpec, AType, bf16, CType, r32>, 1, false, false
+	&gemv_a_strd_first<false, ArchitectureSpec, AType, bf16, CType, r32>, 1, false, value_support::not_zero
 };
 
 template<bool IsConj, typename AType, typename BType, typename CType, typename ScalarType, typename ArchitectureSpec>
 constexpr gemv_kernel_spec<AType, BType, CType, ScalarType> gemv_t_fallback_spec {
-	&gemv_a_cntg_first<IsConj, ArchitectureSpec, AType, BType, CType, ScalarType>, 1, false, false
+	&gemv_a_cntg_first<IsConj, ArchitectureSpec, AType, BType, CType, ScalarType>, 1, false, value_support::not_zero
 };
 
 template<typename AMatrixType, typename BMatrixType, typename CMatrixType, typename ScalarType>
@@ -424,6 +431,25 @@ auto get_gemv_neon_kernel(const ProblemContext& pctx, kernel_inttype max_threads
 	return get_gemv_fallback_spec(pctx);
 }
 
+PERFLIBS_LINALG_INLINE
+bool prefer_sgemv_t_sve_3col(kernel_inttype reduction_len, kernel_inttype output_count,
+                             kernel_inttype lda, kernel_inttype incy) {
+	// Exclude short and long reductions.
+	constexpr kernel_inttype minimum_reduction_len = 64;
+	constexpr kernel_inttype maximum_reduction_len = 8192;
+	// Exclude shapes with both dimensions large.
+	constexpr kernel_inttype maximum_shorter_dimension = 2048;
+	// Exclude small problems.
+	constexpr kernel_inttype minimum_elements = 512 * 512;
+
+	// Prefer packed matrices and unit-stride outputs.
+	return lda == reduction_len && incy == 1 &&
+	       reduction_len >= minimum_reduction_len &&
+	       reduction_len <= maximum_reduction_len &&
+	       min(reduction_len, output_count) <= maximum_shorter_dimension &&
+	       output_count >= iround_div(minimum_elements, reduction_len);
+}
+
 template <typename ProblemContext>
 PERFLIBS_LINALG_INLINE
 gemv_problem_kernel_spec_t<typename ProblemContext::a_matrix_type, typename ProblemContext::b_matrix_type,
@@ -445,6 +471,10 @@ get_gemv_sve_kernel(const ProblemContext& pctx, kernel_inttype max_threads) {
 	          && std::is_same_v<c_data_type, r32>) {
 		if (gemv_incx(pctx) == 1 && supported_incy) {
 			if (is_cntg_contig(pctx.a)) {
+				if (prefer_sgemv_t_sve_3col(pctx.a.cntg(), pctx.a.strd(),
+				                            pctx.a.strd_step(), incy)) {
+					return sgemv_t_sve_3col_spec;
+				}
 				return sgemv_t_sve_spec;
 			}
 			else {

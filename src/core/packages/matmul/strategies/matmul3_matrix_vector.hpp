@@ -20,12 +20,12 @@ namespace perflibs::linalg::matmul {
 template<typename GemvKernel>
 class gemv_kernel_exec {
 	GemvKernel kernel_;
-	bool       apply_beta_;
+	value_support beta_support_;
 public:
 	PERFLIBS_LINALG_INLINE
-	gemv_kernel_exec(GemvKernel kernel, bool apply_beta)
-	:	kernel_     { kernel     }
-	,	apply_beta_ { apply_beta }
+	gemv_kernel_exec(GemvKernel kernel, value_support beta_support)
+	:	kernel_       { kernel }
+	,	beta_support_ { beta_support }
 	{	}
 
 	template <typename AType, typename BType, typename CType, typename ScalarType>
@@ -37,11 +37,11 @@ public:
 		PERFLIBS_ASSERT(b.strd() == 1,        "b must be vector");
 		PERFLIBS_ASSERT(c.strd() == 1,        "c must be vector");
 
-		if(beta == zero<ScalarType>) {
+		if(beta == zero<ScalarType> && beta_support_ != value_support::all) {
 			set(beta, c);
 			beta = one<ScalarType>;
 		}
-		else if(apply_beta_ && beta != one<ScalarType>) {
+		else if(beta != one<ScalarType> && beta_support_ == value_support::one) {
 			scale(beta, c);
 			beta = one<ScalarType>;
 		}
@@ -95,7 +95,7 @@ public:
 			 * get its own chunk of the destination vector
 			 */
 			parallelize      { general_parallel_strat, a_strd, spec.max_threads, spec.kernel.num_cols,
-			gemv_kernel_exec { spec.kernel.gemv_kernel, spec.kernel.apply_beta } };
+			gemv_kernel_exec { spec.kernel.gemv_kernel, spec.kernel.beta_support } };
 
 		if(spec.kernel.scale_b) {
 			// Replace the user's B with an internal scaled copy.

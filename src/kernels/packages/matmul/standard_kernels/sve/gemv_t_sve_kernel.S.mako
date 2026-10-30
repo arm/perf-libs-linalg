@@ -68,11 +68,11 @@ A_ADDR   .req x2  // The address of the current row, to be used for loads
 ORIG_LDA .req x10
 
 // Req scratch registers
-SCRATCH_0_z .req z1
-SCRATCH_0_v .req v1
-SCRATCH_0_s .req s1
-SCRATCH_0_d .req d1
-SCRATCH_0_q .req q1
+SCRATCH_0_z .req z2
+SCRATCH_0_v .req v2
+SCRATCH_0_s .req s2
+SCRATCH_0_d .req d2
+SCRATCH_0_q .req q2
 ISCRATCH_0 .req x5
 ISCRATCH_1 .req x12
 
@@ -112,12 +112,16 @@ ACC_REG_${r}_q .req q${6 + NUM_PRELOAD + r}
 % endfor
 
 <%def name="gemv(p, is_complex, conjugate=False)">
+<% native_beta = p == "s" and not is_complex %>
 
 ALPHA_z .req z0
 ALPHA_v .req v0
 ALPHA_s .req s0
 ALPHA_d .req d0
 ALPHA_q .req q0
+% if native_beta:
+BETA .req s1
+% endif
 
 ## neonldp is the SIMD & FP register used for the given type, mainly used for
 ## ldrs.
@@ -192,7 +196,21 @@ else:
 ## with some unroll depth (in the case of original_func_name_0). Think of it like
 ## a name stack.
 ## TODO: Implement an explicit name stack in Mako.
-<% original_func_name_0 = func_name %>
+<% entry_name = func_name %>
+% if native_beta:
+  fcmp BETA, #0.0
+  b.eq .L${entry_name}_beta0_entry
+  fmov SCRATCH_0_s, #1.0
+  fcmp BETA, SCRATCH_0_s
+  b.ne .L${entry_name}_beta_general_entry
+% endif
+
+<% beta_paths = (("one", ""), ("zero", "_beta0"), ("general", "_beta_general")) if native_beta else (("one", ""),) %>
+% for beta_mode, suffix in beta_paths:
+<% original_func_name_0 = entry_name + suffix %>
+% if native_beta:
+.L${original_func_name_0}_entry:
+% endif
 % for NUM_COLUMNS in NUM_COLUMN_PROGRESSION:
     <% func_name = original_func_name_0 + "_columns_" + str(NUM_COLUMNS) %>
 
@@ -301,13 +319,21 @@ else:
       faddv ACC_REG_${c}_${p}, p1, ACC_REG_${c}_z.${p}
     % endif
 
-      // Load & add to Y
+    % if native_beta and beta_mode == "zero":
+      // Preserve signed-zero behaviour using beta as the addend; do not read Y.
+      fmadd SCRATCH_0_s, ACC_REG_${c}_s, ALPHA_s, BETA
+    % else:
       ldr SCRATCH_0_${neonldp}, [Y]
+      % if native_beta and beta_mode == "general":
+      // Keep beta scaling separate from the FMA, as in the driver.
+      fmul SCRATCH_0_s, BETA, SCRATCH_0_s
+      % endif
     % if is_complex:
       fcmla SCRATCH_0_z.${p}, p1/m, ACC_REG_${c}_z.${p}, ALPHA_z.${p}, #0  // real
       fcmla SCRATCH_0_z.${p}, p1/m, ACC_REG_${c}_z.${p}, ALPHA_z.${p}, #90 // imag
     % else:
       fmla SCRATCH_0_${p}, ACC_REG_${c}_${p}, ALPHA_v.${p}[0]
+    % endif
     % endif
       str SCRATCH_0_${neonldp}, [Y]
 
@@ -341,8 +367,13 @@ else:
 
 % endfor ## % for NUM_COLUMNS in NUM_COLUMN_PROGRESSION:
 
-## Reset func_name (since we changed it for the loop)
-<% func_name = original_func_name_0 %>
+% if native_beta:
+  b .L${entry_name}_cleanup
+% endif
+% endfor ## beta_paths
+
+## Reset func_name (since we changed it for the loops)
+<% func_name = entry_name %>
 
 .L${func_name}_cleanup:
   ldp  d8,  d9, [sp, #16]
@@ -362,6 +393,9 @@ else:
 .unreq ALPHA_s
 .unreq ALPHA_d
 .unreq ALPHA_q
+% if native_beta:
+.unreq BETA
+% endif
 
   ${epilogue(func_name)}
 
