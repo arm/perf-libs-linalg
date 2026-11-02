@@ -209,13 +209,13 @@
 	},
 	{
 		"kernel_type": "interleaved",
-		"c_type": "bf16",
-		"symbol": "bgemm_fp32_fmla_acle_bf16exten",
+		"c_type": "r16",
+		"symbol": "hgemm_fp32_fmla_acle",
 		"cntg_unroll": 1,
 		"apply_beta": "all",
 		"extensions": "neon",
 		"a_interleave_spec": {
-			"datatype": "bf16",
+			"datatype": "r16",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 12,
@@ -224,7 +224,7 @@
 			"split_factor": 0
 		},
 		"b_interleave_spec": {
-			"datatype": "bf16",
+			"datatype": "r16",
 			"strd_unroll": 1,
 			"cntg_interleave": 1,
 			"strd_interleave": 8,

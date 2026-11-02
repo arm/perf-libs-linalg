@@ -7,14 +7,10 @@
 #define PERFLIBS_LINALG_BLAS_INTERFACES_GEMM_HPP
 
 #include "packages/matmul/strategies.hpp"
-#include "packages/matmul/strategies/backstop.hpp"
 
 #include "matrix/matrix.hpp"
 #include "framework/linalg_util.hpp"
 #include "framework/xerbla.hpp"
-
-#include "detect/cpu_info.hpp"
-#include "detect/os.hpp"
 
 #include <string_view>
 
@@ -136,16 +132,6 @@ void gemm(
 		},
 		ArchitectureSpec { machine::get_system_unsafe() }
 	};
-
-	if constexpr(std::is_same_v<AType, half>) {
-		const auto features = perflibs::machine::cpu_info::get_cpu_features();
-		// We don't have a valid optimized HGEMM kernel for Arm64EC
-		// so use the backstop that promotes to FP32
-		if (os::windows_arm64ec || !features.fphp) {
-			matmul::backstop{}(pctx);
-			return;
-		}
-	}
 
 	matmul::compute(pctx);
 }

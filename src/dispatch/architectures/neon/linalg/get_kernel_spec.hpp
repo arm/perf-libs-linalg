@@ -39,7 +39,12 @@ PERFLIBS_LINALG_INLINE
 auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag>, const problem_context<ProblemContextBase, ArchitectureSpec>& pctx, System)
     requires std::same_as<compute_precision_t<problem_context<ProblemContextBase, ArchitectureSpec>>, r16>{
 
-	return interleave_matmul_kernel_specs< interleave_matmul_kernel_spec<r16, r16, r16>, ArchitectureSpec> [ hgemm_8_2_kernel_idx ];
+	// HGEMM assembly uses registers unavailable on Arm64EC.
+	if (!os::windows_arm64ec && machine::cpu_info::get_cpu_features().fphp) {
+		return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<r16, r16, r16>, ArchitectureSpec>[hgemm_8_2_kernel_idx];
+	}
+
+	return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<r16, r16, r16>, ArchitectureSpec>[hgemm_fp32_fmla_acle_idx];
 }
 
 template<typename StrategyTag, typename ProblemContextBase, typename ArchitectureSpec, typename System>

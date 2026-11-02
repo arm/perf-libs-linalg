@@ -45,30 +45,32 @@ auto load_4s(const bf16 *p) {
 	);
 }
 
-template<bool BFloat16Extensions>
 inline __attribute__((always_inline))
-void store_4s(bf16 *ptr, auto v) {
-	if constexpr(BFloat16Extensions) {
-		vst1_bf16(ptr, vcvt_bf16_f32(v));
-	}
-	else {
-		uint16x4_t bf16 = vshrn_n_u32(vreinterpretq_u32_f32(v), 16);
-		vst1_u16(reinterpret_cast<std::uint16_t *>(ptr), bf16);
-	}
+auto load_4s(const r16 *p) {
+	return vcvt_f32_f16(vld1_f16(p));
 }
 
-template<bool BFloat16Extensions>
+inline __attribute__((always_inline))
+void store_4s(r16 *ptr, auto v) {
+	vst1_f16(ptr, vcvt_f16_f32(v));
+}
+
+inline __attribute__((always_inline))
+void store_4s(bf16 *ptr, auto v) {
+	uint16x4_t bf16 = vshrn_n_u32(vreinterpretq_u32_f32(v), 16);
+	vst1_u16(reinterpret_cast<std::uint16_t *>(ptr), bf16);
+}
+
 inline __attribute__((always_inline))
 void store_4s(r32 *ptr, auto v) {
 	vst1q_f32(ptr, v);
 }
 
-template<bool BFloat16Extensions>
 inline __attribute__((always_inline))
 auto store_n_of_4(std::size_t n, float32x4_t out, r32 *ptr)  {
 	switch(n) {
 		default:
-			store_4s<BFloat16Extensions>(ptr, out);
+			store_4s(ptr, out);
 			break;
 
 		case 3: vst1q_lane_f32(ptr+2, out, 2);
@@ -79,37 +81,50 @@ auto store_n_of_4(std::size_t n, float32x4_t out, r32 *ptr)  {
 	}
 }
 
-template<bool BFloat16Extensions>
 inline __attribute__((always_inline))
 auto store_n_of_4(std::size_t n, float32x4_t out, bf16 *ptr)  {
-	if constexpr(BFloat16Extensions) {
-		auto out_bf16x4 = vcvt_bf16_f32(out);
-		switch(n) {
-			default:
-				vst1_bf16(ptr, out_bf16x4);
-				break;
+	uint16x8_t out_u16 = vreinterpretq_u16_f32(out);
+	switch(n) {
+		default:
+			store_4s(ptr, out);
+			break;
 
-			case 3: vst1_lane_bf16(ptr+2, out_bf16x4, 2);
-			case 2: vst1_lane_bf16(ptr+1, out_bf16x4, 1);
-			case 1: vst1_lane_bf16(ptr+0, out_bf16x4, 0);
-			case 0:
-				break;
-		}
+		case 3: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+2), out_u16, 5);
+		case 2: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+1), out_u16, 3);
+		case 1: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+0), out_u16, 1);
+		case 0:
+			break;
 	}
-	else {
-		uint16x8_t out_u16 = vreinterpretq_u16_f32(out);
-		switch(n) {
-			default:
-				store_4s<BFloat16Extensions>(ptr, out);
-				break;
+}
 
-			case 3: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+2), out_u16, 5);
-			case 2: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+1), out_u16, 3);
-			case 1: vst1q_lane_u16(reinterpret_cast<std::uint16_t*>(ptr+0), out_u16, 1);
-			case 0:
-				break;
-		}
+inline __attribute__((always_inline))
+auto store_n_of_4(std::size_t n, float32x4_t out, r16 *ptr) {
+	const auto values = vcvt_f16_f32(out);
+	switch (n) {
+		default:
+			store_4s(ptr, out);
+			break;
+		case 3: vst1_lane_f16(ptr + 2, values, 2); [[fallthrough]];
+		case 2: vst1_lane_f16(ptr + 1, values, 1); [[fallthrough]];
+		case 1: vst1_lane_f16(ptr, values, 0); [[fallthrough]];
+		case 0:
+			break;
 	}
+}
+
+inline __attribute__((always_inline))
+auto load_n_of_4(std::size_t n, const r16 *ptr) {
+	float16x4_t out = vreinterpret_f16_u16(vdup_n_u16(0));
+	switch (n) {
+		default:
+			return load_4s(ptr);
+		case 3: out = vld1_lane_f16(ptr + 2, out, 2); [[fallthrough]];
+		case 2: out = vld1_lane_f16(ptr + 1, out, 1); [[fallthrough]];
+		case 1: out = vld1_lane_f16(ptr, out, 0); [[fallthrough]];
+		case 0:
+			break;
+	}
+	return vcvt_f32_f16(out);
 }
 
 inline __attribute__((always_inline))
@@ -145,7 +160,6 @@ auto load_n_of_4(std::size_t n, const bf16 *ptr)  {
 	return vreinterpretq_f32_u16(out);
 }
 
-template<bool BFloat16Extensions>
 inline void store_col(auto *c_col, std::size_t mblk, float32x4_t acc0, float32x4_t acc1, float32x4_t acc2, float alpha, float beta) {
 	float32x4_t c0, c1, c2;
 	auto *c1_col = c_col + std::min(4zu, mblk);
@@ -179,15 +193,11 @@ inline void store_col(auto *c_col, std::size_t mblk, float32x4_t acc0, float32x4
 		c2 = vaddq_f32(c2, acc2);
 	}
 
-	store_n_of_4<BFloat16Extensions>(mblk,                 c0, c_col);
-	store_n_of_4<BFloat16Extensions>(max(4zu, mblk) - 4zu, c1, c1_col);
-	store_n_of_4<BFloat16Extensions>(max(8zu, mblk) - 8zu, c2, c2_col);
+	store_n_of_4(mblk,                 c0, c_col);
+	store_n_of_4(max(4zu, mblk) - 4zu, c1, c1_col);
+	store_n_of_4(max(8zu, mblk) - 8zu, c2, c2_col);
 }
 
-} //namespace <anon>
-
-
-template<bool BFloat16Extensions>
 void gemm_fp32_fmla_12x8_acle(const auto *a, const auto *b, auto *c,
 		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc,
 		float alpha, float beta) {
@@ -263,31 +273,33 @@ void gemm_fp32_fmla_12x8_acle(const auto *a, const auto *b, auto *c,
 
 			for (std::size_t col = 0; col < nblk; ++col) {
 				auto *c_col = c + (b_row_idx + col) * ldcs + a_row_idx;
-				store_col<BFloat16Extensions>(c_col, mblk, acc[col][0], acc[col][1], acc[col][2], alpha, beta);
+				store_col(c_col, mblk, acc[col][0], acc[col][1], acc[col][2], alpha, beta);
 			}
 		}
 	}
 }
 
+} //namespace <anon>
+
 extern "C" {
 	void sgemm_vanilla_big_acle(const r32 *a, const r32 *b, r32 *c,
 		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc, r32 alpha, r32 beta) {
-		return gemm_fp32_fmla_12x8_acle<false>(a, b, c, k, m, n, ldc, alpha, beta);
+		return gemm_fp32_fmla_12x8_acle(a, b, c, k, m, n, ldc, alpha, beta);
 	}
 
 	void sbgemm_fp32_fmla_acle(const bf16 *a, const bf16 *b, r32 *c,
 		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc, r32 alpha, r32 beta) {
-		return gemm_fp32_fmla_12x8_acle<false>(a, b, c, k, m, n, ldc, alpha, beta);
+		return gemm_fp32_fmla_12x8_acle(a, b, c, k, m, n, ldc, alpha, beta);
 	}
 
 	void bgemm_fp32_fmla_acle_nobf16exten(const bf16 *a, const bf16 *b, bf16 *c,
 		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc, bf16 alpha, bf16 beta) {
-		return gemm_fp32_fmla_12x8_acle<false>(a, b, c, k, m, n, ldc, alpha, beta);
+		return gemm_fp32_fmla_12x8_acle(a, b, c, k, m, n, ldc, alpha, beta);
 	}
 
-	void bgemm_fp32_fmla_acle_bf16exten(const bf16 *a, const bf16 *b, bf16 *c,
-		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc, bf16 alpha, bf16 beta) {
-		return gemm_fp32_fmla_12x8_acle<true>(a, b, c, k, m, n, ldc, alpha, beta);
+	void hgemm_fp32_fmla_acle(const r16 *a, const r16 *b, r16 *c,
+		kernel_inttype k, kernel_inttype m, kernel_inttype n, kernel_inttype ldc, r16 alpha, r16 beta) {
+		return gemm_fp32_fmla_12x8_acle(a, b, c, k, m, n, ldc, alpha, beta);
 	}
 
 } //extern "C"
