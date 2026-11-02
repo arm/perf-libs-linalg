@@ -53,8 +53,8 @@ def resolve_interleave(
 
 @dataclass
 class InterleaveKernelSpec:
-    strd_interleave: int
-    cntg_interleave: int = 1
+    strd_interleave: InterleaveValue
+    cntg_interleave: InterleaveValue = 1
     cntg_interleave_step: int = 1
     strd_interleave_step: int = 1
     split_factor: int = 0
@@ -62,6 +62,7 @@ class InterleaveKernelSpec:
     matrix_req: str = "matrix_requirement::cntg_one"
     kernel: str = "nullptr"
     implementation: str | None = None
+    extensions: str = "neon"
 
     def implementation_function(self) -> str:
         return {
@@ -90,13 +91,22 @@ class InterleaveKernelSpec:
             strd_interleave = resolve_interleave(
                 requirement["strd_interleave"], data_type, vector_length_bits
             )
+            candidate_bits = vector_length_bits if self.extensions == "sve" else 128
             if (
-                self.cntg_interleave == cntg_interleave
-                and self.strd_interleave == strd_interleave
+                resolve_interleave(self.cntg_interleave, data_type, candidate_bits)
+                == cntg_interleave
+                and resolve_interleave(self.strd_interleave, data_type, candidate_bits)
+                == strd_interleave
             ):
                 return True
 
         return False
+
+    def interleave_cpp(self, value: InterleaveValue, data_type: str) -> str:
+        if isinstance(value, int):
+            return f"{value}_ki"
+        multiplier = value["vector_length_multiplier"]
+        return f"vl<extensions::{self.extensions}, {data_type}, {multiplier}>"
 
     def to_cpp(self, arguments: tuple[str, ...]) -> str:
         kernel = self.kernel
@@ -108,8 +118,8 @@ class InterleaveKernelSpec:
         kernel = kernel if kernel == "nullptr" else f"&{kernel}"
 
         values = (
-            f"{self.cntg_interleave}_ki",
-            f"{self.strd_interleave}_ki",
+            self.interleave_cpp(self.cntg_interleave, arguments[2]),
+            self.interleave_cpp(self.strd_interleave, arguments[2]),
             f"{self.cntg_interleave_step}_ki",
             f"{self.strd_interleave_step}_ki",
             f"{self.split_factor}_ki",
@@ -163,6 +173,16 @@ class InterleaveKernelTable:
             entries=tuple(InterleaveKernelSpec(**entry) for entry in entries),
         )
 
+    def array_cpp(self, entries: tuple[InterleaveKernelSpec, ...], indent: int = 0) -> str:
+        if not entries:
+            return (
+                f"std::array<interleave_kernel_spec<"
+                f"{self.src_data_type}, {self.dst_data_type}>, 0> {{ }}"
+            )
+        padding = " " * indent
+        elements = "\n".join(padding + entry.to_cpp(self.arguments) for entry in entries)
+        return f"std::array {{\n{elements}\n{padding}}}"
+
     def to_cpp(self) -> str:
         template_declaration = ", ".join(self.template_parameters)
         arguments = ", ".join(self.arguments)
@@ -177,14 +197,18 @@ class InterleaveKernelTable:
             f"constexpr auto {target} = "
         )
 
-        if not self.entries:
-            return (
-                f"{declaration}std::array<interleave_kernel_spec<"
-                f"{self.src_data_type}, {self.dst_data_type}>, 0> {{ }};"
-            )
-
-        entries = "\n".join(entry.to_cpp(self.arguments) for entry in self.entries)
-        return f"{declaration}std::array {{\n{entries}\n}};"
+        baseline_entries = tuple(
+            entry for entry in self.entries if entry.extensions == "neon"
+        )
+        if len(baseline_entries) == len(self.entries):
+            return f"{declaration}{self.array_cpp(self.entries)};"
+        return f"""{declaration}[] {{
+    if constexpr (spec::is_sve_v<ArchitectureSpec>) {{
+        return {self.array_cpp(self.entries, indent=8)};
+    }} else {{
+        return {self.array_cpp(baseline_entries, indent=8)};
+    }}
+}}();"""
 
 
 def parse_tables(data: dict[str, object]) -> list[InterleaveKernelTable]:
@@ -201,7 +225,7 @@ def pruned_tables(
     data: dict[str, object],
     matmul_data: list[dict[str, object]],
 ) -> tuple[InterleaveKernelTable, ...]:
-    """Return the interleave tables reachable by any matmul kernel."""
+    """Keep compatible implementations in registry order for each required layout."""
     tables = parse_tables(data)
     primary_table = next(table for table in tables if table.kind == "primary")
     specializations = {
@@ -214,29 +238,32 @@ def pruned_tables(
         for key in ("a_interleave_spec", "b_interleave_spec")
     )
 
-    for request in data[FALLBACK_INSTANTIATIONS_KEY]:
-        flags = flags_expression(request["flags"])
+    requests = dict.fromkeys(
+        (flags_expression(request["flags"]), data_type, data_type, "ArchitectureSpec")
+        for request in data[FALLBACK_INSTANTIATIONS_KEY]
+        for data_type in request["data_types"]
+    )
+    requests.update(dict.fromkeys(specializations))
 
-        for data_type in request["data_types"]:
-            arguments = (flags, data_type, data_type, "ArchitectureSpec")
-            source_table = specializations.get(arguments, primary_table)
-            entries = tuple(
-                entry
-                for entry in source_table.entries
-                if any(
-                    entry.matches_shape(data_type, requirement)
-                    for requirement in requirements
+    for arguments in requests:
+        source_table = specializations.get(arguments, primary_table)
+        entries = tuple(
+            entry
+            for entry in source_table.entries
+            if any(
+                entry.matches_shape(arguments[2], requirement)
+                for requirement in requirements
+            )
+        )
+        if entries:
+            result.append(
+                replace(
+                    source_table,
+                    kind="specialization",
+                    arguments=arguments,
+                    entries=entries,
                 )
             )
-            if entries:
-                result.append(
-                    replace(
-                        source_table,
-                        kind="specialization",
-                        arguments=arguments,
-                        entries=entries,
-                    )
-                )
 
     return tuple(result)
 
@@ -253,6 +280,7 @@ def generate_cpp_from_data(
 #define PERFLIBS_LINALG_KERNEL_SPECS_INTERLEAVE_KERNELS_HPP
 
 #include "kernel_specs/interleave_kernel_spec.hpp"
+#include "spec/generic_machine_spec.hpp"
 
 namespace perflibs::linalg {{
 
@@ -260,7 +288,7 @@ namespace perflibs::linalg {{
 
 template<kernel_inttype Flags, typename ProblemContext, typename System, typename... Types>
 PERFLIBS_LINALG_INLINE
-auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System) {{
+const auto& get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System) {{
     return interleave_kernel_specs<Flags, Types..., typename ProblemContext::architecture_spec_type>;
 }}
 
@@ -295,7 +323,7 @@ def generate_fallback_instantiations(
         if entry.is_fallback()
     )
 
-    generated_instantiations = "\n\n".join(instantiations)
+    generated_instantiations = "\n\n".join(dict.fromkeys(instantiations))
     return f"""#include "{architecture}/linalg/machine_spec.hpp"
 
 #include "perflibs_complex.hpp"

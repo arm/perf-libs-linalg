@@ -46,6 +46,8 @@ perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s2;
 perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s4;
 perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s6;
 perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s8;
+perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s12;
+perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s16;
 perflibs::linalg::interleave_kernel_legacy_f<r32, r32> n_interleave_kernel_s20;
 
 perflibs::linalg::interleave_kernel_legacy_f<r32, r32> t_interleave_kernel_s2;
@@ -230,7 +232,7 @@ struct interleave_kernel_specs_tag { };
 
 template<kernel_inttype Flags, typename ProblemContext, typename System, typename... Types>
 PERFLIBS_LINALG_INLINE
-auto get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System);
+const auto& get_specs(interleave_kernel_specs_tag<Flags, Types...>, const ProblemContext&, System);
 
 template<typename ProblemContext>
 PERFLIBS_LINALG_INLINE

@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Reduce build times and library size.
 - Improve instruction scheduling in the SVE complex GEMM kernels.
+- Improve FP32 GEMM matrix packing performance.
 - Improve SVE transposed GEMV performance with strided output.
 - Improve IMATADD, OMATADD, IMATCOPY and OMATCOPY performance.
 - Improve Neon performance for CROT and ZROT.

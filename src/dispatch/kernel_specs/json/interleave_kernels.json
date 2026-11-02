@@ -326,6 +326,58 @@
   ],
   "specialization<kernel_inttype(interleave_flags::None),r32,r32,ArchitectureSpec>": [
     {
+      "strd_interleave": 16,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s16>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_physical_packed_dst_shim<vl<extensions::sve, r32, 2>, &interleave_2vl_sve_kernel_s>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 9,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "vector_size_bits": 512,
+      "kernel": "n_interleave_physical_packed_dst_shim<intval<9>, &interleave_9s_sve_512_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, r32, 2>, &tran_interleave_2vl_sve_kernel_s>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 9,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 512,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<9>, &tran_interleave_9s_sve_512_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 12,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 256,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<12>, &tran_interleave_12s_sve_256_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 12,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 512,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<12>, &tran_interleave_12s_sve_512_kernel>"
+    },
+    {
       "strd_interleave": 2,
       "split_factor": 0,
       "vector_size_bits": 0,
@@ -365,14 +417,7 @@
       "split_factor": 0,
       "vector_size_bits": 0,
       "matrix_req": "matrix_requirement::cntg_one",
-      "implementation": "fallback"
-    },
-    {
-      "strd_interleave": 16,
-      "split_factor": 0,
-      "vector_size_bits": 0,
-      "matrix_req": "matrix_requirement::cntg_one",
-      "implementation": "fallback"
+      "kernel": "n_interleave_shim<&n_interleave_kernel_s12>"
     },
     {
       "strd_interleave": 2,
@@ -425,6 +470,66 @@
     }
   ],
   "specialization<kernel_inttype(interleave_flags::None),r64,r64,ArchitectureSpec>": [
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_physical_packed_dst_shim<vl<extensions::sve, r64, 2>, &interleave_2vl_sve_kernel_d>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 3},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_physical_packed_dst_shim<vl<extensions::sve, r64, 3>, &interleave_3vl_sve_kernel_d>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 9,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "vector_size_bits": 512,
+      "kernel": "n_interleave_physical_packed_dst_shim<intval<9>, &interleave_9d_sve_512_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, r64, 2>, &tran_interleave_2vl_sve_kernel_d>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 3},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, r64, 3>, &tran_interleave_3vl_sve_kernel_d>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 8,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 256,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<8>, &tran_interleave_8d_sve_256_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 8,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 512,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<8>, &tran_interleave_8d_sve_512_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 9,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 512,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<9>, &tran_interleave_9d_sve_512_kernel>"
+    },
     {
       "strd_interleave": 2,
       "split_factor": 0,
@@ -554,6 +659,34 @@
   ],
   "specialization<kernel_inttype(interleave_flags::None),c32,c32,ArchitectureSpec>": [
     {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_physical_packed_dst_shim<vl<extensions::sve, c32, 2>, interleave_2vl_sve_kernel_c32>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 3},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::cntg_one",
+      "kernel": "n_interleave_physical_packed_dst_shim<vl<extensions::sve, c32, 3>, interleave_3vl_sve_kernel_c32>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 2},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, c32, 2>, tran_interleave_2vl_sve_kernel_c32>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 3},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, c32, 3>, tran_interleave_3vl_sve_kernel_c32>"
+    },
+    {
       "strd_interleave": 2,
       "split_factor": 0,
       "vector_size_bits": 0,
@@ -653,6 +786,29 @@
     }
   ],
   "specialization<kernel_inttype(interleave_flags::None),c64,c64,ArchitectureSpec>": [
+    {
+      "extensions": "sve",
+      "strd_interleave": {"vector_length_multiplier": 4},
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "kernel": "t_interleave_physical_packed_dst_shim<vl<extensions::sve, c64, 4>, &tran_interleave_4vl_sve_kernel_z>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 5,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 256,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<5>, &tran_interleave_5z_sve_256_kernel>"
+    },
+    {
+      "extensions": "sve",
+      "strd_interleave": 5,
+      "cntg_interleave_step": 0,
+      "matrix_req": "matrix_requirement::strd_one",
+      "vector_size_bits": 512,
+      "kernel": "t_interleave_physical_packed_dst_shim<intval<5>, &tran_interleave_5z_sve_512_kernel>"
+    },
     {
       "strd_interleave": 2,
       "split_factor": 0,
