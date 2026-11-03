@@ -14,6 +14,17 @@ https://github.com/Reference-LAPACK/lapack
 License: BSD-3-Clause-Open-MPI. See `netlib/LICENSE` and
 `LICENSES/BSD-3-Clause-Open-MPI.txt`.
 
+## LAPACKE
+
+This project includes LAPACKE from Reference LAPACK.
+
+Version 3.12.1 from https://github.com/Reference-LAPACK/lapack
+(tag commit 6ec7f2bc4ecf4c4a93496aa2fa519575bc0e39ca).
+
+Copyright (c) 2012, Intel Corp.
+
+License: BSD-3-Clause. See `LICENSES/BSD-3-Clause.txt`.
+
 ## Arm Compute Library
 
 Files: `src/core/framework/2d_split.hpp`

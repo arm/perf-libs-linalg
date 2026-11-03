@@ -21,8 +21,8 @@ It provides a full BLAS/CBLAS interface and a subset of LAPACK routines, using s
 - Linux and macOS on AArch64 are supported build/test platforms.
 - Windows AArch64 support is experimental and assumes LLVM/Clang in a [wenv](https://gitlab.com/Linaro/windowsonarm/wenv)/MSYS2-style environment.
 - BLAS, CBLAS, and selected LAPACK routines are provided by default.
-- Enable `LINALG_LAPACK_FALLBACK` for full LAPACK support.
-- LAPACKE and Fortran modules are not currently provided.
+- Enable `LINALG_LAPACK_FALLBACK` for full LAPACK and LAPACKE support.
+- Fortran modules are not currently provided.
 
 ## Quick Start
 
@@ -41,7 +41,7 @@ This builds the `pl_linalg` target.
 - `BUILD_SHARED_LIBS=ON|OFF`: builds shared or static libraries where supported. The default is `OFF`.
 - `LINALG_INTEGER_MODEL=lp64|ilp64`: selects the public integer ABI. The default is `lp64`.
 - `LINALG_THREADING_MODEL=serial|openmp`: selects the threading backend. The default is `serial`.
-- `LINALG_LAPACK_FALLBACK=ON|OFF`: adds reference LAPACK routines not otherwise provided. The default is `OFF`.
+- `LINALG_LAPACK_FALLBACK=ON|OFF`: enables full LAPACK and LAPACKE support. The default is `OFF`.
 - `LINALG_BUILD_BENCHMARKS=ON|OFF`: builds `problem_context_bench`. The default is `OFF`.
 - `LINALG_ENABLE_TUNING_OVERRIDES=ON|OFF`: enables JSON tuning overrides. The default is `OFF`.
 - `LINALG_SANITIZER=none|address`: selects sanitizer instrumentation. The default is `none`.
@@ -62,8 +62,8 @@ cmake --build build-openmp --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-This runs the Netlib BLAS and CBLAS test suites. Builds with
-`LINALG_LAPACK_FALLBACK=ON` also run the upstream LAPACK test suite.
+This runs the Netlib BLAS and CBLAS test suites. With
+`LINALG_LAPACK_FALLBACK=ON`, it also runs the LAPACK tests and LAPACKE examples.
 
 ## Install
 

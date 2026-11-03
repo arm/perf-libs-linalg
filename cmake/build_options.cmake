@@ -20,7 +20,7 @@ if(NOT LINALG_SANITIZER MATCHES "^(none|address)$")
 endif()
 
 option(LINALG_ENABLE_TUNING_OVERRIDES "Enable runtime tuning parameter overrides" OFF)
-option(LINALG_LAPACK_FALLBACK "Provide reference LAPACK routines not implemented in this library" OFF)
+option(LINALG_LAPACK_FALLBACK "Add reference LAPACK routines and the LAPACKE interface" OFF)
 
 include(compile_options)
 

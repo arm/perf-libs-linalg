@@ -1,0 +1,61 @@
+diff --git a/LAPACKE/include/lapack.h b/LAPACKE/include/lapack.h.in
+rename from LAPACKE/include/lapack.h
+rename to LAPACKE/include/lapack.h.in
+--- a/LAPACKE/include/lapack.h
++++ b/LAPACKE/include/lapack.h.in
+@@ -5,9 +5,9 @@
+ *  Turn on HAVE_LAPACK_CONFIG_H to redefine C-LAPACK datatypes
+ */
+-#ifdef HAVE_LAPACK_CONFIG_H
+-#include "lapacke_config.h"
+-#endif
+-
+-#include "lapacke_mangling.h"
++#if defined(HAVE_LAPACK_CONFIG_H) || defined(_WIN32)
++@LAPACKE_CONFIG_HEADER@
++#endif
++
++@LAPACKE_MANGLING_HEADER@
+
+ #include <stdlib.h>
+@@ -86,5 +86,5 @@
+ /*----------------------------------------------------------------------------*/
+ #ifndef lapack_int
+-#if defined(LAPACK_ILP64)
++#if defined(LAPACK_ILP64) || defined(INTEGER64)
+ #define lapack_int        int64_t
+ #else
+@@ -97,5 +97,5 @@
+  */
+ #ifndef LAPACK_IFMT
+-#if defined(LAPACK_ILP64)
++#if defined(LAPACK_ILP64) || defined(INTEGER64)
+ #define LAPACK_IFMT       PRId64
+ #else
+diff --git a/LAPACKE/include/lapacke_config.h b/LAPACKE/include/lapacke_config.h
+--- a/LAPACKE/include/lapacke_config.h
++++ b/LAPACKE/include/lapacke_config.h
+@@ -46,5 +46,5 @@
+
+ #ifndef lapack_int
+-#if defined(LAPACK_ILP64)
++#if defined(LAPACK_ILP64) || defined(INTEGER64)
+ #define lapack_int        int64_t
+ #else
+@@ -57,5 +57,5 @@
+  */
+ #ifndef LAPACK_IFMT
+-#if defined(LAPACK_ILP64)
++#if defined(LAPACK_ILP64) || defined(INTEGER64)
+ #define LAPACK_IFMT       PRId64
+ #else
+@@ -69,4 +69,9 @@
+
+ #ifndef LAPACK_COMPLEX_CUSTOM
++
++#if defined(_WIN32) && !defined(LAPACK_COMPLEX_STRUCTURE) && \
++    !defined(LAPACK_COMPLEX_C99) && !defined(LAPACK_COMPLEX_CPP)
++#define LAPACK_COMPLEX_STRUCTURE
++#endif
+
+ #if defined(LAPACK_COMPLEX_STRUCTURE)

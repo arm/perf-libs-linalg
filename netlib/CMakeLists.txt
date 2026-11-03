@@ -64,6 +64,7 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cblas.cmake")
 
 if(LINALG_LAPACK_FALLBACK)
   add_subdirectory(lapack)
+  add_subdirectory(lapacke)
 endif()
 
 if(BUILD_TESTING)

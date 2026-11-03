@@ -15,6 +15,7 @@ set(LINALG_LAPACK_URL
   CACHE STRING "Reference LAPACK archive URL or local archive path")
 set(_lapack_patches
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-headers.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/lapacke-headers.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-empty-vectors.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-test-exclusions.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/blas-nrm2-infinity.patch"
