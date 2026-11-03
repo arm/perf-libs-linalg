@@ -4,21 +4,22 @@
  */
 
 #include "framework/linalg_util.hpp"
+#include "perflibs_util.hpp"
 
 #include <cstdint>
 #include <cstddef>
 
 extern "C" {
 
-void sme2_interleaved_nomerge_fp32_mopa_2VLx2VL(const float *const A, const float *const B, float *const C, const int M, const int N, const int K, int ldc, float alpha, float beta) {
+void sme2_interleaved_nomerge_fp32_mopa_2VLx2VL(const float *const A, const float *const B, float *const C, const kernel_inttype M, const kernel_inttype N, const kernel_inttype K, kernel_inttype ldc, float alpha, float beta) {
 
   struct KernelArgs {
     KernelArgs(
       const float *const B,
       const float *const A,
       float *const C,
-      const int K, const int N, const int M,
-      const int ldc,
+      const kernel_inttype K, const kernel_inttype N, const kernel_inttype M,
+      const kernel_inttype ldc,
 	float alpha, float beta)
 
       : A(A),
@@ -38,8 +39,8 @@ void sme2_interleaved_nomerge_fp32_mopa_2VLx2VL(const float *const A, const floa
     const float *const A;
     const float *const B;
     float *const C;
-    const long M, N, K;
-    const long ldcb;
+    const kernel_inttype M, N, K;
+    const kernel_inttype ldcb;
 
     const float alpha;
     const float beta;
@@ -62,8 +63,8 @@ void sme2_interleaved_nomerge_fp32_mopa_2VLx2VL(const float *const A, const floa
       "ptrue p0.b\n"
       ".inst 0x25207811  // ptrue pn9.b\n"
       "ldr x13, [%x[args], %[offsetof_K]]\n"
-      "ldr w11, [%x[args], %[offsetof_M]]\n"
-      "ldr w10, [%x[args], %[offsetof_N]]\n"
+      "ldr x11, [%x[args], %[offsetof_M]]\n"
+      "ldr x10, [%x[args], %[offsetof_N]]\n"
       "ldr x9, [%x[args], %[offsetof_A]]\n"
       "1:"  // M loop
       "ldr x28, [%x[args], %[offsetof_B]]\n"
