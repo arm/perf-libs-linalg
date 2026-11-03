@@ -7,6 +7,10 @@ add_subdirectory(kernels)
 add_subdirectory(dispatch)
 
 set_target_properties(pl_linalg PROPERTIES LINKER_LANGUAGE CXX)
+target_include_directories(pl_linalg PUBLIC
+  "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+)
+target_compile_definitions(pl_linalg PUBLIC ${LINALG_ABI_COMPILE_DEFINITIONS})
 target_link_options(pl_linalg PUBLIC ${LINALG_LINK_OPTIONS})
 target_link_libraries(pl_linalg
   PRIVATE
@@ -15,6 +19,4 @@ target_link_libraries(pl_linalg
     linalg_kernels
     linalg_dispatch
     linalg_netlib
-  INTERFACE
-    "$<BUILD_INTERFACE:linalg_core>"
 )

@@ -10,12 +10,10 @@
 #include <cstdio>
 #include <inttypes.h>
 
-#ifdef __ELF__
 // Convention is to weaken xerbla for testing/user override.
 extern "C" void FTN_SYMB(xerbla)(const char *srname, const pl_linalg_int_t *info,
                                  perflibs::fortran_charlen_t SRNAME_LEN)
                                  __attribute__((weak));
-#endif
 
 extern "C" void FTN_SYMB(xerbla)(const char *srname, const pl_linalg_int_t *info,
                                  perflibs::fortran_charlen_t SRNAME_LEN) {

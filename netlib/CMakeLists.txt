@@ -44,3 +44,10 @@ target_sources(linalg_netlib INTERFACE
     $<TARGET_OBJECTS:reference_blas_obj>
     $<TARGET_OBJECTS:netlib_upstream_obj>
 )
+
+include("${PROJECT_SOURCE_DIR}/cmake/dependencies/lapack.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cblas.cmake")
+
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()

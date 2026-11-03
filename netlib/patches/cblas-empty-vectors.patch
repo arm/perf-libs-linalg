@@ -1,0 +1,84 @@
+diff --git a/CBLAS/src/cblas_cgemv.c b/CBLAS/src/cblas_cgemv.c
+--- a/CBLAS/src/cblas_cgemv.c
++++ b/CBLAS/src/cblas_cgemv.c
+@@ -74,7 +74,7 @@
+          BETA[0]=     *( (const float *)  beta     );
+          BETA[1]= -(  *( (const float *)  beta+1 ) );
+          TA = 'N';
+-         if (M > 0)
++         if (M > 0 && N > 0)
+          {
+             n = M << 1;
+             x = malloc(n*sizeof(float));
+@@ -144,7 +144,7 @@
+       if (TransA == CblasConjTrans)
+       {
+          if (x != (const float *)X) free(x);
+-         if (N > 0)
++         if (M > 0 && N > 0)
+          {
+             do
+             {
+diff --git a/CBLAS/src/cblas_cgbmv.c b/CBLAS/src/cblas_cgbmv.c
+--- a/CBLAS/src/cblas_cgbmv.c
++++ b/CBLAS/src/cblas_cgbmv.c
+@@ -74,7 +74,7 @@
+          BETA[0]= *bet;
+          BETA[1]= -bet[1];
+          TA = 'N';
+-         if (M > 0)
++         if (M > 0 && N > 0)
+          {
+             n = M << 1;
+             x = malloc(n*sizeof(float));
+@@ -148,7 +148,7 @@
+       if (TransA == CblasConjTrans)
+       {
+          if (x != X) free(x);
+-         if (N > 0)
++         if (M > 0 && N > 0)
+          {
+             do
+             {
+diff --git a/CBLAS/src/cblas_zgemv.c b/CBLAS/src/cblas_zgemv.c
+--- a/CBLAS/src/cblas_zgemv.c
++++ b/CBLAS/src/cblas_zgemv.c
+@@ -73,7 +73,7 @@
+          BETA[0]= *bet;
+          BETA[1]= -bet[1];
+          TA = 'N';
+-         if (M > 0)
++         if (M > 0 && N > 0)
+          {
+             n = M << 1;
+             x = malloc(n*sizeof(double));
+@@ -146,7 +146,7 @@
+       if (TransA == CblasConjTrans)
+       {
+          if (x != (double *)X) free(x);
+-         if (N > 0)
++         if (M > 0 && N > 0)
+          {
+             do
+             {
+diff --git a/CBLAS/src/cblas_zgbmv.c b/CBLAS/src/cblas_zgbmv.c
+--- a/CBLAS/src/cblas_zgbmv.c
++++ b/CBLAS/src/cblas_zgbmv.c
+@@ -74,7 +74,7 @@
+          BETA[0]= *bet;
+          BETA[1]= -bet[1];
+          TA = 'N';
+-         if (M > 0)
++         if (M > 0 && N > 0)
+          {
+             n = M << 1;
+             x = malloc(n*sizeof(double));
+@@ -148,7 +148,7 @@
+       if (TransA == CblasConjTrans)
+       {
+          if (x != X) free(x);
+-         if (N > 0)
++         if (M > 0 && N > 0)
+          {
+             do
+             {

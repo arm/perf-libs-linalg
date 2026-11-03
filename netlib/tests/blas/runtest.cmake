@@ -8,7 +8,6 @@ if(DEFINED INPUT)
   file(REMOVE "${SUMMARY}")
 endif()
 
-message("Running: ${TEST}")
 execute_process(
   COMMAND "${TEST}"
   ${ARGS}
@@ -24,17 +23,12 @@ endif()
 
 message("${LOG}")
 
-# if the test does not return 0, then fail it
-if(NOT ${RET} EQUAL 0)
+if(NOT "${RET}" STREQUAL "0")
   message(FATAL_ERROR "Test ${TEST} returned ${RET}")
 endif()
 
 # Netlib BLAS drivers use plain STOP, so failures can still exit 0.
-set(FAILURE_PATTERN "FAIL|FAILED|TESTS ABANDONED|FATAL ERROR|NOT RECOGNIZED")
-if(LOG MATCHES "${FAILURE_PATTERN}")
-  if(DEFINED SUMMARY_OUTPUT)
-    message("BLAS summary output (${SUMMARY}):\n${SUMMARY_OUTPUT}")
-  endif()
+if(LOG MATCHES "FAIL|TESTS ABANDONED|FATAL ERROR|NOT RECOGNIZED")
   message(FATAL_ERROR "Test ${TEST} reported a BLAS failure")
 endif()
 
@@ -43,9 +37,6 @@ if(DEFINED INPUT)
     message(FATAL_ERROR "Test ${TEST} did not create summary file ${SUMMARY}")
   endif()
   if(NOT SUMMARY_OUTPUT MATCHES "END OF TESTS")
-    message("BLAS summary output (${SUMMARY}):\n${SUMMARY_OUTPUT}")
     message(FATAL_ERROR "Test ${TEST} did not complete summary output")
   endif()
 endif()
-
-message("Test ${TEST} returned ${RET}")

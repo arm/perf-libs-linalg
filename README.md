@@ -2,7 +2,7 @@
 
 A library of dense linear algebra functions for AArch64 systems.
 
-It provides a full BLAS interface and a subset of LAPACK routines, using strategies and optimized kernels selected at runtime.
+It provides a full BLAS/CBLAS interface and a subset of LAPACK routines, using strategies and optimized kernels selected at runtime.
 
 ## Requirements
 
@@ -13,15 +13,15 @@ It provides a full BLAS interface and a subset of LAPACK routines, using strateg
   - other C++23-capable compilers may work
 - A Fortran compiler for the Netlib reference sources
 - Python 3.10 or newer with Mako and NumPy
-- `make` and `find`
+- `make`, `find`, and `git`
 - OpenMP development support when building with `LINALG_THREADING_MODEL=openmp`
 
 ## Limitations
 
 - Linux and macOS on AArch64 are supported build/test platforms.
 - Windows AArch64 support is experimental and assumes LLVM/Clang in a [wenv](https://gitlab.com/Linaro/windowsonarm/wenv)/MSYS2-style environment.
-- The library provides a full BLAS interface and selected LAPACK routines, not a complete LAPACK implementation.
-- CBLAS, LAPACKE, and Fortran modules are not currently provided.
+- The library provides a full BLAS/CBLAS interface and selected LAPACK routines, not a complete LAPACK implementation.
+- LAPACKE and Fortran modules are not currently provided.
 
 ## Quick Start
 
@@ -60,7 +60,7 @@ cmake --build build-openmp --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-This currently runs the Netlib BLAS test suite.
+This runs the Netlib BLAS and CBLAS test suites.
 
 ## Install
 
@@ -68,7 +68,7 @@ This currently runs the Netlib BLAS test suite.
 cmake --install build --prefix /path/to/install
 ```
 
-This installs the `pl_linalg` library and public headers from `include/`.
+This installs the built `pl_linalg` library, its public headers, and license notices.
 
 ## Source Layout
 
@@ -77,7 +77,7 @@ This installs the `pl_linalg` library and public headers from `include/`.
 - `src/kernels/`: optimized AArch64 kernels and kernel generators
 - `src/runtime/`: CPU and system detection
 - `src/dispatch/`: runtime dispatch and generated selection sources
-- `netlib/`: imported Netlib reference sources and BLAS test suite
+- `netlib/`: imported Netlib reference sources and test integration
 - `cmake/`: top-level CMake build options
 
 ## Contributing

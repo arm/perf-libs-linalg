@@ -15,15 +15,15 @@ include(build_options)
 include(CTest)
 include(GNUInstallDirs)
 
-add_subdirectory(netlib)
 add_library(pl_linalg)
+add_subdirectory(netlib)
 add_subdirectory(src)
 
 add_subdirectory(tools)
 
-if(BUILD_TESTING)
-  add_subdirectory(netlib/tests)
-endif()
-
 install(TARGETS pl_linalg)
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" TYPE INCLUDE)
+install(FILES LICENSE THIRD_PARTY_NOTICES.md
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/licenses/${PROJECT_NAME}")
+install(DIRECTORY LICENSES
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/licenses/${PROJECT_NAME}")

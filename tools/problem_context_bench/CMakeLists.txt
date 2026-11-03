@@ -31,5 +31,6 @@ target_include_directories(problem_context_bench PRIVATE
 
 target_link_libraries(problem_context_bench PRIVATE
   pl_linalg
+  linalg_core
   nlohmann_json::nlohmann_json
 )

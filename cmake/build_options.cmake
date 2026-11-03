@@ -31,9 +31,11 @@ target_compile_options(build_options INTERFACE
   "$<$<COMPILE_LANGUAGE:Fortran>:${LINALG_Fortran_COMPILE_OPTIONS}>"
 )
 
+set(LINALG_ABI_COMPILE_DEFINITIONS)
 if(LINALG_INTEGER_MODEL STREQUAL "ilp64")
-  target_compile_definitions(build_options INTERFACE INTEGER64)
+  set(LINALG_ABI_COMPILE_DEFINITIONS INTEGER64)
 endif()
+target_compile_definitions(build_options INTERFACE ${LINALG_ABI_COMPILE_DEFINITIONS})
 
 if(LINALG_THREADING_MODEL STREQUAL "openmp")
   find_package(OpenMP REQUIRED COMPONENTS CXX)

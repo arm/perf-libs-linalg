@@ -1,0 +1,49 @@
+--- a/CBLAS/include/cblas.h
++++ b/CBLAS/include/cblas.h
+@@ -18,7 +18,7 @@
+  * Integer type
+  */
+ #ifndef CBLAS_INT
+-#ifdef WeirdNEC
++#ifdef INTEGER64
+    #define CBLAS_INT int64_t
+ #else
+    #define CBLAS_INT int32_t
+@@ -29,7 +29,7 @@
+  * Integer format string
+  */
+ #ifndef CBLAS_IFMT
+-#ifdef WeirdNEC
++#ifdef INTEGER64
+    #define CBLAS_IFMT PRId64
+ #else
+    #define CBLAS_IFMT PRId32
+@@ -44,18 +44,11 @@
+ 
+ #define CBLAS_ORDER CBLAS_LAYOUT /* this for backward compatibility with CBLAS_ORDER */
+ 
+-#include "cblas_mangling.h"
+-
+ /*
+  * Integer specific API
+  */
+ #ifndef API_SUFFIX
+-#ifdef CBLAS_API64
+-#define API_SUFFIX(a) a##_64
+-#include "cblas_64.h"
+-#else
+ #define API_SUFFIX(a) a
+-#endif
+ #endif
+ 
+ 
+--- a/CBLAS/include/cblas_f77.h
++++ b/CBLAS/include/cblas_f77.h
+@@ -11,6 +11,7 @@
+ 
+ #include <stdarg.h>
+ #include <stdint.h>
++#include "cblas_mangling.h"
+ 
+ /* It seems all current Fortran compilers put strlen at end.
+ *  Some historical compilers put strlen after the str argument
