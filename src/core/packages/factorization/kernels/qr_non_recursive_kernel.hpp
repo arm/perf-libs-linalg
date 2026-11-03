@@ -36,7 +36,8 @@ void qr_non_recursive_kernel(const kernel_inttype m, const kernel_inttype n, T *
 		const auto diagonal_element_idx = col * lda + col;
 
 		// Generate elementary reflector H(i) to annihilate A(i+1:m,i)
-		if (rows_in_householder > 1) {
+		// Complex scalar reflectors also make the diagonal real.
+		if (rows_in_householder > 1 || is_complex_v<T>) {
 			T diagonal_element = A[diagonal_element_idx];
 
 			const auto subdiagonal_start_idx = col * lda + min(col + 1, m - 1);

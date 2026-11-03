@@ -8,6 +8,8 @@ if(POLICY CMP0135)
   cmake_policy(SET CMP0135 NEW)
 endif()
 
+set(LAPACK_VERSION 3.12.1)
+set(LAPACK_MAJOR_VERSION 3)
 set(LINALG_LAPACK_URL
   "https://github.com/Reference-LAPACK/lapack/archive/6ec7f2bc4ecf4c4a93496aa2fa519575bc0e39ca.tar.gz"
   CACHE STRING "Reference LAPACK archive URL or local archive path")
@@ -15,7 +17,11 @@ set(_lapack_patches
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-headers.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-empty-vectors.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/cblas-test-exclusions.patch"
-  "${PROJECT_SOURCE_DIR}/netlib/patches/blas-nrm2-infinity.patch")
+  "${PROJECT_SOURCE_DIR}/netlib/patches/blas-nrm2-infinity.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/blas-reference-symbols.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/blas-nan-propagation.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-test-failure-reporting.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-test-exclusions.patch")
 set(_lapack_patch_hash "")
 foreach(_patch IN LISTS _lapack_patches)
   file(SHA256 "${_patch}" _hash)

@@ -35,7 +35,12 @@ remove_complex_t<T> compute_householder_beta(const T alpha, const remove_complex
 
 	const real_type beta = [&] {
 		if constexpr (is_complex_v<T>) {
+#if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION < 190100
+			// Older libc++ lacks scaling in three-argument hypot: https://llvm.org/PR92782.
+			return std::hypot(std::hypot(perflibs::real(alpha), perflibs::imag(alpha)), xnorm);
+#else
 			return std::hypot(perflibs::real(alpha), perflibs::imag(alpha), xnorm);
+#endif
 		}
 		else {
 			return std::hypot(alpha, xnorm);

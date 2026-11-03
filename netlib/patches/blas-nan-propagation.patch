@@ -1,0 +1,837 @@
+Backport TRSM and TRSV NaN propagation fixes:
+https://github.com/Reference-LAPACK/lapack/commit/6840252146e762f3dd3b42b8e0f096cae727bcf1
+https://github.com/Reference-LAPACK/lapack/commit/38ccf80859c4221b34c4d0a0f1f2a248407d0478
+https://github.com/Reference-LAPACK/lapack/commit/6e7b86cda4486c56bf728ec7f685b616fe01393c
+
+--- a/BLAS/SRC/strsm.f
++++ b/BLAS/SRC/strsm.f
+@@ -280,29 +280,25 @@
+                               B(I,J) = ALPHA*B(I,J)
+    30                     CONTINUE
+                       END IF
+-                      DO 50 K = M,1,-1
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 40 I = 1,K - 1
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   40                         CONTINUE
+-                          END IF
++                       DO 50 K = M,1,-1
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 40 I = 1,K - 1
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   40                     CONTINUE
+    50                 CONTINUE
+    60             CONTINUE
+-              ELSE
+-                  DO 100 J = 1,N
+-                      IF (ALPHA.NE.ONE) THEN
+-                          DO 70 I = 1,M
+-                              B(I,J) = ALPHA*B(I,J)
++               ELSE
++                   DO 100 J = 1,N
++                       IF (ALPHA.NE.ONE) THEN
++                           DO 70 I = 1,M
++                               B(I,J) = ALPHA*B(I,J)
+    70                     CONTINUE
+-                      END IF
+-                      DO 90 K = 1,M
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 80 I = K + 1,M
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   80                         CONTINUE
+-                          END IF
++                       END IF
++                       DO 90 K = 1,M
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 80 I = K + 1,M
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   80                     CONTINUE
+    90                 CONTINUE
+   100             CONTINUE
+               END IF
+@@ -347,11 +343,9 @@
+   170                     CONTINUE
+                       END IF
+                       DO 190 K = 1,J - 1
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 180 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  180                         CONTINUE
+-                          END IF
++                          DO 180 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  180                     CONTINUE
+   190                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -368,11 +362,9 @@
+   220                     CONTINUE
+                       END IF
+                       DO 240 K = J + 1,N
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 230 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  230                         CONTINUE
+-                          END IF
++                          DO 230 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  230                     CONTINUE
+   240                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -395,12 +387,10 @@
+   270                     CONTINUE
+                       END IF
+                       DO 290 J = 1,K - 1
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              TEMP = A(J,K)
+-                              DO 280 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  280                         CONTINUE
+-                          END IF
++                          TEMP = A(J,K)
++                          DO 280 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  280                     CONTINUE
+   290                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 300 I = 1,M
+@@ -417,12 +407,10 @@
+   320                     CONTINUE
+                       END IF
+                       DO 340 J = K + 1,N
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              TEMP = A(J,K)
+-                              DO 330 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  330                         CONTINUE
+-                          END IF
++                          TEMP = A(J,K)
++                          DO 330 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  330                     CONTINUE
+   340                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 350 I = 1,M
+--- a/BLAS/SRC/dtrsm.f
++++ b/BLAS/SRC/dtrsm.f
+@@ -280,13 +280,11 @@
+                               B(I,J) = ALPHA*B(I,J)
+    30                     CONTINUE
+                       END IF
+-                      DO 50 K = M,1,-1
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 40 I = 1,K - 1
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   40                         CONTINUE
+-                          END IF
++                       DO 50 K = M,1,-1
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 40 I = 1,K - 1
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   40                     CONTINUE
+    50                 CONTINUE
+    60             CONTINUE
+               ELSE
+@@ -296,13 +294,11 @@
+                               B(I,J) = ALPHA*B(I,J)
+    70                     CONTINUE
+                       END IF
+-                      DO 90 K = 1,M
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 80 I = K + 1,M
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   80                         CONTINUE
+-                          END IF
++                       DO 90 K = 1,M
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 80 I = K + 1,M
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   80                     CONTINUE
+    90                 CONTINUE
+   100             CONTINUE
+               END IF
+@@ -347,11 +343,9 @@
+   170                     CONTINUE
+                       END IF
+                       DO 190 K = 1,J - 1
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 180 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  180                         CONTINUE
+-                          END IF
++                          DO 180 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  180                     CONTINUE
+   190                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -368,11 +362,9 @@
+   220                     CONTINUE
+                       END IF
+                       DO 240 K = J + 1,N
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 230 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  230                         CONTINUE
+-                          END IF
++                          DO 230 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  230                     CONTINUE
+   240                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -395,12 +387,10 @@
+   270                     CONTINUE
+                       END IF
+                       DO 290 J = 1,K - 1
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              TEMP = A(J,K)
+-                              DO 280 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  280                         CONTINUE
+-                          END IF
++                          TEMP = A(J,K)
++                          DO 280 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  280                     CONTINUE
+   290                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 300 I = 1,M
+@@ -417,12 +407,10 @@
+   320                     CONTINUE
+                       END IF
+                       DO 340 J = K + 1,N
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              TEMP = A(J,K)
+-                              DO 330 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  330                         CONTINUE
+-                          END IF
++                          TEMP = A(J,K)
++                          DO 330 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  330                     CONTINUE
+   340                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 350 I = 1,M
+--- a/BLAS/SRC/ctrsm.f
++++ b/BLAS/SRC/ctrsm.f
+@@ -282,29 +282,25 @@
+                               B(I,J) = ALPHA*B(I,J)
+    30                     CONTINUE
+                       END IF
+-                      DO 50 K = M,1,-1
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 40 I = 1,K - 1
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   40                         CONTINUE
+-                          END IF
++                       DO 50 K = M,1,-1
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 40 I = 1,K - 1
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   40                     CONTINUE
+    50                 CONTINUE
+    60             CONTINUE
+-              ELSE
+-                  DO 100 J = 1,N
+-                      IF (ALPHA.NE.ONE) THEN
+-                          DO 70 I = 1,M
+-                              B(I,J) = ALPHA*B(I,J)
++               ELSE
++                   DO 100 J = 1,N
++                       IF (ALPHA.NE.ONE) THEN
++                           DO 70 I = 1,M
++                               B(I,J) = ALPHA*B(I,J)
+    70                     CONTINUE
+-                      END IF
+-                      DO 90 K = 1,M
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 80 I = K + 1,M
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   80                         CONTINUE
+-                          END IF
++                       END IF
++                       DO 90 K = 1,M
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 80 I = K + 1,M
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   80                     CONTINUE
+    90                 CONTINUE
+   100             CONTINUE
+               END IF
+@@ -364,11 +360,9 @@
+   190                     CONTINUE
+                       END IF
+                       DO 210 K = 1,J - 1
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 200 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  200                         CONTINUE
+-                          END IF
++                          DO 200 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  200                     CONTINUE
+   210                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -385,11 +379,9 @@
+   240                     CONTINUE
+                       END IF
+                       DO 260 K = J + 1,N
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 250 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  250                         CONTINUE
+-                          END IF
++                          DO 250 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  250                     CONTINUE
+   260                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -417,16 +409,14 @@
+   290                     CONTINUE
+                       END IF
+                       DO 310 J = 1,K - 1
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              IF (NOCONJ) THEN
+-                                  TEMP = A(J,K)
+-                              ELSE
+-                                  TEMP = CONJG(A(J,K))
+-                              END IF
+-                              DO 300 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  300                         CONTINUE
+-                          END IF
++                          IF (NOCONJ) THEN
++                              TEMP = A(J,K)
++                          ELSE
++                              TEMP = CONJG(A(J,K))
++                          END IF
++                          DO 300 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  300                     CONTINUE
+   310                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 320 I = 1,M
+@@ -447,16 +437,14 @@
+   340                     CONTINUE
+                       END IF
+                       DO 360 J = K + 1,N
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              IF (NOCONJ) THEN
+-                                  TEMP = A(J,K)
+-                              ELSE
+-                                  TEMP = CONJG(A(J,K))
+-                              END IF
+-                              DO 350 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  350                         CONTINUE
+-                          END IF
++                          IF (NOCONJ) THEN
++                              TEMP = A(J,K)
++                          ELSE
++                              TEMP = CONJG(A(J,K))
++                          END IF
++                          DO 350 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  350                     CONTINUE
+   360                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 370 I = 1,M
+--- a/BLAS/SRC/ztrsm.f
++++ b/BLAS/SRC/ztrsm.f
+@@ -282,29 +282,25 @@
+                               B(I,J) = ALPHA*B(I,J)
+    30                     CONTINUE
+                       END IF
+-                      DO 50 K = M,1,-1
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 40 I = 1,K - 1
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   40                         CONTINUE
+-                          END IF
++                       DO 50 K = M,1,-1
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 40 I = 1,K - 1
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   40                     CONTINUE
+    50                 CONTINUE
+    60             CONTINUE
+-              ELSE
+-                  DO 100 J = 1,N
+-                      IF (ALPHA.NE.ONE) THEN
+-                          DO 70 I = 1,M
+-                              B(I,J) = ALPHA*B(I,J)
++               ELSE
++                   DO 100 J = 1,N
++                       IF (ALPHA.NE.ONE) THEN
++                           DO 70 I = 1,M
++                               B(I,J) = ALPHA*B(I,J)
+    70                     CONTINUE
+-                      END IF
+-                      DO 90 K = 1,M
+-                          IF (B(K,J).NE.ZERO) THEN
+-                              IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
+-                              DO 80 I = K + 1,M
+-                                  B(I,J) = B(I,J) - B(K,J)*A(I,K)
+-   80                         CONTINUE
+-                          END IF
++                       END IF
++                       DO 90 K = 1,M
++                           IF (NOUNIT) B(K,J) = B(K,J)/A(K,K)
++                           DO 80 I = K + 1,M
++                               B(I,J) = B(I,J) - B(K,J)*A(I,K)
++   80                     CONTINUE
+    90                 CONTINUE
+   100             CONTINUE
+               END IF
+@@ -364,11 +360,9 @@
+   190                     CONTINUE
+                       END IF
+                       DO 210 K = 1,J - 1
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 200 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  200                         CONTINUE
+-                          END IF
++                          DO 200 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  200                     CONTINUE
+   210                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -385,11 +379,9 @@
+   240                     CONTINUE
+                       END IF
+                       DO 260 K = J + 1,N
+-                          IF (A(K,J).NE.ZERO) THEN
+-                              DO 250 I = 1,M
+-                                  B(I,J) = B(I,J) - A(K,J)*B(I,K)
+-  250                         CONTINUE
+-                          END IF
++                          DO 250 I = 1,M
++                              B(I,J) = B(I,J) - A(K,J)*B(I,K)
++  250                     CONTINUE
+   260                 CONTINUE
+                       IF (NOUNIT) THEN
+                           TEMP = ONE/A(J,J)
+@@ -417,16 +409,14 @@
+   290                     CONTINUE
+                       END IF
+                       DO 310 J = 1,K - 1
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              IF (NOCONJ) THEN
+-                                  TEMP = A(J,K)
+-                              ELSE
+-                                  TEMP = DCONJG(A(J,K))
+-                              END IF
+-                              DO 300 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  300                         CONTINUE
+-                          END IF
++                          IF (NOCONJ) THEN
++                              TEMP = A(J,K)
++                          ELSE
++                              TEMP = DCONJG(A(J,K))
++                          END IF
++                          DO 300 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  300                     CONTINUE
+   310                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 320 I = 1,M
+@@ -447,16 +437,14 @@
+   340                     CONTINUE
+                       END IF
+                       DO 360 J = K + 1,N
+-                          IF (A(J,K).NE.ZERO) THEN
+-                              IF (NOCONJ) THEN
+-                                  TEMP = A(J,K)
+-                              ELSE
+-                                  TEMP = DCONJG(A(J,K))
+-                              END IF
+-                              DO 350 I = 1,M
+-                                  B(I,J) = B(I,J) - TEMP*B(I,K)
+-  350                         CONTINUE
+-                          END IF
++                          IF (NOCONJ) THEN
++                              TEMP = A(J,K)
++                          ELSE
++                              TEMP = DCONJG(A(J,K))
++                          END IF
++                          DO 350 I = 1,M
++                              B(I,J) = B(I,J) - TEMP*B(I,K)
++  350                     CONTINUE
+   360                 CONTINUE
+                       IF (ALPHA.NE.ONE) THEN
+                           DO 370 I = 1,M
+--- a/BLAS/SRC/strsv.f
++++ b/BLAS/SRC/strsv.f
+@@ -160,10 +160,6 @@
+ *     ..
+ *
+ *  =====================================================================
+-*
+-*     .. Parameters ..
+-      REAL ZERO
+-      PARAMETER (ZERO=0.0E+0)
+ *     ..
+ *     .. Local Scalars ..
+       REAL TEMP
+@@ -230,52 +226,44 @@
+           IF (LSAME(UPLO,'U')) THEN
+               IF (INCX.EQ.1) THEN
+                   DO 20 J = N,1,-1
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 10 I = J - 1,1,-1
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   10                     CONTINUE
+-                      END IF
++                        IF (NOUNIT) X(J) = X(J)/A(J,J)
++                        TEMP = X(J)
++                        DO 10 I = J - 1,1,-1
++                            X(I) = X(I) - TEMP*A(I,J)
++   10                   CONTINUE
+    20             CONTINUE
+               ELSE
+                   JX = KX + (N-1)*INCX
+                   DO 40 J = N,1,-1
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 30 I = J - 1,1,-1
+-                              IX = IX - INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   30                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 30 I = J - 1,1,-1
++                          IX = IX - INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   30                 CONTINUE
+                       JX = JX - INCX
+    40             CONTINUE
+               END IF
+           ELSE
+               IF (INCX.EQ.1) THEN
+                   DO 60 J = 1,N
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 50 I = J + 1,N
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   50                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 50 I = J + 1,N
++                          X(I) = X(I) - TEMP*A(I,J)
++   50                 CONTINUE
+    60             CONTINUE
+               ELSE
+                   JX = KX
+                   DO 80 J = 1,N
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 70 I = J + 1,N
+-                              IX = IX + INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   70                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 70 I = J + 1,N
++                          IX = IX + INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   70                 CONTINUE
+                       JX = JX + INCX
+    80             CONTINUE
+               END IF
+--- a/BLAS/SRC/dtrsv.f
++++ b/BLAS/SRC/dtrsv.f
+@@ -154,10 +154,6 @@
+ *     ..
+ *
+ *  =====================================================================
+-*
+-*     .. Parameters ..
+-      DOUBLE PRECISION ZERO
+-      PARAMETER (ZERO=0.0D+0)
+ *     ..
+ *     .. Local Scalars ..
+       DOUBLE PRECISION TEMP
+@@ -224,52 +220,44 @@
+           IF (LSAME(UPLO,'U')) THEN
+               IF (INCX.EQ.1) THEN
+                   DO 20 J = N,1,-1
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 10 I = J - 1,1,-1
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   10                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 10 I = J - 1,1,-1
++                          X(I) = X(I) - TEMP*A(I,J)
++   10                 CONTINUE
+    20             CONTINUE
+               ELSE
+                   JX = KX + (N-1)*INCX
+                   DO 40 J = N,1,-1
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 30 I = J - 1,1,-1
+-                              IX = IX - INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   30                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 30 I = J - 1,1,-1
++                          IX = IX - INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   30                 CONTINUE
+                       JX = JX - INCX
+    40             CONTINUE
+               END IF
+           ELSE
+               IF (INCX.EQ.1) THEN
+                   DO 60 J = 1,N
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 50 I = J + 1,N
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   50                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 50 I = J + 1,N
++                          X(I) = X(I) - TEMP*A(I,J)
++   50                 CONTINUE
+    60             CONTINUE
+               ELSE
+                   JX = KX
+                   DO 80 J = 1,N
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 70 I = J + 1,N
+-                              IX = IX + INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   70                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 70 I = J + 1,N
++                          IX = IX + INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   70                 CONTINUE
+                       JX = JX + INCX
+    80             CONTINUE
+               END IF
+--- a/BLAS/SRC/ctrsv.f
++++ b/BLAS/SRC/ctrsv.f
+@@ -160,10 +160,6 @@
+ *     ..
+ *
+ *  =====================================================================
+-*
+-*     .. Parameters ..
+-      COMPLEX ZERO
+-      PARAMETER (ZERO= (0.0E+0,0.0E+0))
+ *     ..
+ *     .. Local Scalars ..
+       COMPLEX TEMP
+@@ -231,52 +227,44 @@
+           IF (LSAME(UPLO,'U')) THEN
+               IF (INCX.EQ.1) THEN
+                   DO 20 J = N,1,-1
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 10 I = J - 1,1,-1
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   10                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 10 I = J - 1,1,-1
++                          X(I) = X(I) - TEMP*A(I,J)
++   10                 CONTINUE
+    20             CONTINUE
+               ELSE
+                   JX = KX + (N-1)*INCX
+                   DO 40 J = N,1,-1
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 30 I = J - 1,1,-1
+-                              IX = IX - INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   30                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 30 I = J - 1,1,-1
++                          IX = IX - INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   30                 CONTINUE
+                       JX = JX - INCX
+    40             CONTINUE
+               END IF
+           ELSE
+               IF (INCX.EQ.1) THEN
+                   DO 60 J = 1,N
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 50 I = J + 1,N
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   50                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 50 I = J + 1,N
++                          X(I) = X(I) - TEMP*A(I,J)
++   50                 CONTINUE
+    60             CONTINUE
+               ELSE
+                   JX = KX
+                   DO 80 J = 1,N
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 70 I = J + 1,N
+-                              IX = IX + INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   70                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 70 I = J + 1,N
++                          IX = IX + INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   70                 CONTINUE
+                       JX = JX + INCX
+    80             CONTINUE
+               END IF
+--- a/BLAS/SRC/ztrsv.f
++++ b/BLAS/SRC/ztrsv.f
+@@ -160,10 +160,6 @@
+ *     ..
+ *
+ *  =====================================================================
+-*
+-*     .. Parameters ..
+-      COMPLEX*16 ZERO
+-      PARAMETER (ZERO= (0.0D+0,0.0D+0))
+ *     ..
+ *     .. Local Scalars ..
+       COMPLEX*16 TEMP
+@@ -231,52 +227,44 @@
+           IF (LSAME(UPLO,'U')) THEN
+               IF (INCX.EQ.1) THEN
+                   DO 20 J = N,1,-1
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 10 I = J - 1,1,-1
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   10                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 10 I = J - 1,1,-1
++                          X(I) = X(I) - TEMP*A(I,J)
++   10                 CONTINUE
+    20             CONTINUE
+               ELSE
+                   JX = KX + (N-1)*INCX
+                   DO 40 J = N,1,-1
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 30 I = J - 1,1,-1
+-                              IX = IX - INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   30                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 30 I = J - 1,1,-1
++                          IX = IX - INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   30                 CONTINUE
+                       JX = JX - INCX
+    40             CONTINUE
+               END IF
+           ELSE
+               IF (INCX.EQ.1) THEN
+                   DO 60 J = 1,N
+-                      IF (X(J).NE.ZERO) THEN
+-                          IF (NOUNIT) X(J) = X(J)/A(J,J)
+-                          TEMP = X(J)
+-                          DO 50 I = J + 1,N
+-                              X(I) = X(I) - TEMP*A(I,J)
+-   50                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(J) = X(J)/A(J,J)
++                      TEMP = X(J)
++                      DO 50 I = J + 1,N
++                          X(I) = X(I) - TEMP*A(I,J)
++   50                 CONTINUE
+    60             CONTINUE
+               ELSE
+                   JX = KX
+                   DO 80 J = 1,N
+-                      IF (X(JX).NE.ZERO) THEN
+-                          IF (NOUNIT) X(JX) = X(JX)/A(J,J)
+-                          TEMP = X(JX)
+-                          IX = JX
+-                          DO 70 I = J + 1,N
+-                              IX = IX + INCX
+-                              X(IX) = X(IX) - TEMP*A(I,J)
+-   70                     CONTINUE
+-                      END IF
++                      IF (NOUNIT) X(JX) = X(JX)/A(J,J)
++                      TEMP = X(JX)
++                      IX = JX
++                      DO 70 I = J + 1,N
++                          IX = IX + INCX
++                          X(IX) = X(IX) - TEMP*A(I,J)
++   70                 CONTINUE
+                       JX = JX + INCX
+    80             CONTINUE
+               END IF

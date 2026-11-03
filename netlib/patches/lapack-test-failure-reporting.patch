@@ -1,0 +1,18 @@
+Report numerical failures even when the test executable returns zero.
+
+--- a/TESTING/runtest.cmake
++++ b/TESTING/runtest.cmake
+@@ -31,6 +31,13 @@
+   message("Test ERROR:\n${TEST_ERROR}")
+ endif()
+ 
++# Numerical failures do not necessarily change the test program's exit status.
++string(TOLOWER "${TEST_OUTPUT}" test_output_lower)
++if(test_output_lower MATCHES
++    "failed|failure|error in|error messages? recorded|illegal|inconsistent scale factor")
++  message(FATAL_ERROR "Test ${TEST} reported a failure")
++endif()
++
+ # if the test does not return 0, then fail it
+ if(NOT ${RET} EQUAL 0)
+   message(FATAL_ERROR "Test ${TEST} returned ${RET}")

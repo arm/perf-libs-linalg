@@ -83,7 +83,7 @@ void ungqr(const IntType* m, const IntType* n, const IntType* k,
 	constexpr IntType max_nb = 128;
 
 	// Calculate the optimal workspace size
-	const IntType opt_lwork = max_nb * (*n);
+	const IntType opt_lwork = max(1, max_nb * (*n));
 	work[0] = opt_lwork;
 
 	// Quick return if possible

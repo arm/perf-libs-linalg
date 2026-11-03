@@ -1,0 +1,376 @@
+Rename the reference BLAS entry points used by the library.
+
+--- a/BLAS/SRC/sgemm.f
++++ b/BLAS/SRC/sgemm.f
+@@ -183,7 +183,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE SGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
++      SUBROUTINE SGEMM_REFERENCE(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
+      +         BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+--- a/BLAS/SRC/dgemm.f
++++ b/BLAS/SRC/dgemm.f
+@@ -183,7 +183,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
++      SUBROUTINE DGEMM_REFERENCE(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
+      +         BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+--- a/BLAS/SRC/cgemm.f
++++ b/BLAS/SRC/cgemm.f
+@@ -183,7 +183,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
++      SUBROUTINE CGEMM_REFERENCE(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
+      +         BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+--- a/BLAS/SRC/zgemm.f
++++ b/BLAS/SRC/zgemm.f
+@@ -183,7 +183,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
++      SUBROUTINE ZGEMM_REFERENCE(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,
+      +         BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+--- a/BLAS/SRC/ssymm.f
++++ b/BLAS/SRC/ssymm.f
+@@ -185,7 +185,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE SSYMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE SSYMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dsymm.f
++++ b/BLAS/SRC/dsymm.f
+@@ -185,7 +185,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DSYMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE DSYMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/csymm.f
++++ b/BLAS/SRC/csymm.f
+@@ -185,7 +185,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CSYMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE CSYMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zsymm.f
++++ b/BLAS/SRC/zsymm.f
+@@ -185,7 +185,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZSYMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE ZSYMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ssyrk.f
++++ b/BLAS/SRC/ssyrk.f
+@@ -165,7 +165,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE SSYRK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE SSYRK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dsyrk.f
++++ b/BLAS/SRC/dsyrk.f
+@@ -165,7 +165,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DSYRK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE DSYRK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/csyrk.f
++++ b/BLAS/SRC/csyrk.f
+@@ -163,7 +163,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CSYRK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE CSYRK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zsyrk.f
++++ b/BLAS/SRC/zsyrk.f
+@@ -163,7 +163,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZSYRK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE ZSYRK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ssyr2k.f
++++ b/BLAS/SRC/ssyr2k.f
+@@ -188,7 +188,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE SSYR2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE SSYR2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dsyr2k.f
++++ b/BLAS/SRC/dsyr2k.f
+@@ -188,7 +188,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DSYR2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE DSYR2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/csyr2k.f
++++ b/BLAS/SRC/csyr2k.f
+@@ -184,7 +184,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CSYR2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE CSYR2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zsyr2k.f
++++ b/BLAS/SRC/zsyr2k.f
+@@ -184,7 +184,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZSYR2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE ZSYR2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/strmm.f
++++ b/BLAS/SRC/strmm.f
+@@ -173,7 +173,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE STRMM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE STRMM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dtrmm.f
++++ b/BLAS/SRC/dtrmm.f
+@@ -173,7 +173,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DTRMM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE DTRMM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ctrmm.f
++++ b/BLAS/SRC/ctrmm.f
+@@ -173,7 +173,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CTRMM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE CTRMM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ztrmm.f
++++ b/BLAS/SRC/ztrmm.f
+@@ -173,7 +173,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZTRMM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE ZTRMM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/strsm.f
++++ b/BLAS/SRC/strsm.f
+@@ -177,7 +177,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE STRSM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE STRSM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dtrsm.f
++++ b/BLAS/SRC/dtrsm.f
+@@ -177,7 +177,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE DTRSM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE DTRSM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ctrsm.f
++++ b/BLAS/SRC/ctrsm.f
+@@ -176,7 +176,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CTRSM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE CTRSM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ztrsm.f
++++ b/BLAS/SRC/ztrsm.f
+@@ -176,7 +176,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZTRSM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
++      SUBROUTINE ZTRSM_REFERENCE(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/strsv.f
++++ b/BLAS/SRC/strsv.f
+@@ -145,7 +145,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE STRSV(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
++      SUBROUTINE STRSV_REFERENCE(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
+ *
+ *  -- Reference BLAS level2 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/dtrsv.f
++++ b/BLAS/SRC/dtrsv.f
+@@ -139,7 +139,7 @@
+ *> \ingroup trsv
+ *
+ *  =====================================================================
+-      SUBROUTINE DTRSV(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
++      SUBROUTINE DTRSV_REFERENCE(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
+ *
+ *  -- Reference BLAS level2 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ctrsv.f
++++ b/BLAS/SRC/ctrsv.f
+@@ -145,7 +145,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CTRSV(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
++      SUBROUTINE CTRSV_REFERENCE(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
+ *
+ *  -- Reference BLAS level2 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/ztrsv.f
++++ b/BLAS/SRC/ztrsv.f
+@@ -145,7 +145,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZTRSV(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
++      SUBROUTINE ZTRSV_REFERENCE(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)
+ *
+ *  -- Reference BLAS level2 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/chemm.f
++++ b/BLAS/SRC/chemm.f
+@@ -187,7 +187,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CHEMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE CHEMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zhemm.f
++++ b/BLAS/SRC/zhemm.f
+@@ -187,7 +187,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZHEMM(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE ZHEMM_REFERENCE(SIDE,UPLO,M,N,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/cherk.f
++++ b/BLAS/SRC/cherk.f
+@@ -169,7 +169,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CHERK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE CHERK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zherk.f
++++ b/BLAS/SRC/zherk.f
+@@ -169,7 +169,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZHERK(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
++      SUBROUTINE ZHERK_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/cher2k.f
++++ b/BLAS/SRC/cher2k.f
+@@ -193,7 +193,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE CHER2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE CHER2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
+--- a/BLAS/SRC/zher2k.f
++++ b/BLAS/SRC/zher2k.f
+@@ -194,7 +194,7 @@
+ *> \endverbatim
+ *>
+ *  =====================================================================
+-      SUBROUTINE ZHER2K(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
++      SUBROUTINE ZHER2K_REFERENCE(UPLO,TRANS,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)
+ *
+ *  -- Reference BLAS level3 routine --
+ *  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
