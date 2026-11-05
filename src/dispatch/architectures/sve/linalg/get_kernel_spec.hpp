@@ -49,7 +49,7 @@ auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag
 	if constexpr(std::is_same_v<bf16, std::remove_cv_t<typename ProblemContextBase::a_matrix_type::value_type>>) {
 
 		if(machine::cpu_info::get_cpu_features().neon_bf16) {
-			return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, r32>, sve_architecture_spec> [ a64_interleaved_nomerge_bf16fp32_mmla_6x8_idx ];
+			return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, r32>, sve_architecture_spec> [ a64_interleaved_nomerge_bf16fp32_mmla_12x8_idx ];
 		}
 
 		return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, r32>, sve_architecture_spec> [ sbgemm_fp32_fmla_acle_idx ];
