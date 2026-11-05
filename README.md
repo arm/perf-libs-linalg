@@ -43,6 +43,7 @@ This builds the `pl_linalg` target.
 - `BUILD_SHARED_LIBS=ON|OFF`: builds shared or static libraries where supported. The default is `OFF`.
 - `LINALG_INTEGER_MODEL=lp64|ilp64`: selects the public integer ABI. The default is `lp64`.
 - `LINALG_THREADING_MODEL=serial|openmp`: selects the threading backend. The default is `serial`.
+- `LINALG_REQUEST_MAX_THREADS=ON|OFF`: always request the current maximum OpenMP team size. The default is `OFF`.
 - `LINALG_LAPACK_FALLBACK=ON|OFF`: enables full LAPACK and LAPACKE support. The default is `OFF`.
 - `LINALG_BUILD_BENCHMARKS=ON|OFF`: builds `problem_context_bench`. The default is `OFF`.
 - `LINALG_ENABLE_TUNING_OVERRIDES=ON|OFF`: enables JSON tuning overrides. The default is `OFF`.

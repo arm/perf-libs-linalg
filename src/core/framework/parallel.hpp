@@ -13,6 +13,7 @@
 #include "perflibs_numeric_utils.hpp"
 #include "linalg_util.hpp"
 #include "dyn_array.hpp"
+#include "spec/config.hpp"
 
 namespace perflibs::linalg {
 
@@ -22,6 +23,9 @@ namespace perflibs::linalg {
  * this number of threads so that the OpenMP runtime never shrinks
  * the thread pool, avoiding the overhead of unnecessarily spawning
  * threads in the future.
+ *
+ * LINALG_REQUEST_MAX_THREADS bypasses this state and requests the current
+ * OpenMP maximum instead.
  */
 class parallel_state_t {
 	int max_threads;
@@ -43,6 +47,10 @@ public:
 	 * @returns      The number of threads to spawn.
 	 */
 	PERFLIBS_LINALG_INLINE int request(const int nt) {
+		if constexpr (spec::request_max_threads()) {
+			return omp::get_max_threads();
+		}
+
 		// Operate on a thread-local copy of global max
 		const int current_max = max_threads;
 

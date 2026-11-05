@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add `problem_context_bench` for benchmarking individual strategies.
 - Support runtime tuning overrides through JSON.
 - Add optional AddressSanitizer builds.
+- Add `LINALG_REQUEST_MAX_THREADS` to always request the current maximum OpenMP team size.
 
 ### Performance
 

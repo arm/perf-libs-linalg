@@ -7,6 +7,8 @@ if(NOT LINALG_THREADING_MODEL MATCHES "^(serial|openmp)$")
   message(FATAL_ERROR "LINALG_THREADING_MODEL must be serial or openmp")
 endif()
 
+option(LINALG_REQUEST_MAX_THREADS "Request the maximum OpenMP team size" OFF)
+
 set(LINALG_INTEGER_MODEL "lp64" CACHE STRING "Public integer ABI to build: lp64 or ilp64")
 set_property(CACHE LINALG_INTEGER_MODEL PROPERTY STRINGS lp64 ilp64)
 if(NOT LINALG_INTEGER_MODEL MATCHES "^(lp64|ilp64)$")

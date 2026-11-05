@@ -9,6 +9,10 @@ target_include_directories(linalg_core INTERFACE
 )
 target_link_libraries(linalg_core INTERFACE runtime_common)
 
+if(LINALG_REQUEST_MAX_THREADS)
+  target_compile_definitions(linalg_core INTERFACE PL_LINALG_REQUEST_MAX_THREADS=1)
+endif()
+
 if(LINALG_ENABLE_TUNING_OVERRIDES)
   include("${PROJECT_SOURCE_DIR}/cmake/dependencies/json.cmake")
   target_compile_definitions(linalg_core INTERFACE PL_LINALG_LIVE_TARGET=1)

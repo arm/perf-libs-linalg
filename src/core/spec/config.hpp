@@ -16,6 +16,14 @@
 
 namespace perflibs::linalg::spec {
 
+constexpr bool request_max_threads() {
+#if defined(PL_LINALG_REQUEST_MAX_THREADS)
+	return PL_LINALG_REQUEST_MAX_THREADS != 0;
+#else
+	return false;
+#endif
+}
+
 constexpr kernel_inttype accelerator_count_not_set_value =
 	std::numeric_limits<kernel_inttype>::lowest();
 
