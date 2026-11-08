@@ -11,6 +11,288 @@ extern "C" void a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8(
     const bfloat16_t *, const bfloat16_t *, bfloat16_t *, kernel_inttype,
     kernel_inttype, kernel_inttype, kernel_inttype, bfloat16_t, bfloat16_t);
 
+static inline __attribute__((always_inline)) void bgemm_mmla_8x8_tile(
+    const bfloat16_t *A, const bfloat16_t *B, bfloat16_t *C,
+    kernel_inttype K, kernel_inttype ldc, bfloat16_t alpha, bfloat16_t beta,
+    unsigned alpha_mode, unsigned beta_mode)
+{
+    float alpha_fp32 = alpha;
+    float beta_fp32 = beta;
+    const bfloat16_t *B0_5 = B;
+    const bfloat16_t *B6_11 = B + K * 6;
+    bfloat16_t *C_even = C;
+    bfloat16_t *C_odd = C + ldc;
+    const kernel_inttype ldc2 = ldc * (2 * sizeof(bfloat16_t));
+
+    __asm__ __volatile__(
+      " ldp    q0, q1, [%[B0_5]]\n"
+      " ldr    q2, [%[B0_5], #32]\n"
+      " ldr    q3, [%[B6_11]]\n"
+      " ldp    q6, q7, [%[A]]\n"
+
+      " movi   v18.16b, #0\n"
+      " movi   v19.16b, #0\n"
+      " movi   v16.16b, #0\n"
+      " movi   v17.16b, #0\n"
+      " movi   v20.16b, #0\n"
+      " movi   v21.16b, #0\n"
+      " movi   v22.16b, #0\n"
+      " movi   v23.16b, #0\n"
+      " movi   v24.16b, #0\n"
+      " movi   v25.16b, #0\n"
+      " movi   v26.16b, #0\n"
+      " movi   v27.16b, #0\n"
+      " movi   v28.16b, #0\n"
+      " movi   v29.16b, #0\n"
+      " movi   v30.16b, #0\n"
+      " movi   v31.16b, #0\n"
+
+      " sub    %[K], %[K], #4\n"
+      " cbz    %[K], 4f\n"
+      " b      2f\n"
+
+      "1:\n"
+      " ldp    q6, q7, [%[A]]\n"
+
+      "2:\n"
+      " bfmmla v18.4s,  v0.8h,   v6.8h\n"
+      " bfmmla v19.4s,  v0.8h,   v7.8h\n"
+      " bfmmla v20.4s,  v1.8h,   v6.8h\n"
+      " bfmmla v21.4s,  v1.8h,   v7.8h\n"
+      " bfmmla v24.4s,  v2.8h,   v6.8h\n"
+      " bfmmla v25.4s,  v2.8h,   v7.8h\n"
+      " bfmmla v28.4s,  v3.8h,   v6.8h\n"
+      " bfmmla v29.4s,  v3.8h,   v7.8h\n"
+      " ldp    q6, q7, [%[A], #32]\n"
+      " add    %[A], %[A], #64\n"
+      " subs   %[K], %[K], #4\n"
+      " bfmmla v16.4s,  v0.8h,   v6.8h\n"
+      " bfmmla v17.4s,  v0.8h,   v7.8h\n"
+      " bfmmla v22.4s,  v1.8h,   v6.8h\n"
+      " bfmmla v23.4s,  v1.8h,   v7.8h\n"
+      " ldp    q0, q1, [%[B0_5], #48]\n"
+      " bfmmla v26.4s,  v2.8h,   v6.8h\n"
+      " bfmmla v27.4s,  v2.8h,   v7.8h\n"
+      " ldr    q2, [%[B0_5], #80]\n"
+      " bfmmla v30.4s,  v3.8h,   v6.8h\n"
+      " bfmmla v31.4s,  v3.8h,   v7.8h\n"
+      " ldr    q3, [%[B6_11], #48]\n"
+      " add    %[B0_5], %[B0_5], #48\n"
+      " add    %[B6_11], %[B6_11], #48\n"
+      " b.ne   1b\n"
+      " ldp    q6, q7, [%[A]]\n"
+
+      "4:\n"
+      " bfmmla v18.4s,  v0.8h,   v6.8h\n"
+      " bfmmla v19.4s,  v0.8h,   v7.8h\n"
+      " bfmmla v20.4s,  v1.8h,   v6.8h\n"
+      " bfmmla v21.4s,  v1.8h,   v7.8h\n"
+      " bfmmla v24.4s,  v2.8h,   v6.8h\n"
+      " bfmmla v25.4s,  v2.8h,   v7.8h\n"
+      " bfmmla v28.4s,  v3.8h,   v6.8h\n"
+      " bfmmla v29.4s,  v3.8h,   v7.8h\n"
+      " ldp    q6, q7, [%[A], #32]\n"
+      " bfmmla v16.4s,  v0.8h,   v6.8h\n"
+      " bfmmla v17.4s,  v0.8h,   v7.8h\n"
+      " bfmmla v22.4s,  v1.8h,   v6.8h\n"
+      " bfmmla v23.4s,  v1.8h,   v7.8h\n"
+      " bfmmla v26.4s,  v2.8h,   v6.8h\n"
+      " bfmmla v27.4s,  v2.8h,   v7.8h\n"
+      " bfmmla v30.4s,  v3.8h,   v6.8h\n"
+      " bfmmla v31.4s,  v3.8h,   v7.8h\n"
+
+      " cbz    %w[beta_mode], 200f\n"
+      " ldr    q4, [%[C_even]]\n"
+
+      "200:\n"
+      " uzp1   v0.2d,   v18.2d,  v19.2d\n"
+      " uzp2   v1.2d,   v18.2d,  v19.2d\n"
+      " cbz    %w[beta_mode], 201f\n"
+      " ldr    q19, [%[C_odd]]\n"
+
+      "201:\n"
+      " uzp1   v2.2d,   v16.2d,  v17.2d\n"
+      " uzp2   v3.2d,   v16.2d,  v17.2d\n"
+      " movi   v18.16b, #0\n"
+      " cbz    %w[alpha_mode], 202f\n"
+      " fmul   v0.4s,   v0.4s,   %[alpha].s[0]\n"
+      " fmul   v1.4s,   v1.4s,   %[alpha].s[0]\n"
+      " fmul   v2.4s,   v2.4s,   %[alpha].s[0]\n"
+      " fmul   v3.4s,   v3.4s,   %[alpha].s[0]\n"
+
+      "202:\n"
+      " cbz    %w[beta_mode], 204f\n"
+      " zip2   v5.8h,   v18.8h,  v4.8h\n"
+      " zip1   v4.8h,   v18.8h,  v4.8h\n"
+      " zip2   v16.8h,  v18.8h,  v19.8h\n"
+      " zip1   v19.8h,  v18.8h,  v19.8h\n"
+      " tbz    %w[beta_mode], #1, 203f\n"
+      " fmla   v0.4s,   v4.4s,   %[beta].s[0]\n"
+      " fmla   v2.4s,   v5.4s,   %[beta].s[0]\n"
+      " fmla   v1.4s,   v19.4s,   %[beta].s[0]\n"
+      " fmla   v3.4s,   v16.4s,  %[beta].s[0]\n"
+      " b      204f\n"
+
+      "203:\n"
+      " fadd   v0.4s,   v0.4s,   v4.4s\n"
+      " fadd   v2.4s,   v2.4s,   v5.4s\n"
+      " fadd   v1.4s,   v1.4s,   v19.4s\n"
+      " fadd   v3.4s,   v3.4s,   v16.4s\n"
+
+      "204:\n"
+      " bfcvtn v4.4h,   v0.4s\n"
+      " bfcvtn v5.4h,   v1.4s\n"
+      " bfcvtn2 v4.8h,   v2.4s\n"
+      " bfcvtn2 v5.8h,   v3.4s\n"
+      " st1    {v4.8h}, [%[C_even]], %[ldc2]\n"
+      " st1    {v5.8h}, [%[C_odd]], %[ldc2]\n"
+
+      " cbz    %w[beta_mode], 210f\n"
+      " ldr    q4, [%[C_even]]\n"
+
+      "210:\n"
+      " uzp1   v0.2d,   v20.2d,  v21.2d\n"
+      " uzp2   v1.2d,   v20.2d,  v21.2d\n"
+      " cbz    %w[beta_mode], 211f\n"
+      " ldr    q19, [%[C_odd]]\n"
+
+      "211:\n"
+      " uzp1   v2.2d,   v22.2d,  v23.2d\n"
+      " uzp2   v3.2d,   v22.2d,  v23.2d\n"
+      " cbz    %w[alpha_mode], 212f\n"
+      " fmul   v0.4s,   v0.4s,   %[alpha].s[0]\n"
+      " fmul   v1.4s,   v1.4s,   %[alpha].s[0]\n"
+      " fmul   v2.4s,   v2.4s,   %[alpha].s[0]\n"
+      " fmul   v3.4s,   v3.4s,   %[alpha].s[0]\n"
+
+      "212:\n"
+      " cbz    %w[beta_mode], 214f\n"
+      " zip2   v5.8h,   v18.8h,  v4.8h\n"
+      " zip1   v4.8h,   v18.8h,  v4.8h\n"
+      " zip2   v16.8h,  v18.8h,  v19.8h\n"
+      " zip1   v19.8h,  v18.8h,  v19.8h\n"
+      " tbz    %w[beta_mode], #1, 213f\n"
+      " fmla   v0.4s,   v4.4s,   %[beta].s[0]\n"
+      " fmla   v2.4s,   v5.4s,   %[beta].s[0]\n"
+      " fmla   v1.4s,   v19.4s,   %[beta].s[0]\n"
+      " fmla   v3.4s,   v16.4s,  %[beta].s[0]\n"
+      " b      214f\n"
+
+      "213:\n"
+      " fadd   v0.4s,   v0.4s,   v4.4s\n"
+      " fadd   v2.4s,   v2.4s,   v5.4s\n"
+      " fadd   v1.4s,   v1.4s,   v19.4s\n"
+      " fadd   v3.4s,   v3.4s,   v16.4s\n"
+
+      "214:\n"
+      " bfcvtn v4.4h,   v0.4s\n"
+      " bfcvtn v5.4h,   v1.4s\n"
+      " bfcvtn2 v4.8h,   v2.4s\n"
+      " bfcvtn2 v5.8h,   v3.4s\n"
+      " st1    {v4.8h}, [%[C_even]], %[ldc2]\n"
+      " st1    {v5.8h}, [%[C_odd]], %[ldc2]\n"
+
+      " cbz    %w[beta_mode], 220f\n"
+      " ldr    q4, [%[C_even]]\n"
+
+      "220:\n"
+      " uzp1   v0.2d,   v24.2d,  v25.2d\n"
+      " uzp2   v1.2d,   v24.2d,  v25.2d\n"
+      " cbz    %w[beta_mode], 221f\n"
+      " ldr    q19, [%[C_odd]]\n"
+
+      "221:\n"
+      " uzp1   v2.2d,   v26.2d,  v27.2d\n"
+      " uzp2   v3.2d,   v26.2d,  v27.2d\n"
+      " cbz    %w[alpha_mode], 222f\n"
+      " fmul   v0.4s,   v0.4s,   %[alpha].s[0]\n"
+      " fmul   v1.4s,   v1.4s,   %[alpha].s[0]\n"
+      " fmul   v2.4s,   v2.4s,   %[alpha].s[0]\n"
+      " fmul   v3.4s,   v3.4s,   %[alpha].s[0]\n"
+
+      "222:\n"
+      " cbz    %w[beta_mode], 224f\n"
+      " zip2   v5.8h,   v18.8h,  v4.8h\n"
+      " zip1   v4.8h,   v18.8h,  v4.8h\n"
+      " zip2   v16.8h,  v18.8h,  v19.8h\n"
+      " zip1   v19.8h,  v18.8h,  v19.8h\n"
+      " tbz    %w[beta_mode], #1, 223f\n"
+      " fmla   v0.4s,   v4.4s,   %[beta].s[0]\n"
+      " fmla   v2.4s,   v5.4s,   %[beta].s[0]\n"
+      " fmla   v1.4s,   v19.4s,   %[beta].s[0]\n"
+      " fmla   v3.4s,   v16.4s,  %[beta].s[0]\n"
+      " b      224f\n"
+
+      "223:\n"
+      " fadd   v0.4s,   v0.4s,   v4.4s\n"
+      " fadd   v2.4s,   v2.4s,   v5.4s\n"
+      " fadd   v1.4s,   v1.4s,   v19.4s\n"
+      " fadd   v3.4s,   v3.4s,   v16.4s\n"
+
+      "224:\n"
+      " bfcvtn v4.4h,   v0.4s\n"
+      " bfcvtn v5.4h,   v1.4s\n"
+      " bfcvtn2 v4.8h,   v2.4s\n"
+      " bfcvtn2 v5.8h,   v3.4s\n"
+      " st1    {v4.8h}, [%[C_even]], %[ldc2]\n"
+      " st1    {v5.8h}, [%[C_odd]], %[ldc2]\n"
+
+      " cbz    %w[beta_mode], 230f\n"
+      " ldr    q4, [%[C_even]]\n"
+
+      "230:\n"
+      " uzp1   v0.2d,   v28.2d,  v29.2d\n"
+      " uzp2   v1.2d,   v28.2d,  v29.2d\n"
+      " cbz    %w[beta_mode], 231f\n"
+      " ldr    q19, [%[C_odd]]\n"
+
+      "231:\n"
+      " uzp1   v2.2d,   v30.2d,  v31.2d\n"
+      " uzp2   v3.2d,   v30.2d,  v31.2d\n"
+      " cbz    %w[alpha_mode], 232f\n"
+      " fmul   v0.4s,   v0.4s,   %[alpha].s[0]\n"
+      " fmul   v1.4s,   v1.4s,   %[alpha].s[0]\n"
+      " fmul   v2.4s,   v2.4s,   %[alpha].s[0]\n"
+      " fmul   v3.4s,   v3.4s,   %[alpha].s[0]\n"
+
+      "232:\n"
+      " cbz    %w[beta_mode], 234f\n"
+      " zip2   v5.8h,   v18.8h,  v4.8h\n"
+      " zip1   v4.8h,   v18.8h,  v4.8h\n"
+      " zip2   v16.8h,  v18.8h,  v19.8h\n"
+      " zip1   v19.8h,  v18.8h,  v19.8h\n"
+      " tbz    %w[beta_mode], #1, 233f\n"
+      " fmla   v0.4s,   v4.4s,   %[beta].s[0]\n"
+      " fmla   v2.4s,   v5.4s,   %[beta].s[0]\n"
+      " fmla   v1.4s,   v19.4s,   %[beta].s[0]\n"
+      " fmla   v3.4s,   v16.4s,  %[beta].s[0]\n"
+      " b      234f\n"
+
+      "233:\n"
+      " fadd   v0.4s,   v0.4s,   v4.4s\n"
+      " fadd   v2.4s,   v2.4s,   v5.4s\n"
+      " fadd   v1.4s,   v1.4s,   v19.4s\n"
+      " fadd   v3.4s,   v3.4s,   v16.4s\n"
+
+      "234:\n"
+      " bfcvtn v4.4h,   v0.4s\n"
+      " bfcvtn v5.4h,   v1.4s\n"
+      " bfcvtn2 v4.8h,   v2.4s\n"
+      " bfcvtn2 v5.8h,   v3.4s\n"
+      " str    q4, [%[C_even]]\n"
+      " str    q5, [%[C_odd]]\n"
+      : [A] "+&r"(A), [B0_5] "+&r"(B0_5),
+        [B6_11] "+&r"(B6_11), [K] "+&r"(K),
+        [C_even] "+&r"(C_even), [C_odd] "+&r"(C_odd),
+        [alpha] "+&w"(alpha_fp32), [beta] "+&w"(beta_fp32)
+      : [ldc2] "r"(ldc2),
+        [alpha_mode] "r"(alpha_mode), [beta_mode] "r"(beta_mode)
+      : "memory", "cc",
+        "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
+        "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23",
+        "v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31");
+}
+
 static inline __attribute__((always_inline)) void bgemm_mmla_12x8_tile(
     const bfloat16_t *A, const bfloat16_t *B, bfloat16_t *C,
     kernel_inttype K, kernel_inttype ldc, bfloat16_t alpha, bfloat16_t beta,
@@ -404,6 +686,22 @@ static inline __attribute__((always_inline)) void bgemm_mmla_12x8_tile(
         "v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31");
 }
 
+// Handle full eight-row blocks across exactly eight columns.
+// Eight columns span one complete B6 panel and the first pair of the next.
+// A remains packed in groups of eight rows; both B panels advance by K=4.
+void a64_interleaved_nomerge_bf16fp32bf16_mmla_8x8(
+    const bfloat16_t *A, const bfloat16_t *B, bfloat16_t *C,
+    kernel_inttype K, kernel_inttype N, kernel_inttype ldc,
+    bfloat16_t alpha, bfloat16_t beta,
+    unsigned alpha_mode, unsigned beta_mode)
+{
+    for (kernel_inttype row = 0; row < N; row += 8) {
+        bgemm_mmla_8x8_tile(
+            A + row * K, B, C + row,
+            K, ldc, alpha, beta, alpha_mode, beta_mode);
+    }
+}
+
 // Twelve columns span two complete B6 panels.
 // A remains packed in groups of eight rows; both B panels advance by K=4.
 extern "C" void a64_interleaved_nomerge_bf16fp32bf16_mmla_12x8(
@@ -416,7 +714,7 @@ extern "C" void a64_interleaved_nomerge_bf16fp32bf16_mmla_12x8(
     const unsigned alpha_mode = float(alpha) != 1.0f;
     const unsigned beta_mode = float(beta) == 0.0f ? 0 : (float(beta) == 1.0f ? 1 : 2);
 
-    if (N < 8 || M < 12) {
+    if (N < 8 || (M < 12 && M != 8)) {
         a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8(
             A, B, C, K, N, M, ldc, alpha, beta);
         return;
@@ -434,9 +732,15 @@ extern "C" void a64_interleaved_nomerge_bf16fp32bf16_mmla_12x8(
     }
 
     if (col != M) {
-        a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8(
-            A, B + col * K, C + col * ldc,
-            K, full_rows, M - col, ldc, alpha, beta);
+        if (M - col == 8) {
+            a64_interleaved_nomerge_bf16fp32bf16_mmla_8x8(
+                A, B + col * K, C + col * ldc,
+                K, full_rows, ldc, alpha, beta, alpha_mode, beta_mode);
+        } else {
+            a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8(
+                A, B + col * K, C + col * ldc,
+                K, full_rows, M - col, ldc, alpha, beta);
+        }
     }
 
     // Handle remaining rows across all columns once.
