@@ -131,32 +131,6 @@
 	},
 	{
 		"kernel_type": "interleaved",
-		"symbol": "a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8",
-		"c_type": "bf16",
-		"cntg_unroll": 8,
-		"apply_beta": "not_zero",
-		"extensions": "neon",
-		"a_interleave_spec": {
-			"datatype": "bf16",
-			"strd_unroll": 1,
-			"cntg_interleave": 4,
-			"strd_interleave": 8,
-			"strd_interleave_step": 4,
-			"cntg_interleave_step": 1,
-			"split_factor": 0
-		},
-		"b_interleave_spec": {
-			"datatype": "bf16",
-			"strd_unroll": 1,
-			"cntg_interleave": 4,
-			"strd_interleave": 6,
-			"strd_interleave_step": 4,
-			"cntg_interleave_step": 1,
-			"split_factor": 0
-		}
-	},
-	{
-		"kernel_type": "interleaved",
 		"symbol": "a64_interleaved_nomerge_bf16fp32bf16_mmla_4x12",
 		"c_type": "bf16",
 		"cntg_unroll": 8,
@@ -186,7 +160,7 @@
 		"symbol": "a64_interleaved_nomerge_bf16fp32bf16_mmla_12x8",
 		"c_type": "bf16",
 		"cntg_unroll": 8,
-		"apply_beta": "not_zero",
+		"apply_beta": "all",
 		"extensions": "neon",
 		"a_interleave_spec": {
 			"datatype": "bf16",
