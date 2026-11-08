@@ -53,7 +53,7 @@ auto get_spec_system(gemm_kernel_tag<gemm_kernel_types::interleaved, StrategyTag
     requires std::same_as<compute_precision_t<problem_context<ProblemContextBase, ArchitectureSpec>>, bf16> {
 
 	if(machine::cpu_info::get_cpu_features().neon_bf16) {
-		return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, bf16>, ArchitectureSpec> [ a64_interleaved_nomerge_bf16fp32bf16_mmla_6x8_idx ];
+		return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, bf16>, ArchitectureSpec> [ a64_interleaved_nomerge_bf16fp32bf16_mmla_12x8_idx ];
 	}
 	else {
 		return interleave_matmul_kernel_specs<interleave_matmul_kernel_spec<bf16, bf16, bf16>, ArchitectureSpec> [ bgemm_fp32_fmla_acle_nobf16exten_idx ];
