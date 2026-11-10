@@ -14,14 +14,14 @@
 #include "benchmark_runner.hpp"
 #include "perflibs_complex.hpp"
 #include "pl_linalg_int.h"
+#include "random_data.hpp"
 #include "matrix/matrix.hpp"
 #include "packages/factorization/problem_context_bases.hpp"
 
 #include <nlohmann/json.hpp>
 
-#include <algorithm>
-#include <iterator>
 #include <random>
+#include <span>
 #include <type_traits>
 #include <vector>
 
@@ -70,55 +70,26 @@ void run_with_reset_matrix(
 	std::mt19937 gen{std::random_device{}()};
 	std::uniform_real_distribution<real_data_type> dist{1.0, 2.0};
 
-	std::generate(begin(a_original_data), end(a_original_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
+	fill_random(std::span { a_original_data }, gen, dist);
+
+	const matrix_base a_base {
+		a_original_data.data(), pctx_base.a.cntg(), pctx_base.a.strd(), 1, pctx_base.a.cntg()
+	};
+	const auto a_original = [&] {
+		if constexpr(is_symmetric_matrix_v<matrix_type>) {
+			return symmetric_matrix { pctx_base.a.uplo(), a_base };
+		}
+		else if constexpr(is_hermitian_matrix_v<matrix_type>) {
+			return hermitian_matrix { pctx_base.a.uplo(), a_base };
 		}
 		else {
-			return dist(gen);
+			return general_matrix { a_base };
 		}
+	}();
+
+	bench(j, pctx_base, [&](auto& pctx) {
+		copy(a_original, pctx.a);
 	});
-
-	if constexpr (is_symmetric_matrix_v<matrix_type>) {
-		auto a_original = symmetric_matrix{
-			pctx_base.a.uplo(),
-			matrix_base{
-				a_original_data.data(),
-				pctx_base.a.cntg(), pctx_base.a.strd(),
-				1, pctx_base.a.cntg()
-			}
-		};
-
-		bench(j, pctx_base, [&](auto& pctx) {
-			copy(a_original, pctx.a);
-		});
-	}
-	else if constexpr (is_hermitian_matrix_v<matrix_type>) {
-		auto a_original = hermitian_matrix{
-			pctx_base.a.uplo(),
-			matrix_base{
-				a_original_data.data(),
-				pctx_base.a.cntg(), pctx_base.a.strd(),
-				1, pctx_base.a.cntg()
-			}
-		};
-
-		bench(j, pctx_base, [&](auto& pctx) {
-			copy(a_original, pctx.a);
-		});
-	}
-	else {
-		auto a_original = general_matrix{
-			matrix_base{
-				a_original_data.data(),
-				pctx_base.a.cntg(), pctx_base.a.strd(),
-				1, pctx_base.a.cntg()
-			}
-		};
-		bench(j, pctx_base, [&](auto& pctx) {
-			copy(a_original, pctx.a);
-		});
-	}
 }
 
 
@@ -142,40 +113,19 @@ void run_apply_q_from_qr(
 	std::vector<mutable_data_type> c_original_data(pctx_base.c.cntg() * pctx_base.c.strd());
 
 	// Generate random data
-	unsigned int seed = 42;
+	const unsigned int seed = 42;
 	std::mt19937 gen(seed);
 	std::uniform_real_distribution<real_data_type> dist{1.0, 2.0};
 
 	// Initialize A with random entries
-	std::generate(begin(a_qr_data), end(a_qr_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { a_qr_data }, gen, dist);
 	auto a_original = general_matrix{ matrix_base{ a_qr_data.data(), m, n, pctx_base.a.cntg_step(), pctx_base.a.strd_step()} };
 
 	// Initialize random C matrix
-	std::generate(begin(c_original_data), end(c_original_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { c_original_data }, gen, dist);
 
 	// Initialize random tau matrix
-	std::generate(begin(tau_qr_data), end(tau_qr_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { tau_qr_data }, gen, dist);
 
 	auto tau_original = general_matrix{ matrix_base{ tau_qr_data.data(), k, 1, 1, 1 } };
 
@@ -213,32 +163,18 @@ void run_generate_q_from_qr(
 	std::vector<mutable_data_type> tau_qr_data(k);
 
 	// Generate random data
-	unsigned int seed = 42;
+	const unsigned int seed = 42;
 	std::mt19937 gen(seed);
 	std::uniform_real_distribution<real_data_type> dist{1.0, 2.0};
 
 	// Initialize A with random entries
-	std::generate(begin(a_qr_data), end(a_qr_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { a_qr_data }, gen, dist);
 
 	// Create temporary matrix for QR factorization
 	auto a_original = general_matrix{ matrix_base{ a_qr_data.data(), m, n, pctx_base.a.cntg_step(), pctx_base.a.strd_step()} };
 
 	// Initialize random tau vector
-	std::generate(begin(tau_qr_data), end(tau_qr_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { tau_qr_data }, gen, dist);
 
 	auto tau_original = general_matrix{ matrix_base{ tau_qr_data.data(), k, 1, 1, 1 } };
 
@@ -269,40 +205,19 @@ void run_apply_q_from_lq(
 	std::vector<mutable_data_type> c_original_data(pctx_base.c.cntg() * pctx_base.c.strd());
 
 	// Generate random data
-	unsigned int seed = 42;
+	const unsigned int seed = 42;
 	std::mt19937 gen(seed);
 	std::uniform_real_distribution<real_data_type> dist{1.0, 2.0};
 
 	// Initialize A with random entries
-	std::generate(begin(a_lq_data), end(a_lq_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { a_lq_data }, gen, dist);
 	auto a_original = general_matrix{ matrix_base{ a_lq_data.data(), m, n, pctx_base.a.cntg_step(), pctx_base.a.strd_step()} };
 
 	// Initialize random C matrix
-	std::generate(begin(c_original_data), end(c_original_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { c_original_data }, gen, dist);
 
 	// Initialize random tau matrix
-	std::generate(begin(tau_lq_data), end(tau_lq_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { tau_lq_data }, gen, dist);
 
 	auto tau_original = general_matrix{ matrix_base{ tau_lq_data.data(), k, 1, 1, 1 } };
 
@@ -340,32 +255,18 @@ void run_generate_q_from_lq(
 	std::vector<mutable_data_type> tau_lq_data(k);
 
 	// Generate random data
-	unsigned int seed = 42;
+	const unsigned int seed = 42;
 	std::mt19937 gen(seed);
 	std::uniform_real_distribution<real_data_type> dist{1.0, 2.0};
 
 	// Initialize A with random entries
-	std::generate(begin(a_lq_data), end(a_lq_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { a_lq_data }, gen, dist);
 
 	// Create temporary matrix for LQ factorization
 	auto a_original = general_matrix{ matrix_base{ a_lq_data.data(), m, n, pctx_base.a.cntg_step(), pctx_base.a.strd_step()} };
 
 	// Initialize random tau vector
-	std::generate(begin(tau_lq_data), end(tau_lq_data), [&] {
-		if constexpr (is_complex_v<mutable_data_type>) {
-			return mutable_data_type{ dist(gen), dist(gen) };
-		}
-		else {
-			return dist(gen);
-		}
-	});
+	fill_random(std::span { tau_lq_data }, gen, dist);
 
 	auto tau_original = general_matrix{ matrix_base{ tau_lq_data.data(), k, 1, 1, 1 } };
 

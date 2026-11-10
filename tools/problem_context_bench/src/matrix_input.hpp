@@ -10,6 +10,10 @@
  * Create matrices for the benchmark. Read their dimensions and layout from
  * JSON, allocate their data, and fill the data with random values.
  *
+ * Use fill_random() to fill the allocated data.
+ * make_matrix_data() chooses the seed, value range, and allocation size.
+ * For low-precision types, generate fp32 values and then convert them.
+ *
  * To add a matrix form:
  * - Read its JSON fields and construct its view in parse_matrix_as() below.
  * - Add its JSON name to matrix_signature_for() in context_dispatch.hpp.
@@ -21,15 +25,15 @@
 #include "perflibs_complex.hpp"
 #include "perflibs_float.hpp"
 #include "perflibs_util.hpp"
+#include "random_data.hpp"
 #include "framework/linalg_blas_types.hpp"
 #include "matrix/matrix.hpp"
 
 #include <nlohmann/json.hpp>
 
-#include <algorithm>
-#include <iterator>
 #include <memory>
 #include <random>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -86,14 +90,7 @@ auto make_matrix_data(const matrix_dimensions& dimensions) {
 	std::mt19937 gen { std::random_device{}() };
 	std::uniform_real_distribution<distribution_type> dist {1.0, 2.0};
 
-	std::generate(begin(*data_ptr), end(*data_ptr), [&] {
-		if constexpr(is_complex_v<DataType>) {
-			return DataType { dist(gen), dist(gen) };
-		}
-		else {
-			return static_cast<DataType>(dist(gen));
-		}
-	});
+	fill_random(std::span { *data_ptr }, gen, dist);
 
 	return data_ptr;
 }
