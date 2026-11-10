@@ -98,15 +98,6 @@ auto make_matrix_data(const matrix_dimensions& dimensions) {
 	return data_ptr;
 }
 
-/*
- * Call dispatch(matrix, data_ptr) before this function returns.
- * matrix is a view: it points to the values but does not own them.
- * data_ptr owns the vector; destroying data_ptr frees the values.
- *
- * Pass data_ptr along with the matrix through each callback. The callback
- * that runs the benchmark must keep data_ptr alive until the benchmark ends.
- * Keeping only the matrix view would leave it pointing to freed memory.
- */
 template<typename Matrix, typename Dispatch>
 auto parse_matrix_as(const nlohmann::json& j, Dispatch dispatch) {
 	const auto dimensions = parse_matrix_dimensions(j);
