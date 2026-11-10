@@ -5,8 +5,10 @@
 
 #include "benchmark_io.hpp"
 #include "json_optional.hpp"
+#include "perflibs_util.hpp"
 #include "statistics_json.hpp"
 
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -33,7 +35,18 @@ bench_settings parse_bench_settings(const nlohmann::json& j, std::size_t n_strat
 		return std::pair { strategy_index, strategy_index + 1uz };
 	}();
 
-	return { pre_runs, nruns, niters, target_secs, std::move(ignore), first_strategy, last_strategy };
+	return { { pre_runs, nruns, niters, target_secs }, std::move(ignore), first_strategy, last_strategy };
+}
+
+bench_result make_bench_result(const measurement_result& measurement, double nflops) {
+	const auto& time = measurement.time;
+	return {
+		measurement.success,
+		measurement.out_of_time,
+		time,
+		time.n > 0 ? (nflops / time) / 1e6 : time,
+		std::max(0., nflops / measurement.min_time) / 1e6
+	};
 }
 
 nlohmann::json make_bench_output(const nlohmann::json& j) {

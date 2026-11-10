@@ -6,7 +6,7 @@
 #ifndef PERFLIBS_PCTX_BENCHMARK_IO_HPP
 #define PERFLIBS_PCTX_BENCHMARK_IO_HPP
 
-#include "perflibs_util.hpp"
+#include "measurement.hpp"
 #include <nlohmann/json.hpp>
 #include "statistics.hpp"
 
@@ -17,10 +17,7 @@
 namespace perflibs::linalg {
 
 struct bench_settings {
-	kernel_inttype pre_runs;
-	kernel_inttype nruns;
-	kernel_inttype niters;
-	double target_secs;
+	measurement_settings measurement;
 	std::vector<bool> ignore;
 	std::size_t first_strategy;
 	std::size_t last_strategy;
@@ -35,6 +32,7 @@ struct bench_result {
 };
 
 bench_settings parse_bench_settings(const nlohmann::json& j, std::size_t n_strategies);
+bench_result make_bench_result(const measurement_result& measurement, double nflops);
 nlohmann::json make_bench_output(const nlohmann::json& j);
 void append_bench_result(nlohmann::json& output, std::size_t index, std::string_view name,
 	const bench_result& result);

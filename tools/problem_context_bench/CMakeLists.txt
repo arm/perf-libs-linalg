@@ -21,7 +21,6 @@ add_custom_command(
 add_executable(problem_context_bench
   src/problem_context_bench.cpp
   src/benchmark_io.cpp
-  src/statistics.cpp
   "${_supported_compute_header}"
 )
 target_include_directories(problem_context_bench PRIVATE
@@ -30,6 +29,7 @@ target_include_directories(problem_context_bench PRIVATE
 )
 
 target_link_libraries(problem_context_bench PRIVATE
+  benchmark_common
   pl_linalg
   linalg_core
   nlohmann_json::nlohmann_json

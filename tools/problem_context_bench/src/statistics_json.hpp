@@ -12,20 +12,6 @@
 namespace perflibs {
 	template<>
 	struct json_impl<statistics::normal_distribution> {
-		static inline std::optional<statistics::normal_distribution> from_json(const nlohmann::json &j) {
-			auto type = perflibs::from_json<std::string>(j, "type");
-			if (!type || *type != "normal_distribution") {
-				return {};
-			}
-			auto mean = perflibs::from_json<double>(j, "mean");
-			auto stddev = perflibs::from_json<double>(j, "stddev");
-			auto n = perflibs::from_json<double>(j, "n");
-			if (!mean || !stddev || !n) {
-				return {};
-			}
-			return { statistics::normal_distribution{ *mean, *stddev, *n }};
-		}
-
 		static inline nlohmann::json to_json(const statistics::normal_distribution &v) {
 			auto j = nlohmann::json::object_t{};
 			j["type"] = "normal_distribution";

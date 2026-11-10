@@ -13,63 +13,6 @@
 namespace perflibs {
 
 /**
- * Get the number of floating-point operations that must be done for each
- * matrix element of the output of BLAS operations.
- *
- * @tparam T        The working precision of the operation (complex arithmetic
- *                  requires more FLOPs).
- * @tparam Talpha   The datatype of the alpha parameter. This can be different
- *                  than T such as in CHPR.
- * @tparam Tbeta    The datatype of the beta parameter. This can be different
- *                  than T such as in CHERK.
- * @param[in] k     The accumulating dimension of the problem.
- * @param[in] alpha The alpha parameter. If alpha is zero/one, skip/add
- *                  FLOP counts accordingly.
- * @param[in] beta  The beta parameter. If beta is zero/one, skip/add
- *                  FLOP counts accordingly.
- */
-template<typename T, typename Talpha, typename Tbeta>
-inline std::int64_t get_nflops_limit(const std::int64_t k,
-                                     const Talpha alpha, const Tbeta beta) {
-	const int op_tol_mod_add = is_complex_v<T> ? 2 : 1;
-	const int op_tol_mod_mul = is_complex_v<T> ? 6 : 1;
-	const int op_tol_mod_mla = is_complex_v<T> ? 8 : 2;
-
-	const bool is_alpha_zero = alpha == Talpha(0);
-	const bool is_alpha_one  = alpha == Talpha(1);
-	const bool is_beta_zero  = beta  == Tbeta(0);
-	const bool is_beta_one   = beta  == Tbeta(1);
-
-	std::int64_t nflops = 0;
-	if (!is_alpha_zero && k>0) {
-		// k-1 multiply-accumulate
-		nflops += op_tol_mod_mla * (k-1);
-		// the first one should be a multiply rather than a multiply-accumulate
-		nflops += op_tol_mod_mul;
-		if (!is_alpha_one) {
-			// If T is real, then this always evaluate to 1 which is correct.
-			// If T and Talpha is complex, then we add 6 FLOPs for multiplication of
-			// complex numbers.
-			// If T is complex and Talpha is real, then we add 2 FLOPs for multiplication
-			// of complex with real numbers.
-			nflops += is_complex_v<Talpha> ? op_tol_mod_mul : op_tol_mod_add;
-		}
-	}
-
-	if (!is_beta_zero) {
-		if (!is_beta_one) {
-			// same as the case with !is_alpha_one above
-			nflops += is_complex_v<Tbeta> ? op_tol_mod_mul : op_tol_mod_add;
-		}
-		if (!is_alpha_zero) {
-			nflops += op_tol_mod_add;
-		}
-	}
-
-	return nflops;
-}
-
-/**
  * Get the number of floating-point operations that must be done to complete a
  * particular level-3 BLAS operation. Note that you can emulate level-1 and
  * level-2 BLAS functions by setting certain dimensions of the problem to 1 (or
