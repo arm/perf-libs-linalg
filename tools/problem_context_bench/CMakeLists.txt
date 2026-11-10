@@ -21,6 +21,7 @@ add_custom_command(
 add_executable(problem_context_bench
   src/problem_context_bench.cpp
   src/benchmark_io.cpp
+  src/context_runner.cpp
   "${_supported_compute_header}"
 )
 target_include_directories(problem_context_bench PRIVATE
