@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add CBLAS interface and tests.
 - Add option `LINALG_LAPACK_FALLBACK` to enable full LAPACK and LAPACKE support.
 - Add double-precision interleaved-batch BLAS and factorization routines.
+- Add detection for Arm AGI CPU and Neoverse N4.
 - Add `problem_context_bench` for benchmarking individual strategies.
 - Support runtime tuning overrides through JSON.
 - Add optional AddressSanitizer builds.

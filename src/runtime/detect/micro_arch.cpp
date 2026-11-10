@@ -25,12 +25,13 @@ struct micro_arch_entry {
 // (PL_LINALG_TARGET) and MIDR-based hardware detection.
 constexpr micro_arch_entry micro_arch_table[] = {
 	{ micro_arch::neoverse_n1,    "PL_LINALG_NEOVERSE_N1",    0x41, 0xd0c, false },
-	{ micro_arch::neoverse_v1,    "PL_LINALG_NEOVERSE_V1",    0x41, 0xd40,  true },
 	{ micro_arch::neoverse_n2,    "PL_LINALG_NEOVERSE_N2",    0x41, 0xd49,  true },
 	{ micro_arch::neoverse_n3,    "PL_LINALG_NEOVERSE_N3",    0x41, 0xd8e,  true },
+	{ micro_arch::neoverse_n4,    "PL_LINALG_NEOVERSE_N4",    0x41, 0xd94,  true },
+	{ micro_arch::neoverse_v1,    "PL_LINALG_NEOVERSE_V1",    0x41, 0xd40,  true },
 	{ micro_arch::neoverse_v2,    "PL_LINALG_NEOVERSE_V2",    0x41, 0xd4f,  true },
-	{ micro_arch::neoverse_v3,    "PL_LINALG_NEOVERSE_V3",    0x41, 0xd83,  true }, // V3AE
 	{ micro_arch::neoverse_v3,    "PL_LINALG_NEOVERSE_V3",    0x41, 0xd84,  true }, // V3
+	{ micro_arch::neoverse_v3ae,  "PL_LINALG_NEOVERSE_V3AE",  0x41, 0xd83,  true }, // V3AE
 	{ micro_arch::ampere_one,     "PL_LINALG_AMPERE_ONE",     0xc0, 0xac3, false },
 	{ micro_arch::fujitsu_monaka, "PL_LINALG_FUJITSU_MONAKA", 0x46, 0x003,  true },
 };

@@ -38,6 +38,9 @@ enum class system {
 	v3_c9g,
 	v3_cobalt200,
 
+	// Neoverse V3AE
+	v3ae_agi,
+
 	// Ampere One
 	ampere_one_gcp,
 

@@ -14,8 +14,10 @@ enum class micro_arch {
 	neoverse_v1,
 	neoverse_n2,
 	neoverse_n3,
+	neoverse_n4,
 	neoverse_v2,
 	neoverse_v3,
+	neoverse_v3ae,
 	ampere_one,
 	fujitsu_monaka,
 };

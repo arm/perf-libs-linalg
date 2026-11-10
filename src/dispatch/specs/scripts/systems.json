@@ -52,6 +52,9 @@
 	"v3_cobalt200": {
 		"architecture": "sve"
 	},
+	"v3ae_agi": {
+		"architecture": "sve"
+	},
 	"fujitsu_monaka": {
 		"architecture": "sve"
 	}

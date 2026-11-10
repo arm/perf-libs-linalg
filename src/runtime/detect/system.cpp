@@ -40,6 +40,8 @@ constexpr std::pair<system, std::string_view> names[]{
 	{ system::v3_c9g,            "Neoverse V3 (AWS, c9g)"                        },
 	{ system::v3_cobalt200,      "Neoverse V3 (Microsoft Azure Cobalt 200)"      },
 
+	{ system::v3ae_agi,          "Neoverse V3AE (Arm AGI CPU)"                   },
+
 	{ system::ampere_one_gcp,    "Ampere One (GCP)"                              },
 
 	{ system::apple_m1,          "Apple M1 (generic)"                            },
@@ -97,9 +99,10 @@ system get_system_impl() {
 	case micro_arch::generic_sve:
 	case micro_arch::neoverse_v1: return system::v1_c7g;
 
-	// Neoverse N3 uses N2 settings for now
+	// Neoverse N3 and N4 use N2 settings for now
 	case micro_arch::neoverse_n2:
-	case micro_arch::neoverse_n3: {
+	case micro_arch::neoverse_n3:
+	case micro_arch::neoverse_n4: {
 		return system::n2_cobalt100;
 	}
 
@@ -123,6 +126,8 @@ system get_system_impl() {
 		// Fall back to AWS Graviton5
 		return system::v3_c9g;
 	}
+
+	case micro_arch::neoverse_v3ae: return system::v3ae_agi;
 
 	case micro_arch::ampere_one: return system::ampere_one_gcp;
 

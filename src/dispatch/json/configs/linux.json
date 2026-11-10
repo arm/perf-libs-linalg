@@ -19,11 +19,12 @@
 				"v1_c7g": {},
 				"v2_axion": {"inherit": "v2_c8g"},
 				"v2_c8g": {},
-				"v3_c9g": {},
 				"v2_grace": {},
 				"n2_cobalt100": {},
 				"n2_y710": {"inherit": "n2_cobalt100"},
+				"v3_c9g": {},
 				"v3_cobalt200": {"inherit": "v2_c8g"},
+				"v3ae_agi": {"inherit": "v3_c9g"},
 				"n3_axion": {"inherit": "n2_cobalt100"},
 				"fujitsu_monaka": {"inherit": "v1_c7g"}
 			},
