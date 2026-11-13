@@ -19,6 +19,7 @@ It provides a full BLAS/CBLAS interface and a subset of LAPACK routines, using s
 ## Support and Limitations
 
 - Linux and macOS on AArch64 are supported build/test platforms.
+- Experimental Android arm64-v8a cross-compilation is available. See [Android build instructions](docs/android.md).
 - Windows AArch64 support is experimental and assumes LLVM/Clang in a [wenv](https://gitlab.com/Linaro/windowsonarm/wenv)/MSYS2-style environment.
 - BLAS, CBLAS, and selected LAPACK routines are provided by default.
 - Enable `LINALG_LAPACK_FALLBACK` for full LAPACK and LAPACKE support.

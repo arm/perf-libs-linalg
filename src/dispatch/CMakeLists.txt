@@ -106,6 +106,15 @@ if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET)
   list(PREPEND _dispatch_make_cxx_flags
       "-mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}")
 endif()
+if(ANDROID)
+  if(NOT CMAKE_CXX_COMPILER_TARGET OR NOT CMAKE_SYSROOT)
+    message(FATAL_ERROR
+        "The Android dispatch build requires CMAKE_CXX_COMPILER_TARGET and CMAKE_SYSROOT")
+  endif()
+  list(PREPEND _dispatch_make_cxx_flags
+      "--target=${CMAKE_CXX_COMPILER_TARGET}"
+      "--sysroot=${CMAKE_SYSROOT}")
+endif()
 if(CMAKE_CXX_FLAGS)
   list(PREPEND _dispatch_make_cxx_flags "${CMAKE_CXX_FLAGS}")
 endif()
