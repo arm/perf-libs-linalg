@@ -1,4 +1,4 @@
-# Android arm64 build
+# Android arm64 build and test
 
 Cross-compile perf-libs-linalg for Android arm64 using the Android Native
 Development Kit (NDK) and Flang. Before configuring the build, set
@@ -47,3 +47,22 @@ statically instead. Choose a runtime consistent with the application's other
 native libraries; avoid linking separate copies of the static C++ runtime into
 multiple shared libraries. See the [NDK C++ runtime
 guidance](https://developer.android.com/ndk/guides/cpp-support).
+
+## Build the tests
+
+Configure each build with `-DBUILD_TESTING=ON` and
+`-DLINALG_ANDROID_FLANG_RUNTIME_LIBRARIES=/path/to/libflang_rt.runtime.a`. Use a
+Flang runtime built for Android arm64, not the host runtime. The archive is
+linked into the test executables and does not need to be copied to the
+device. If you select a shared Flang runtime instead, copy the supplied shared
+libraries to the device alongside the test executables.
+
+The install step does not copy test executables, test inputs, or runtime
+libraries. To run the BLAS tests through ADB, copy the `xblat*` executables
+from the build's `netlib/tests/blas` directory and the `.in` files from
+`BLAS/TESTING` in the fetched Reference-LAPACK source tree. Also copy
+`libpl_linalg.so` for shared library builds, `libc++_shared.so` when using
+`ANDROID_STL=c++_shared`, and `libomp.so` for OpenMP builds. Set
+`LD_LIBRARY_PATH` to the device directory containing the shared libraries.
+Level 1 tests do not require input files;
+redirect the corresponding `.in` file to standard input for Level 2 and 3 tests.

@@ -1,0 +1,50 @@
+Keep LAPACK and LAPACKE executables available without registering Android host tests.
+
+--- a/TESTING/CMakeLists.txt
++++ b/TESTING/CMakeLists.txt
+@@ -13,6 +13,7 @@
+ add_subdirectory(LIN)
+ add_subdirectory(EIG)
+ 
++if(NOT ANDROID)
+ 
+ # Only run this test if python 3 is found
+ if(PYTHON_EXECUTABLE AND LAPACK_TESTING_USE_PYTHON)
+@@ -193,2 +194,3 @@
+   add_lapack_test(zctest.out zctest.in xlintstzc)
+ endif()
++endif()
+--- a/LAPACKE/example/CMakeLists.txt
++++ b/LAPACKE/example/CMakeLists.txt
+@@ -8,10 +8,12 @@
+ target_link_libraries(xexample_DGELS_rowmajor ${LAPACKELIB} ${BLAS_LIBRARIES})
+ target_link_libraries(xexample_DGELS_colmajor ${LAPACKELIB} ${BLAS_LIBRARIES})
+ 
++if(NOT ANDROID)
+-add_test(example_DGESV_rowmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_rowmajor)
+-add_test(example_DGESV_colmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_colmajor)
+-add_test(example_DGELS_rowmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_rowmajor)
+-add_test(example_DGELS_colmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_colmajor)
++  add_test(example_DGESV_rowmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_rowmajor)
++  add_test(example_DGESV_colmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_colmajor)
++  add_test(example_DGELS_rowmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_rowmajor)
++  add_test(example_DGELS_colmajor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_colmajor)
++endif()
+ 
+ if(BUILD_INDEX64_EXT_API)
+   add_executable(xexample_DGESV_rowmajor_64 example_DGESV_rowmajor_64.c lapacke_example_aux.c lapacke_example_aux.h)
+@@ -23,8 +25,10 @@
+   target_link_libraries(xexample_DGELS_rowmajor_64 ${LAPACKELIB} ${BLAS_LIBRARIES})
+   target_link_libraries(xexample_DGELS_colmajor_64 ${LAPACKELIB} ${BLAS_LIBRARIES})
+ 
++  if(NOT ANDROID)
+-  add_test(example_DGESV_rowmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_rowmajor_64)
+-  add_test(example_DGESV_colmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_colmajor_64)
+-  add_test(example_DGELS_rowmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_rowmajor_64)
+-  add_test(example_DGELS_colmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_colmajor_64)
++    add_test(example_DGESV_rowmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_rowmajor_64)
++    add_test(example_DGESV_colmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGESV_colmajor_64)
++    add_test(example_DGELS_rowmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_rowmajor_64)
++    add_test(example_DGELS_colmajor_64 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xexample_DGELS_colmajor_64)
++  endif()
+ endif()

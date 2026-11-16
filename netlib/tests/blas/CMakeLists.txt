@@ -11,9 +11,11 @@ function(add_blas_test name src)
   add_executable(${name} "${BLAS_TEST_SOURCE_DIR}/${src}")
   set_target_properties(${name} PROPERTIES LINKER_LANGUAGE Fortran)
   target_link_libraries(${name} PRIVATE netlib_fortran_options pl_linalg)
-  add_test(NAME netlib-blas-${name} COMMAND "${CMAKE_COMMAND}"
-    "-DTEST=$<TARGET_FILE:${name}>" ${input_argument}
-    -P "${CMAKE_CURRENT_SOURCE_DIR}/runtest.cmake")
+  if(NOT ANDROID)
+    add_test(NAME netlib-blas-${name} COMMAND "${CMAKE_COMMAND}"
+      "-DTEST=$<TARGET_FILE:${name}>" ${input_argument}
+      -P "${CMAKE_CURRENT_SOURCE_DIR}/runtest.cmake")
+  endif()
 endfunction()
 
 foreach(precision s d c z)

@@ -22,7 +22,8 @@ set(_lapack_patches
   "${PROJECT_SOURCE_DIR}/netlib/patches/blas-reference-symbols.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/blas-nan-propagation.patch"
   "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-test-failure-reporting.patch"
-  "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-test-exclusions.patch")
+  "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-test-exclusions.patch"
+  "${PROJECT_SOURCE_DIR}/netlib/patches/lapack-android-test-registration.patch")
 set(_lapack_patch_hash "")
 foreach(_patch IN LISTS _lapack_patches)
   file(SHA256 "${_patch}" _hash)

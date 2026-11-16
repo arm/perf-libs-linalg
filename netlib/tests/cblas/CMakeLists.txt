@@ -19,8 +19,10 @@ foreach(precision s d c z)
       "${CBLAS_TEST_SOURCE_DIR}/../include" "${cblas_private_include_dir}")
     target_link_libraries(${name} PRIVATE netlib_fortran_options pl_linalg)
 
-    add_test(NAME netlib-cblas-${name} COMMAND "${CMAKE_COMMAND}"
-      "-DTEST=$<TARGET_FILE:${name}>" ${input_argument}
-      -P "${CMAKE_CURRENT_SOURCE_DIR}/runtest.cmake")
+    if(NOT ANDROID)
+      add_test(NAME netlib-cblas-${name} COMMAND "${CMAKE_COMMAND}"
+        "-DTEST=$<TARGET_FILE:${name}>" ${input_argument}
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/runtest.cmake")
+    endif()
   endforeach()
 endforeach()
