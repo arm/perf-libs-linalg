@@ -29,11 +29,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - Fix a data race in parallel QR factorization.
+- Fix non-real diagonal entries in complex QR factorization.
+- Fix complex Householder overflow/underflow with older libc++.
+- Return a valid workspace size for ORGQR and UNGQR on empty matrices.
 - Fix excessive memory use in parallel GEMM.
 - Fix incorrect results in parallel WAXPBY.
 - Fix integer overflow in ILP64 ROTM.
 - Prevent spurious parameter errors in TRSV.
 - Respect thread throttling in parallel POTRF.
+- Allow XERBLA overrides on macOS and Windows.
 
 ## [26.07]
 
