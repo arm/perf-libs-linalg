@@ -10,6 +10,7 @@ It provides a full BLAS/CBLAS interface and a subset of LAPACK routines, using s
 - A toolchain with the required C++ and AArch64 ISA support
   - supported build compilers: GCC 14 and LLVM/Clang 22
   - assembler support is required for `+sve`, `+fp16`, `+bf16`, and `+sme2`
+  - compiler runtime support for the SME ABI
   - other C++23-capable compilers may work
 - A Fortran compiler for the Netlib reference sources
 - Python 3.10 or newer with Mako and NumPy
