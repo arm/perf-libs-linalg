@@ -1,0 +1,53 @@
+/*
+ * SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
+ */
+
+#ifndef PERFLIBS_LINALG_FACTORIZATION_STRATEGIES_LU_NO_PIVOT_NON_RECURSIVE_HPP
+#define PERFLIBS_LINALG_FACTORIZATION_STRATEGIES_LU_NO_PIVOT_NON_RECURSIVE_HPP
+
+#include "matrix/matrix.hpp"
+#include "spec/problem_context.hpp"
+#include "packages/factorization/problem_context_bases.hpp"
+#include "packages/factorization/kernels/lu_unblocked_no_pivot_kernel.hpp"
+
+#include <string_view>
+
+namespace perflibs::linalg::factorization {
+
+class lu_no_pivot_non_recursive {
+
+	template<typename ADataType, typename IntType, typename ArchitectureSpec>
+	using lu_no_pivot_non_recursive_pctx_t = spec::problem_context<
+		lu_factorization_no_pivot<general_matrix<matrix_base<ADataType>>, IntType>,
+		ArchitectureSpec
+	>;
+
+public:
+	static constexpr std::string_view name() { return "lu_no_pivot_non_recursive"; }
+
+	template<typename ADatatype, typename IntType, typename ArchitectureSpec>
+	PERFLIBS_LINALG_INLINE
+	bool operator()(const lu_no_pivot_non_recursive_pctx_t<ADatatype, IntType, ArchitectureSpec>& pctx) const {
+		if (!can_compute(pctx)) return false;
+
+		lu_unblocked_no_pivot_kernel<ArchitectureSpec>(pctx.a.cntg(), pctx.a.strd(), pctx.a.data(), pctx.a.strd_step(), pctx.info);
+		return true;
+	}
+
+	template<typename ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool operator()(const ProblemContext&) const { return false; }
+
+	template<typename ADatatype, typename IntType, typename ArchitectureSpec>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool can_compute(const lu_no_pivot_non_recursive_pctx_t<ADatatype, IntType, ArchitectureSpec>& pctx) const {
+		return true;
+	}
+
+	template<typename ProblemContext>
+	PERFLIBS_LINALG_INLINE
+	constexpr bool can_compute(const ProblemContext&) const { return false; }
+}; // class lu_no_pivot_non_recursive
+} // namespace perflibs::linalg::factorization
+
+#endif // PERFLIBS_LINALG_FACTORIZATION_STRATEGIES_LU_NO_PIVOT_NON_RECURSIVE_HPP

@@ -47,6 +47,16 @@ struct lu_panel_update {
 
 }; // lu_panel_update
 
+// LU Factorization without pivoting (stops at the first exactly zero pivot)
+template<typename MatrixType, typename IntType>
+struct lu_factorization_no_pivot {
+	using matrix_type = MatrixType;
+	using int_type    = IntType;
+
+	matrix_type a;
+	int_type&   info;
+}; // struct lu_factorization_no_pivot
+
 // Cholesky Factorization
 template<typename MatrixType, typename IntType>
 struct cholesky_factorization {
@@ -329,6 +339,12 @@ struct generate_q_from_lq {
 template<typename... Args>
 PERFLIBS_LINALG_INLINE
 kernel_inttype pctx_scale(const lu_factorization<Args...>& pctx) {
+	return min(pctx.a.cntg(), pctx.a.strd());
+}
+
+template<typename... Args>
+PERFLIBS_LINALG_INLINE
+kernel_inttype pctx_scale(const lu_factorization_no_pivot<Args...>& pctx) {
 	return min(pctx.a.cntg(), pctx.a.strd());
 }
 
