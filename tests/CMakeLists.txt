@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
 
-foreach(_test getrfnp)
+foreach(_test getrfnp spffrt)
   add_executable(${_test}_test ${_test}_test.cpp)
   target_compile_features(${_test}_test PRIVATE cxx_std_17)
   target_link_libraries(${_test}_test PRIVATE pl_linalg)
