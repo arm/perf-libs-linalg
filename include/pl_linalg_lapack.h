@@ -79,6 +79,16 @@ void zungqr_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg
 void zunmlq_(const char *side, const char *trans, const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *k, const pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, const pl_linalg_doublecomplex_t *tau, pl_linalg_doublecomplex_t *c, const pl_linalg_int_t *ldc, pl_linalg_doublecomplex_t *work, const pl_linalg_int_t *lwork, pl_linalg_int_t *info, ... );
 void zunmqr_(const char *side, const char *trans, const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *k, const pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, const pl_linalg_doublecomplex_t *tau, pl_linalg_doublecomplex_t *c, const pl_linalg_int_t *ldc, pl_linalg_doublecomplex_t *work, const pl_linalg_int_t *lwork, pl_linalg_int_t *info, ... );
 
+/* LAPACK-like extensions (also implemented in oneMKL and AOCL). */
+void cgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, pl_linalg_singlecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void cgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, pl_linalg_singlecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void dgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, double *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void dgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, double *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void sgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, float *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void sgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, float *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void zgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void zgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
