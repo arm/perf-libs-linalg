@@ -39,6 +39,7 @@ change, the testing performed, and any relevant performance considerations.
 - `src/runtime/`: CPU and system detection.
 - `src/dispatch/`: runtime dispatch code and checked-in dispatch data.
 - `netlib/`: imported Netlib reference sources and BLAS test suite.
+- `tests/`: unit tests for library routines, registered with CTest.
 
 The public BLAS and LAPACK routine interfaces translate arguments into typed problem contexts. Those contexts are resolved through strategy selection and system-specific dispatch to shared strategies and optimized kernels.
 
