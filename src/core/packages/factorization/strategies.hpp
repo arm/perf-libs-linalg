@@ -19,6 +19,8 @@
 #include "packages/factorization/strategies/lu_panel_update.hpp"
 #include "packages/factorization/strategies/lu_no_pivot_non_recursive.hpp"
 #include "packages/factorization/strategies/lu_no_pivot_recursive.hpp"
+#include "packages/factorization/strategies/ldl_no_pivot_packed_blocked.hpp"
+#include "packages/factorization/strategies/ldl_no_pivot_packed_unblocked.hpp"
 #include "packages/factorization/strategies/cholesky_sequential.hpp"
 #include "packages/factorization/strategies/cholesky_non_recursive.hpp"
 #include "packages/factorization/strategies/cholesky_parallel.hpp"
@@ -74,6 +76,12 @@ template<typename... T, typename ArchitectureSpec>
 constexpr auto strategies<spec::problem_context<factorization::lu_factorization_no_pivot<T...>, ArchitectureSpec>> = std::tuple{
     factorization::lu_no_pivot_recursive{},
     factorization::lu_no_pivot_non_recursive{},
+};
+
+template<typename... T, typename ArchitectureSpec>
+constexpr auto strategies<spec::problem_context<factorization::ldl_factorization_no_pivot_packed<T...>, ArchitectureSpec>> = std::tuple{
+    factorization::ldl_no_pivot_packed_blocked{},
+    factorization::ldl_no_pivot_packed_unblocked{},
 };
 
 // Cholesky
@@ -177,6 +185,10 @@ void compute(const spec::problem_context<lu_panel_update<T...>, ArchitectureSpec
 template<typename... T, typename ArchitectureSpec>
 __attribute__((noinline))
 void compute(const spec::problem_context<lu_factorization_no_pivot<T...>, ArchitectureSpec>& pctx) { return compute_impl(pctx); }
+
+template<typename... T, typename ArchitectureSpec>
+__attribute__((noinline))
+void compute(const spec::problem_context<ldl_factorization_no_pivot_packed<T...>, ArchitectureSpec>& pctx) { return compute_impl(pctx); }
 
 template<typename... T, typename ArchitectureSpec>
 __attribute__((noinline))

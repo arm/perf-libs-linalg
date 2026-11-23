@@ -26,6 +26,7 @@ class generate_q_from_qr_generic;
 class apply_q_from_lq_generic;
 class generate_q_from_lq_generic;
 class lu_factorization_no_pivot_generic;
+class ldl_factorization_no_pivot_packed_generic;
 
 template<typename... T, typename ArchitectureSpec>
 void compute(const spec::problem_context<lu_factorization<T...>, ArchitectureSpec>&);
@@ -37,6 +38,8 @@ template<typename... T, typename ArchitectureSpec>
 void compute(const spec::problem_context<lu_panel_update<T...>, ArchitectureSpec>&);
 template<typename... T, typename ArchitectureSpec>
 void compute(const spec::problem_context<lu_factorization_no_pivot<T...>, ArchitectureSpec>&);
+template<typename... T, typename ArchitectureSpec>
+void compute(const spec::problem_context<ldl_factorization_no_pivot_packed<T...>, ArchitectureSpec>&);
 
 template<typename... T, typename ArchitectureSpec>
 void compute(const spec::problem_context<cholesky_factorization<T...>, ArchitectureSpec>&);
