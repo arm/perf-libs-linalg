@@ -82,12 +82,20 @@ void zunmqr_(const char *side, const char *trans, const pl_linalg_int_t *m, cons
 /* LAPACK-like extensions (also implemented in oneMKL and AOCL). */
 void cgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, pl_linalg_singlecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
 void cgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, pl_linalg_singlecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void cspffrt2_(pl_linalg_singlecomplex_t *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, pl_linalg_singlecomplex_t *work, pl_linalg_singlecomplex_t *work2);
+void cspffrtx_(pl_linalg_singlecomplex_t *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, pl_linalg_singlecomplex_t *work, pl_linalg_singlecomplex_t *work2);
 void dgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, double *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
 void dgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, double *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void dspffrt2_(double *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, double *work, double *work2);
+void dspffrtx_(double *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, double *work, double *work2);
 void sgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, float *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
 void sgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, float *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void sspffrt2_(float *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, float *work, float *work2);
+void sspffrtx_(float *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, float *work, float *work2);
 void zgetrfnp_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
 void zgetrfnpi_(const pl_linalg_int_t *m, const pl_linalg_int_t *n, const pl_linalg_int_t *nfact, pl_linalg_doublecomplex_t *a, const pl_linalg_int_t *lda, pl_linalg_int_t *info);
+void zspffrt2_(pl_linalg_doublecomplex_t *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, pl_linalg_doublecomplex_t *work, pl_linalg_doublecomplex_t *work2);
+void zspffrtx_(pl_linalg_doublecomplex_t *ap, const pl_linalg_int_t *n, const pl_linalg_int_t *ncolm, pl_linalg_doublecomplex_t *work, pl_linalg_doublecomplex_t *work2);
 
 #ifdef __cplusplus
 }
