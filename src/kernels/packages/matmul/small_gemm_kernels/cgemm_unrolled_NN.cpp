@@ -8,9 +8,9 @@
 namespace perflibs { namespace gemm {
 
 void cgemm_unrolled_NN(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k, const std::complex<float> alpha,
-                       const std::complex<float> * restrict A, const size_t lda,
-                       const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-                       std::complex<float> * restrict C, const size_t ldc) {
+                       const std::complex<float> * restrict A, const kernel_inttype lda,
+                       const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+                       std::complex<float> * restrict C, const kernel_inttype ldc) {
 	if (m % 8 == 0) {
 		if (n % 2 == 0 && k % 2 == 0) {
 			cgemm_unrolled_kernel<'N', 'N', 2, 8, 2>(m, n, k, alpha, A, lda, B, ldb, beta, C, ldc);

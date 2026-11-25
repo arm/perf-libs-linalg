@@ -11,10 +11,10 @@
 
 #include "cgemm_unrolled_address_calculation.hpp"
 
-static void impl(const int_type m, const int_type n, const int_type k,
-		const std::complex<float> alpha_, const std::complex<float> * restrict A, const size_t lda,
-		const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-		std::complex<float> * restrict C, const size_t ldc) {
+static void impl(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k,
+		const std::complex<float> alpha_, const std::complex<float> * restrict A, const kernel_inttype lda,
+		const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+		std::complex<float> * restrict C, const kernel_inttype ldc) {
 
 	constexpr int_type unrollm_ = unrollm / 4;
 
@@ -25,8 +25,8 @@ static void impl(const int_type m, const int_type n, const int_type k,
 
 	const bool beta_zero =   beta.real() == float(0.0)   &&   beta.imag() == float(0.0);
 
-	for (int_type in = 0; in < n; in+=unrolln) {
-		for (int_type im=0; im < m; im+=4*unrollm_) {
+	for (kernel_inttype in = 0; in < n; in+=unrolln) {
+		for (kernel_inttype im=0; im < m; im+=4*unrollm_) {
 			float32x4_t cr0_re[unrollm_*unrolln];
 			float32x4_t cr0_im[unrollm_*unrolln];
 
@@ -37,7 +37,7 @@ static void impl(const int_type m, const int_type n, const int_type k,
 				}
 			}
 
-			for (int_type ik = 0; ik < k; ik+=unrollk) {
+			for (kernel_inttype ik = 0; ik < k; ik+=unrollk) {
 				float32x4_t ar_re[unrollk*unrollm_];
 				float32x4_t ar_im[unrollk*unrollm_];
 				float32x2_t br[unrollk*unrolln];

@@ -21,9 +21,9 @@ constexpr int max_unroll_cubed = max_unroll*max_unroll*max_unroll;
 template<char transa, char transb, bool beta_one, int unrolln, int unrollm, int unrollk, typename = void>
 struct cgemm_unrolled_impl {
 	static void impl(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k,
-				const std::complex<float> alpha, const std::complex<float> * restrict A, const size_t lda,
-				const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-				std::complex<float> * restrict C, const size_t ldc);
+				const std::complex<float> alpha, const std::complex<float> * restrict A, const kernel_inttype lda,
+				const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+				std::complex<float> * restrict C, const kernel_inttype ldc);
 };
 
 template<int unrolln, int unrollm, int unrollk>
@@ -36,9 +36,9 @@ struct cgemm_unrolled_impl<'N', 'N', true, unrolln, unrollm, unrollk, typename s
 template<int unrolln, int unrollm_, int unrollk>
 struct cgemm_unrolled_impl<'N', 'N', true, unrolln, unrollm_, unrollk, typename std::enable_if<(unrollm_ % 4 == 2)>::type> {
 	static void impl(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k,
-				const std::complex<float> alpha_, const std::complex<float> * restrict A, const size_t lda,
-				const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-				std::complex<float> * restrict C, const size_t ldc) {
+				const std::complex<float> alpha_, const std::complex<float> * restrict A, const kernel_inttype lda,
+				const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+				std::complex<float> * restrict C, const kernel_inttype ldc) {
 
 		constexpr kernel_inttype unrollm = unrollm_ / 2;
 
@@ -134,9 +134,9 @@ struct cgemm_unrolled_impl<'N', 'N', false, unrolln, unrollm, unrollk, typename 
 template<int unrolln, int unrollm_, int unrollk>
 struct cgemm_unrolled_impl<'N', 'N', false, unrolln, unrollm_, unrollk, typename std::enable_if<(unrollm_ % 4 == 2)>::type> {
 	static void impl(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k,
-				const std::complex<float> alpha, const std::complex<float> * restrict A, const size_t lda,
-				const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-				std::complex<float> * restrict C, const size_t ldc) {
+				const std::complex<float> alpha, const std::complex<float> * restrict A, const kernel_inttype lda,
+				const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+				std::complex<float> * restrict C, const kernel_inttype ldc) {
 
 		constexpr kernel_inttype unrollm = unrollm_ / 2;
 
@@ -393,9 +393,9 @@ struct cgemm_unrolled_impl<'C', 'C', true, unrolln, unrollm, unrollk> {
 
 template<char transa, char transb, int unrolln, int unrollm, int unrollk>
 static inline void cgemm_unrolled_kernel(const kernel_inttype m, const kernel_inttype n, const kernel_inttype k,
-			const std::complex<float> alpha, const std::complex<float> * restrict A, const size_t lda,
-			const std::complex<float> * restrict B, const size_t ldb, const std::complex<float> beta,
-			std::complex<float> * restrict C, const size_t ldc) {
+			const std::complex<float> alpha, const std::complex<float> * restrict A, const kernel_inttype lda,
+			const std::complex<float> * restrict B, const kernel_inttype ldb, const std::complex<float> beta,
+			std::complex<float> * restrict C, const kernel_inttype ldc) {
 	if (beta == 1.f) {
 		cgemm_unrolled_impl<transa, transb, true, unrolln, unrollm, unrollk>::impl(m, n, k, alpha, A, lda, B, ldb, beta, C, ldc);
 	} else {

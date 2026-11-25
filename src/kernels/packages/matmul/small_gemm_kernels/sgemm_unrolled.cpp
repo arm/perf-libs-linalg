@@ -50,7 +50,7 @@ void sgemm_unrolled_NN(const kernel_inttype m, const kernel_inttype n, const ker
 	int iunrollm = 1;
 	int iunrolln = 1;
 
-	int mquarter = m>>2;
+	kernel_inttype mquarter = m>>2;
 
 	for (int i = max_unrollNN; i > 0; i--) {
 		if (k_notset && k%i==0) {
@@ -133,7 +133,7 @@ void sgemm_unrolled_NT(const kernel_inttype m, const kernel_inttype n, const ker
 	int iunrollm = 1;
 	int iunrolln = 1;
 
-	int mquarter = m>>2;
+	kernel_inttype mquarter = m>>2;
 
 	for (int i = max_unrollNT; i > 0; i--) {
 		if (k_notset && k%i==0) {
@@ -216,7 +216,7 @@ void sgemm_unrolled_TN(const kernel_inttype m, const kernel_inttype n, const ker
 	int iunrollm = 1;
 	int iunrolln = 1;
 
-	int mquarter = m>>2;
+	kernel_inttype mquarter = m>>2;
 
 	for (int i = max_unrollTN; i > 0; i--) {
 		if (k_notset && k%i==0) {
@@ -299,7 +299,7 @@ void sgemm_unrolled_TT(const kernel_inttype m, const kernel_inttype n, const ker
 	int iunrollm = 1;
 	int iunrolln = 1;
 
-	int nquarter = n>>2;
+	kernel_inttype nquarter = n>>2;
 
 	for (int i = max_unrollTT; i > 0; i--) {
 		if (k_notset && k%i==0) {

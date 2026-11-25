@@ -27,9 +27,9 @@ void unrolled_kernel_NN_nkm(const kernel_inttype m, const kernel_inttype n, cons
 	float32x2_t beta_rs = {0};
 	beta_rs = vld1_lane_f32(&beta, beta_rs, 0);
 
-	for (int_type in = 0; in < n - (unrolln - 1); in+=unrolln) {
+	for (kernel_inttype in = 0; in < n - (unrolln - 1); in+=unrolln) {
 
-		for (int_type ik = 0; ik < k - (unrollk - 1); ik+=unrollk) {
+		for (kernel_inttype ik = 0; ik < k - (unrollk - 1); ik+=unrollk) {
 
 			const float32_t *b_ptr = &B[in*ldb + ik];
 
@@ -43,7 +43,7 @@ void unrolled_kernel_NN_nkm(const kernel_inttype m, const kernel_inttype n, cons
 			const float32_t *a_ptr = &A[ik*lda];
 			float32_t *c_ptr = &C[in*ldc];
 
-			for (int_type im = 0; im < m - (4*unrollm - 1); im+=4*unrollm) {
+			for (kernel_inttype im = 0; im < m - (4*unrollm - 1); im+=4*unrollm) {
 
 				if (ik > 0) { // if this is not the first iteration, simply load C
 					for (int iun =0; iun < unrolln; iun++) {
@@ -85,7 +85,7 @@ void unrolled_kernel_NN_nkm(const kernel_inttype m, const kernel_inttype n, cons
 
 			}
 
-			for (int_type im = m - (m%4); im < m; im++) {
+			for (kernel_inttype im = m - (m%4); im < m; im++) {
 
 				float32x2_t crs[unrolln] = {0};
 				float32x2_t ars[unrollk] = {0};

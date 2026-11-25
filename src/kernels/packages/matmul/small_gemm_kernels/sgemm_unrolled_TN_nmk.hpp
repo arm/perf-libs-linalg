@@ -27,15 +27,15 @@ void unrolled_kernel_TN_nmk(const kernel_inttype m, const kernel_inttype n, cons
 	float32x2_t beta_rs = {0};
 	beta_rs = vld1_lane_f32(&beta, beta_rs, 0);
 
-	for (int in=0; in<n - (unrolln - 1); in+=unrolln) {
+	for (kernel_inttype in=0; in<n - (unrolln - 1); in+=unrolln) {
 
-		for (int im=0; im<m - (4*unrollm - 1); im+=4*unrollm) {
+		for (kernel_inttype im=0; im<m - (4*unrollm - 1); im+=4*unrollm) {
 
 			float32_t *c_ptr = &C[in*ldc + im];
 
 			float32x4_t cr0[unrollm*unrolln] = {0};
 
-			for (int ik=0; ik<k - (unrollk - 1); ik+=unrollk) {
+			for (kernel_inttype ik=0; ik<k - (unrollk - 1); ik+=unrollk) {
 
 				for (int ium=0; ium<unrollm; ium++) {
 					for (int iuk=0; iuk<unrollk; iuk++) {
@@ -122,14 +122,14 @@ void unrolled_kernel_TN_nmk(const kernel_inttype m, const kernel_inttype n, cons
 
 		}
 
-		for (int_type im = m - (m%4); im < m; im++) {
+		for (kernel_inttype im = m - (m%4); im < m; im++) {
 
 			float32_t *c_ptr = &C[in*ldc + im];
 			float32x2_t crs[unrolln] = {0};
 			float32x2_t ars[unrollk] = {0};
 			float32x2_t crs0[unrolln] = {0};
 
-			for (int ik=0; ik<k - (unrollk - 1); ik+=unrollk) {
+			for (kernel_inttype ik=0; ik<k - (unrollk - 1); ik+=unrollk) {
 
 				for (int iuk=0; iuk<unrollk; iuk++) {
 					ars[iuk] = vld1_lane_f32(&A[im*lda + ik + iuk], ars[iuk], 0);
