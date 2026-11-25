@@ -11,17 +11,9 @@
 #include "perflibs_util.hpp"
 
 #include "gemm_small_framework.hpp"
+#include "gemm_small_generic_aarch64.hpp"
 #include "gemm_small_vanilla.hpp"
 #include "spec/problem_context_helpers.hpp"
-
-namespace perflibs::gemm {
-
-void sgemm_small_generic_aarch64(const kernel_inttype max_threads, const perflibs_trans transa,
-                                 const perflibs_trans transb, kernel_inttype m, kernel_inttype n,
-                                 kernel_inttype k, float alpha, const float *a, kernel_inttype lda,
-                                 const float *b, kernel_inttype ldb, float beta, float *c,
-                                 kernel_inttype ldc);
-}
 
 namespace perflibs::linalg {
 

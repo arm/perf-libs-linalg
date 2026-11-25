@@ -13,8 +13,6 @@
 #include <cstdlib>
 #include <algorithm>
 
-using perflibs::perflibs_trans;
-using perflibs::is_trans;
 
 extern "C" {
 
@@ -314,7 +312,7 @@ kfunc_t<float> *get_kernel<float>(trans_t trans_opt, l_order_t loop_o, kernel_in
 
 void sgemm_small_generic_aarch64(
 	const kernel_inttype max_threads,
-	const perflibs_trans transa, const perflibs_trans transb, kernel_inttype m, kernel_inttype n, kernel_inttype k,
+	const linalg::perflibs_trans transa, const linalg::perflibs_trans transb, kernel_inttype m, kernel_inttype n, kernel_inttype k,
 	float alpha, const float *a, kernel_inttype lda,
 	const float *b, kernel_inttype ldb, float beta,
 	float *c, kernel_inttype ldc) {

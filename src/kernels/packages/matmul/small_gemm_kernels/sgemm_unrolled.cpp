@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT OR (Apache-2.0 WITH LLVM-exception)
  */
 
-#include "perflibs_blas_types.hpp"
 #include "sgemm_unrolled_NN_nmk.hpp"
 #include "sgemm_unrolled_NN_nkm.hpp"
 #include "sgemm_unrolled_NT_nmk.hpp"

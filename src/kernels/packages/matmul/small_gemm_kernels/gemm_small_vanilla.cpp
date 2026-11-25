@@ -6,7 +6,7 @@
 #include "perflibs_assert.hpp"
 #include "perflibs_numeric_utils.hpp"
 #include "perflibs_util.hpp"
-#include "perflibs_blas_types.hpp"
+#include "framework/linalg_blas_types.hpp"
 #include "cgemm_unrolled.hpp"
 
 #include <cstdio>
@@ -30,7 +30,7 @@ namespace perflibs::gemm {
 
 
 static void cgemm_small_vanilla_serial (
-	const perflibs_trans transa, const perflibs_trans transb, const kernel_inttype m, const kernel_inttype n,
+	const linalg::perflibs_trans transa, const linalg::perflibs_trans transb, const kernel_inttype m, const kernel_inttype n,
 	const kernel_inttype k, const std::complex<float> alpha, const std::complex<float> *const a,
 	const kernel_inttype lda, const std::complex<float> *const b, const kernel_inttype ldb,
 	const std::complex<float> beta, std::complex<float> *const c, const kernel_inttype ldc) {
@@ -39,7 +39,7 @@ static void cgemm_small_vanilla_serial (
 	const kernel_inttype n2 = n - (n % 2);
 	const kernel_inttype n4 = n - (n % 4);
 
-	if (transa == PERFLIBS_NOTRANS && transb == PERFLIBS_NOTRANS) {
+	if (transa == linalg::PERFLIBS_NOTRANS && transb == linalg::PERFLIBS_NOTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n2 != 0 ? n2 : n;
 
@@ -61,7 +61,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_NN(mm, nn, k, alpha, &a[mblock], lda, &b[ldb*nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_TRANS && transb == PERFLIBS_NOTRANS) {
+	} else if (transa == linalg::PERFLIBS_TRANS && transb == linalg::PERFLIBS_NOTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n2 != 0 ? n2 : n;
 
@@ -83,7 +83,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_TN(mm, nn, k, alpha, &a[lda*mblock], lda, &b[ldb*nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_TRANS && transb == PERFLIBS_TRANS) {
+	} else if (transa == linalg::PERFLIBS_TRANS && transb == linalg::PERFLIBS_TRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n4 != 0 ? n4 : n;
 
@@ -105,7 +105,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_TT(mm, nn, k, alpha, &a[lda*mblock], lda, &b[nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_TRANS && transb == PERFLIBS_CONJTRANS) {
+	} else if (transa == linalg::PERFLIBS_TRANS && transb == linalg::PERFLIBS_CONJTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n4 != 0 ? n4 : n;
 
@@ -127,7 +127,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_TC(mm, nn, k, alpha, &a[lda*mblock], lda, &b[nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_CONJTRANS && transb == PERFLIBS_NOTRANS) {
+	} else if (transa == linalg::PERFLIBS_CONJTRANS && transb == linalg::PERFLIBS_NOTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n2 != 0 ? n2 : n;
 
@@ -149,7 +149,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_CN(mm, nn, k, alpha, &a[lda*mblock], lda, &b[ldb*nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_CONJTRANS && transb == PERFLIBS_TRANS) {
+	} else if (transa == linalg::PERFLIBS_CONJTRANS && transb == linalg::PERFLIBS_TRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n4 != 0 ? n4 : n;
 
@@ -171,7 +171,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_CT(mm, nn, k, alpha, &a[lda*mblock], lda, &b[nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_CONJTRANS && transb == PERFLIBS_CONJTRANS) {
+	} else if (transa == linalg::PERFLIBS_CONJTRANS && transb == linalg::PERFLIBS_CONJTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n4 != 0 ? n4 : n;
 
@@ -193,7 +193,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_CC(mm, nn, k, alpha, &a[lda*mblock], lda, &b[nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_NOTRANS && transb == PERFLIBS_TRANS) {
+	} else if (transa == linalg::PERFLIBS_NOTRANS && transb == linalg::PERFLIBS_TRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n2 != 0 ? n2 : n;
 
@@ -215,7 +215,7 @@ static void cgemm_small_vanilla_serial (
 			const auto mm = m - mblock;
 			cgemm_unrolled_NT(mm, nn, k, alpha, &a[mblock], lda, &b[nblock], ldb, beta, &c[ldc*nblock + mblock], ldc);
 		}
-	} else if (transa == PERFLIBS_NOTRANS && transb == PERFLIBS_CONJTRANS) {
+	} else if (transa == linalg::PERFLIBS_NOTRANS && transb == linalg::PERFLIBS_CONJTRANS) {
 		const kernel_inttype mblock = m4 != 0 ? m4 : m;
 		const kernel_inttype nblock = n2 != 0 ? n2 : n;
 
@@ -245,7 +245,7 @@ static void cgemm_small_vanilla_serial (
 
 void cgemm_small_vanilla (
 	const kernel_inttype max_threads,
-	const perflibs_trans transa, const perflibs_trans transb, const kernel_inttype m, const kernel_inttype n,
+	const linalg::perflibs_trans transa, const linalg::perflibs_trans transb, const kernel_inttype m, const kernel_inttype n,
 	const kernel_inttype k, const std::complex<float> alpha, const std::complex<float> *const a,
 	const kernel_inttype lda, const std::complex<float> *const b, const kernel_inttype ldb,
 	const std::complex<float> beta, std::complex<float> *const c, const kernel_inttype ldc) {
@@ -258,7 +258,7 @@ void cgemm_small_vanilla (
 		for (kernel_inttype start=0; start < n; start += inc) {
 			kernel_inttype work = std::min(n - start, inc);
 			if (work > 0) {
-				auto local_b = transb == PERFLIBS_NOTRANS ? &b[start*ldb] : &b[start];
+				auto local_b = transb == linalg::PERFLIBS_NOTRANS ? &b[start*ldb] : &b[start];
 				auto local_c = &c[start*ldc];
 				cgemm_small_vanilla_serial(transa, transb, m, work, k, alpha, a, lda, local_b, ldb, beta, local_c, ldc);
 			}
