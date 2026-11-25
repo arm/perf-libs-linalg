@@ -309,7 +309,6 @@ kfunc_t<float> *get_kernel_generic<float>(trans_t trans_opt, l_order_t loop_o, k
 
 template <>
 kfunc_t<float> *get_kernel<float>(trans_t trans_opt, l_order_t loop_o, kernel_inttype rblock_m, kernel_inttype rblock_n, kernel_inttype rblock_k, float alpha, float beta) {
-	// get_kernel_tx2<float>() exists, but is not dispatched here.
 	return get_kernel_generic<float>(trans_opt, loop_o, rblock_m, rblock_n, rblock_k, alpha, beta);
 }
 

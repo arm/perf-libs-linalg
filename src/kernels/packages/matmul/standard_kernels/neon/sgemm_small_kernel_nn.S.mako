@@ -113,7 +113,7 @@
 	# round ${in_} down to a multiple of 4
 	and ${out}, ${in_}, -4
 </%def>
-	<% func_name = "sgemm_small_kernel_nn_tx2" %>
+	<% func_name = "sgemm_small_kernel_nn_12x6" %>
 	${prologue(func_name)}
 	stp x29, x30, [sp, #-304]!
 	mov x29, sp
