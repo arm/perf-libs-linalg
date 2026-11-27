@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Add GETRFNP and GETRFNPI for LU factorization without pivoting, including incomplete factorization with a Schur complement update.
+- Add SPFFRT2 and SPFFRTX for partial LDL^T factorization without pivoting of symmetric matrices in packed storage.
 - Add CBLAS interface and tests.
 - Add option `LINALG_LAPACK_FALLBACK` to enable full LAPACK and LAPACKE support.
 - Add double-precision interleaved-batch BLAS and factorization routines.

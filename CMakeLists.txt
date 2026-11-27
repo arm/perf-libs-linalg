@@ -21,6 +21,10 @@ add_subdirectory(src)
 
 add_subdirectory(tools)
 
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
+
 install(TARGETS pl_linalg)
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" TYPE INCLUDE)
 install(FILES LICENSE THIRD_PARTY_NOTICES.md

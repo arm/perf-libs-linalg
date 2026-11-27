@@ -65,7 +65,7 @@ cmake --build build-openmp --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-This runs the Netlib BLAS and CBLAS test suites. With
+This runs the Netlib BLAS and CBLAS test suites and the unit tests in `tests/`. With
 `LINALG_LAPACK_FALLBACK=ON`, it also runs the LAPACK tests and LAPACKE examples.
 
 ## Install

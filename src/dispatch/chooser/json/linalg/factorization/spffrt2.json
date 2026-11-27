@@ -1,0 +1,81 @@
+{
+    "name": "spffrt2",
+    "return_type": "void",
+    "template_parameters": [
+        {
+            "name": "IntType",
+            "type": "typename"
+        },
+        {
+            "name": "AMatrixType",
+            "type": "typename"
+        }
+    ],
+    "parameters": [
+        {
+            "type": "AMatrixType",
+            "name": "ap",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "n",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "IntType",
+            "name": "ncolm",
+            "is_const": true,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "work",
+            "is_const": false,
+            "is_pointer": true
+        },
+        {
+            "type": "AMatrixType",
+            "name": "work2",
+            "is_const": false,
+            "is_pointer": true
+        }
+    ],
+    "instantiations": {
+        "sspffrt2": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r32"
+            },
+            "symbol_type": "fortran"
+        },
+        "dspffrt2": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "r64"
+            },
+            "symbol_type": "fortran"
+        },
+        "cspffrt2": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c32"
+            },
+            "symbol_type": "fortran"
+        },
+        "zspffrt2": {
+            "template_values": {
+                "IntType": "pl_linalg_int_t",
+                "AMatrixType": "c64"
+            },
+            "symbol_type": "fortran"
+        }
+    },
+    "namespaces": [
+        "perflibs",
+        "linalg"
+    ],
+    "interface_header_include": "packages/factorization/interfaces/spffrt.hpp"
+}

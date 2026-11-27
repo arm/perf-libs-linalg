@@ -47,6 +47,29 @@ struct lu_panel_update {
 
 }; // lu_panel_update
 
+// LU Factorization without pivoting (stops at the first exactly zero pivot)
+template<typename MatrixType, typename IntType>
+struct lu_factorization_no_pivot {
+	using matrix_type = MatrixType;
+	using int_type    = IntType;
+
+	matrix_type a;
+	int_type&   info;
+}; // struct lu_factorization_no_pivot
+
+// Eliminated columns: 1/D on the diagonal and L*D below (?spffrt2), or D and L (?spffrtx)
+enum class ldl_packed_output { inverse_diagonal, diagonal };
+
+// Partial LDL^T Factorization without pivoting, lower packed storage
+template<typename MatrixType>
+struct ldl_factorization_no_pivot_packed {
+	using matrix_type = MatrixType;
+
+	matrix_type       a;
+	kernel_inttype    ncolm;
+	ldl_packed_output output;
+}; // struct ldl_factorization_no_pivot_packed
+
 // Cholesky Factorization
 template<typename MatrixType, typename IntType>
 struct cholesky_factorization {
@@ -330,6 +353,18 @@ template<typename... Args>
 PERFLIBS_LINALG_INLINE
 kernel_inttype pctx_scale(const lu_factorization<Args...>& pctx) {
 	return min(pctx.a.cntg(), pctx.a.strd());
+}
+
+template<typename... Args>
+PERFLIBS_LINALG_INLINE
+kernel_inttype pctx_scale(const lu_factorization_no_pivot<Args...>& pctx) {
+	return min(pctx.a.cntg(), pctx.a.strd());
+}
+
+template<typename... Args>
+PERFLIBS_LINALG_INLINE
+kernel_inttype pctx_scale(const ldl_factorization_no_pivot_packed<Args...>& pctx) {
+	return pctx.a.cntg();
 }
 
 template<typename... Args>
